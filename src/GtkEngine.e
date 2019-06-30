@@ -355,29 +355,8 @@ host_addr = "127.0.0.1"
 integer x1 = 0, x2 = 0
 object results = {"127.0.0.1"}
 
-ifdef UNIX then
-	if file_exists(ipfile) then delete_file(ipfile) end if
-	system(sprintf("ifconfig > %s",{ipfile}))
-	sleep(.25)
-	object lines =  read_lines(ipfile)
-	delete_file(ipfile)
-	if not atom(lines) then
-	for i = 1 to length(lines) do
-	   if match("inet addr:",lines[i]) then
-		x1 = match(":",lines[i])
-		x2 = match(" ",lines[i][x1..$])
-		x2 += x1
-		if x1<x2 then
-			results = add_item(trim(lines[i][x1+1..x2]),results,ADD_SORT_UP)
-		end if
-	   end if
-	end for
-       end if
-	
-	if length(results) > 1 then
-		results = remove_all("127.0.0.1",results)
-	end if
-
+ifdef UNIX then --FIXME!
+	host_addr = "127.0.0.1"
 end ifdef
 
 ifdef WINDOWS then -- FIXME!
