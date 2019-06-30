@@ -1,9 +1,5 @@
 <div align="center">
-  <a href="https://github.com/colyseus/colyseus">
-    <img src="https://github.com/davidbruce/EuGTK/blob/master/logo.png?raw=true" />
-  </a>
-  <br>
-  <br>
+  <img src="https://github.com/davidbruce/EuGTK/blob/master/logo.png?raw=true" />
   <h3>
     GTK 3 wrapper for <a href="https://openeuphoria.org/">Open Euphoria</a> <br /><a href="http://htmlpreview.github.io/?https://github.com/davidbruce/EuGTK/blob/master/demos/documentation/README.html">View documentation</a>
   </h3>
