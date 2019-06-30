@@ -1,0 +1,43 @@
+
+launchpad.net GTK+3 with the Broadway (HTML5) backend : Nicolas Delvaux 
+
+This is a rebuild of the GTK+3 Ubuntu 12.04, 12.10, 13.04, 13.10, 14.04 and 14.10 packages with an enabled Broadway backend.
+Note that this PPA is no longer necessary starting from Ubuntu 15.04, as the Broadway backend is now enabled by default. 
+The main difference with this PPA is that the "broadwayd" binary is shipped in the "libgtk-3-bin" package when it was in 
+a separated "broadwayd" package in the PPA.
+
+ADDING THIS PPA TO YOUR SYSTEM
+ ==============================
+Run these commands in a terminal:
+sudo add-apt-repository ppa:malizor/gtk-broadway
+ sudo apt-get update
+ sudo apt-get upgrade
+ sudo apt-get install broadwayd # For Ubuntu >= 13.10
+ 
+HOWTO SINCE SAUCY (gtk+ >= 3.8)
+===============================
+As an example, here is how to run gedit in your browser.
+
+In a terminal, run:
+ broadwayd
+ 
+In another terminal, run:
+ GDK_BACKEND=broadway UBUNTU_MENUPROXY= LIBOVERLAY_SCROLLBAR=0 eui test0.ex
+ 
+Finally, open you Web browser and go to http://localhost:8080/
+The "UBUNTU_MENUPROXY= LIBOVERLAY_SCROLLBAR=0" is only useful if you use the global-menu and/or overlay-scrollbars. You have to disable them for Broadway, otherwise the program will segfault.
+Please see the "broadwayd" manpage for more information.
+
+HOWTO BEFORE SAUCY (gtk+ < 3.8)
+ ===============================
+As an example, here is how to run gedit in your browser.
+In a terminal, run:
+ GDK_BACKEND=broadway UBUNTU_MENUPROXY= LIBOVERLAY_SCROLLBAR=0 gedit
+Finally, open you Web browser and go to http://localhost:8080/
+The "UBUNTU_MENUPROXY= LIBOVERLAY_SCROLLBAR=0" is only useful if you use the global-menu and/or overlay-scrollbars. You have to disable them for Broadway, otherwise the program will segfault.
+You can customize the port by setting the BROADWAY_DISPLAY variable.
+
+DISCLAIMER
+ ==========
+I provide this PPA in the hope that it will be useful and I will try to upload new versions whenever the Ubuntu package is updated.
+ However, I do NOT guarantee that this PPA will always be stable and up-to-date nor that packages it contains may not destroy your computer, cause the end of the world and kill kittens. AaCharis SIL CompactAaClear Sans AAAAA DarkLightAuto 

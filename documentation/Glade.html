@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head> 
+	<title>EuGTK and Glade</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<heading>
+    <img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK LOGO" />
+    <img src="../thumbnails/mongoose.png" alt="mongoose" />	
+    <figure style="float:right; border:solid thin black;">
+    <a href="../screenshots/glade.png">
+    <img src="../screenshots/glade.png" alt="glade" align="right" width="300px" />
+    </a>
+    <figcaption><small>
+    	&nbsp;Calendar program being edited in Glade</small>
+    </figcaption>
+    </figure>
+    
+    <hr />
+    <h2>EuGTK and Glade</h2>
+	<h3>Drag and Drop interface construction</h3>
+	<hr />
+	
+</heading>
+
+<br clear="all" />
+
+<nav>
+    <div class="hdr">Quick Links</div>
+    <a href="../glade/StartingGlade.html"><button>Starting with Glade</button></a><br />
+    <a href="#overview"><button>Overview</button></a>
+    <a href="#namespaces"><button>Namespaces</button></a>
+    <a href="#problems"><button>Problems?</button></a>
+    <a href="#compile"><button>Compiling/Shrouding/Binding</button></a>
+    <a href="../packaging/README.html"><button>Packaging</button></a>
+    <br />
+    <div class="hdr">Other Files:</div>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+    <a href="README.html"><button>README</button></a>
+    <a href="guide_a.html"><button>Alphabetical Guide</button></a>
+    <a href="dialogs.html"><button>Built-in EuGTK Dialogs</button></a>
+    <a href="treeviews.html"><button>ListView/TreeView widgets</button></a>
+    <a href="pango_markup.html"><button>Markup</button></a>
+    <a href="printing.html"><button>Printing</button></a>
+    <a href="ServerHelp.html"><button>Web Server</button></a>
+    <a href="functions.html"><button>Quick Function List</button></a>
+    <a href="platforms.html"><button>Platforms</button></a>
+
+    <br />
+</nav>
+
+<a name="overview" />
+
+<h3><hr />Overview<hr /></h3>
+
+<p>
+It is now possible to use <a href="http://glade.gnome.org">Glade</a> to design your EuGTK 
+program interface. I've tested with Glade version 3.18.3.
+You will still have to write snippets of code in Euphoria to handle 
+user events - just as you would when using Visual Basic&trade;, Delphi&trade;, etc.,
+- except that the snippets in Euphoria will likely be <i>much</i> simpler and
+easier to understand! 
+</p>
+
+<p>Bear in mind, however, that the most-complex program in this EuGTK package 
+is the <a href="bear.html">BEAR</a>, and I did <i>not</i> use Glade to design it. It was much 
+easier to get the look I wanted by simply hand-coding everything!
+</p>
+
+<p>Begin by reading <a href="../glade/StartingGlade.html">Starting Glade I and II</a> for an 
+introduction, then read the rest of this page for details.
+</p>
+
+<p>
+Glade has a preview button so that you can see, to a limited extent, what your program 
+will look like. Controls won't be linked (can't respond to user interaction) until you 
+load the glade XML into your Euphoria program and provide the 'handler' functions. 
+Often, these handler functions will only require a few lines of code.
+</p>
+
+<p>
+EuGTK will try to help you with this task by supplying a ready-made template
+for undeclared functions, which you copy and paste into your Euphoria code using whatever 
+text editor you prefer.
+</p>
+
+<p>This template will appear on the terminal from which you run your 
+program. See the screenshot below.
+</p>
+<a href="../screenshots/template.png">
+<img src="../screenshots/template.png" alt="template" clear="left" align="right" width="400px" />
+</a>
+<p>You <b><i>must</i></b> run programs from a terminal (x-term, for example) while
+developing and testing. There's no way around this.
+</p>
+
+<p>
+Your program begins as usual:<br />
+
+<code>
+<pre> <em class="kw">include</em> GtkEngine.e</pre>
+</code>
+</p>
+
+<p>
+Next, you tell EuGTK's built-in <i>builder</i> object 
+to load your program's XML description from the file created by Glade. The builder will 
+try to connect any signals for which you have declared a handler 
+(in the Glade Properties-&gt;Signals tabs). Finally, you call main() to start the GTK 
+processing loop.
+<div class="quote"><tt><pre>
+<em class="kw">include</em> GtkEngine.e
+<em class="gtk">add</em>(builder,<em class="str">"list.glade"</em>)
+<em class="gtk">main()</em><pre></tt></div>
+</p>
+
+<p>With just those three lines of code, you are now ready to run your program!<br /><br />
+Of course, it won't do anything, except perhaps spit out a message telling you that
+you haven't bothered to write handlers for events declared in Glade.
+</p>
+
+<p>
+You should run the program (preferably from WEE with terminal, Geany using
+ gneui.ex, or directly from an x-term).
+EuGTK will prompt you with an error message and hopefully an empty function template for the 
+missing function.
+You can copy and paste that into your editor, and then fill in the body of the function.
+Put these functions after the call to main().
+</p>
+
+<div class="hint boxshadow">
+<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<p>
+When using Glade, your Euphoria code may use string identifiers to refer to 
+objects, rather than having to obtain a pointer (a.k.a. 'handle') to them first.
+</p>
+
+<p class="L20R">
+Glade will assign a unique identifier for widgets (which it calls the <b>ID:</b>). 
+The ID will be something like 'checkbutton1', 'checkbutton2', 'radiobutton1', etc.
+</p>
+
+<p class="L20R"> This ID property is found on the General tab of the Properties dialog.
+You may change the IDs if you wish, sometimes changing them can make your code easier to 
+understand.
+</p>
+
+<p class="L20R">
+Obviously, you should avoid naming two controls with the same name.
+</p>
+
+<p class="L20R">
+If you are using <u>multiple</u> Glade files, you will almost certainly have more than 
+one 'button1', etc. but this isn't a problem, because a namespace will be prepended. 
+See <a href="#namespaces"> namespaces </a>below.
+</p>
+</div>
+
+<br clear="all" />
+
+<a name="namespaces" />
+
+<h3><hr />Namespaces<hr /></h3>
+<p>When writing a large program with multiple windows, Glade can become difficult to 
+navigate safely. Click on the wrong thing in Glade, and you may lose all your work. 
+This isn't good, so you should try to break your program into small, safe 'modules', 
+each with its own Euphoria include (.e) file and corresponding Glade (.glade) file.
+</p>
+
+<p>
+Let's say, for example, I'm going to need a 'main' window, a pop-up 'edit' window, and 
+the usual "About..." dialog.
+I'd create three Glade files, one named main.glade, the second edit.glade, and the third 
+about.glade. 
+After laying out these three windows using Glade, it's very likely that Glade will 
+have used identical names for controls in the files. 'button1', for example, might appear 
+in all three. You could, if you wish, wade thru all your Glade files and rename these as
+necessary to prevent conflicts, but
+EuGTK offers a less labor-intensive way:
+</p>
+
+<p>
+EuGTK namespacing allows you to refer to these controls by name in a manner familiar to 
+Euphoria programmers:
+<ul>
+<li><em class="str">"button1"</em> ~ button1 in main.ex</li>
+<li><em class="str">"edit:button1"</em> ~ button1 in edit.e</li>
+<li><em class="str">"about:button1"</em> ~ button1 in about.e</li>
+</ul> 
+
+Example:
+<code><pre>	<em class="gtk">set</em>(<em class="str"><b>"edit:window1"</b>,"background","blue"</em>)
+</pre></code>
+Note that these are strings. If you wish to convert them to pointers (handles), you can use the pointer() function:
+<pre><code>	<em class="kw">constant</em> win1 = <em class="gtk">pointer</em>(<em class="str"><b>"edit:window1"</b></em>)
+</code></pre>
+Other files can now access the edit.e window in the normal Euphoria way:
+<pre><code>	<em class="gtk">set</em>(win1,<em class="str">"background"</em>,...)</code></pre>
+</p>
+
+<p>There seems to be no noticeable delay when accessing controls via the string names. 
+In a test which read and set label text using the handle to the label stored in a constant, 20,000
+iterations per second were reported. When using the label's name in string form, 18,900 per second 
+were reported. </p>
+
+<p>
+To keep things neatly organized, you should put your Eu code in separate files as well: 
+main.ex, edit.e, and about.e.
+</p>
+
+<p>
+Your Eu file main.ex would then include the line:
+<pre><code>	<em class="gtk">add</em>(builder,<em class="str">"main.glade"</em>)</code></pre>
+</p>
+
+<p>And your edit.e include file would have the lines:
+<div class="quote"><tt><pre>
+<em class="kw">namespace</em> edit
+<em class="kw">include</em> GtkEngine.e
+<em class="gtk">add</em>(builder,<em class="str">"edit.glade"</em>)
+</pre></tt></div>
+</p>
+
+<h4><hr />Namespaced names
+<a href="../screenshots/namespaces.png" title="Click for a larger view" >
+<img src="../screenshots/namespaces.png" width="300px" align="right" />
+</a></h4>
+
+
+<p>
+To examine the namespaced names as loaded by EuGTK, add the line 
+<b><code> with define BUILDER </code></b>
+to your main program prior to including GtkEngine.e,
+or add <b><code>-d BUILDER</code></b> to the command-line.
+The namespaced names will be shown on the xterm when you run your program. 
+</p>
+ 
+ <p> 
+ EuGTK refers to widgets created by Glade by their ID. For example, the main window 
+ of a program created by Glade would have the default ID of "window1", and your EuGTK 
+ program would access that window as "window1". 
+ These ID's are assigned automatically by Glade, but can be changed if you wish.
+ </p>
+
+<p>
+The GLADE ID names are those you use to refer to the widgets in your
+Euphoria program: <em class="str">"prefs:window1"</em>, for example.
+</p>
+
+<p>Note that the HANDLE is only useful for internal debugging purposes.
+It changes with every run.
+</p>
+
+<hr />
+
+<p><b>Widget names</b>
+
+<a href="../screenshots/namespaces2.png" title="click for a larger view" >
+<img src="../screenshots/namespaces2.png" align="right" width="300px" />
+</a>
+
+<p>
+Confusingly, Glade also has a <i>Widget name:</i> property, blank by default,
+which is found under the Common tab.
+You should avoid using this except under special circumstances. It isn't normally
+ needed.
+ </p>
+
+<p> 
+There are a few 'trick' uses for this 'Widget name' property, however:<br />
+<p>One possible use is to pass data to a Euphoria function. 
+For example, you might have a set of radio buttons which all call a single handler 
+function. That function could examine the control's 'Widget name' to determine what to do. 
+If, for example, the buttons select various colors, each button could have a different 
+color as the name property: 'red', 'green', or 'blue', etc.
+<br />
+See <a href="../glade/widgetname.ex">widgetname.ex</a> and 
+<a href="../glade/widgetname.glade">widgetname.glade</a>.
+</p>
+
+<p>A more complex use might be to pass function names to a central 'dispatch' function,  
+which could then call the desired function by converting the 'name' into a routine_id. 
+</p>
+
+<hr />
+<p><b>Cautions</b><br /><br />
+The XML file created by Glade automatically includes a "requires..." line, specifying 
+a minimum GTK version. You may find it helpful to remove that line under certain conditions, 
+for example when designing your program on a computer with a current version of GTK/Glade, 
+but running it on a computer with an earlier version. 
+Just use a plain-text editor to zap the offending line.
+</p>
+
+<a name="problems" />
+
+<h3><hr />Common Problems<hr /></h3>
+<p>
+<ol>
+    <li>I run my program without errors but <i>can't see anything!</i><br />
+    <dfn>
+    You <em><u>must</u></em> click on the <i>'visible'</i> property checkbox for your main window.
+    This is found on the 'Common' tab under 'Widget Flags'.<br />
+    <i></i><b>Oh, and while you're there,</b></i> be sure to link the main window's <i>destroy</i>
+    signal to the built-in function Quit, so that your program will clean up after itself when finished!
+    You must do these two things for the main window of every program you write.</dfn>
+    </li>
+
+    <li>I put buttons in a dialog, such as FileChooserDialog, but they don't do anything!<br />
+    <dfn>Set a unique <i>'Response ID'</i> for each button.
+    This is found on the 'General' tab under 'Button Attributes'.<br />
+    This ID is returned when the dialog closes as a result of a button being clicked.
+    </dfn>
+    </li>
+
+    <li>How do I make menu items work like check menu items or radio menu items?<br />
+    <dfn>
+    I don't know how to do that using Glade.
+    You'll have to write code in Euphoria, or &lt;gasp!&gt; try to edit the .glade xml directly.
+    </dfn>
+    </li>
+
+    <li>I want to use widget x, but can't find it on the Glade palette<br />
+    <dfn>
+    Some things are hard to find, and some just aren't there.
+    New GTK widgets introduced since GTK 3.10 are partially missing.
+    If you're working on the 'bleeding edge' of GTK3, you probably should be 
+    coding by hand.
+    </dfn>
+    </li>
+
+    <li>How should I name the function that responds to a signal?<br />
+    <dfn>
+    If you click on the widget's Signals tab, you'll see a list of signals that can be linked.<br /> 
+    For example, a button has a 'clicked' signal.
+    You then click on the &lt;type here&gt; space adjacent to the signal name, and press the 'o' key. 
+    <em>that's the letter o, not a zero!</em><br />
+    When you do, a suggested function handler name will be plugged in.
+    You can, of course, type in any global function name you prefer here.
+    For example, the handler name for a Quit or Exit button should usually be <em class="black">Quit</em>
+    (no quotes). This will call EuGTK's built-in Quit() function when the button is clicked.
+    </dfn>
+    </li>
+    
+    <li>I want to write <i>one</i> Eu function to handle multiple controls.<br />
+    <dfn>
+    Instead of accepting the default handler name, supply your own
+    For example, if you have 3 buttons, Glade will supply handler names:
+    <ul><li>on_button1_clicked</li><li>on_button2_clicked</li><li>on_button3_clicked</li></ul>
+    You simply remove the 1, 2, and 3 from the handler names, and name your Eu function
+    <em class="black">on_button_clicked</em>. All 3 buttons will call that function.
+    It's then your job to sort them out.
+    </dfn>
+    </li>
+    
+</ol>
+
+</p>
+
+<a name="compile" />
+<h3><hr />Compiling, Binding, etc...<hr /></h3>
+<p><em>Caution!</em></p>
+
+<p>
+As usual, you can compile, bind, or shroud your Eu program. If you do any of these, your program 
+will <i>still</i> try to load the GUI description from the Glade XML file at run-time. This could be either good or bad, depending upon your perspective.
+</p>
+
+<p>
+<u>The benefits:</u>
+<ul>
+    <li>The GUI appearance can be adjusted without messing with the program logic.</li>
+</ul>
+</p>
+
+<p>
+<u>The drawbacks:</u>
+<ul>
+    <li>Anyone can easily trash your nice program by changing names or removing controls in the .glade file.
+    </li>
+    <li>The .glade file must be distributed along with the .ex file.
+    </li>
+</ul>
+</p>
+
+<div class="hint boxshadow" style="width:80%;" >
+<img class="hint" src="../thumbnails/hint.png" width="100px" alt="hint" align="left" float="right" />
+<p style="margin-left: 40px">
+<b>Knowing the way some users think...</b><br />
+It's almost certain that someone will see that Glade&trade;<sup><em>*</em></sup> file,<br />
+think <i>"I don't care about air fresheners.."</i> and delete it.
+<br /><br />
+<small><i><sup><em>*</em></sup> brand name for a common type of room deodorizer spray in the U.S.</i></small>
+</p>
+
+</div>
+
+<p>
+One easy solution to this problem is to copy the XML from the Glade file, paste it into a new file,
+enclose it in triple quotes, and assign it to an exported constant. Below, the added code is in red, while the XML produced by Glade is shown in black:
+<code><pre><em>  namespace widgets
+  export constant XML = """</em>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;!-- Generated with glade 3.16.1 --&gt;
+    &lt;interface&gt;
+    &lt;requires lib="gtk+" version="3.10"/&gt;
+    ---etc---
+  <em>"""</em>
+</pre></code></p>
+<p>
+
+Save this new file as an include: call it widgets.e, to match the namespace, and then your code becomes:
+<code><pre>
+    <em class="kw">include</em> GtkEngine.e
+    <em class="kw">include</em> widgets.e
+    <em class="gtk">add</em>(builder,widgets:XML)
+    <em class="gtk">main()</em>
+</pre></code>
+</p>
+
+<p>
+Now you can bind, shroud or compile your program and the interface will be 'hard coded' into it. Changing or deleting 
+the widgets.xml or widgets.glade files will make no difference. No changes to your program interface can be made
+without re-compiling or re-binding. If you wish to leave your users
+with <i>some</i> measure of customizability, but without the ability to 
+completely trash your program, use this method along with an ini.
+</p>
+
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+</html>

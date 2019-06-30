@@ -1,0 +1,1222 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<title>EuGTK README</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<header>
+	<img src="../thumbnails/gtk-logo-rgb.gif"><alt="GTK LOGO"></img>
+	<img src="../thumbnails/mongoose.png" alt="mongoose"></img>
+    <a href="../screenshots/t.png">
+	<img src="../screenshots/t.png" alt="test1" title="test1" align="right" width="400px" />
+	</a>
+	<h2><hr />EuGTK<hr /></h2>
+	<p>
+	<b>A cross-platform language binding for Euphoria 4 and the GTK3 graphic user interface.</b>
+	</p>
+	<p>Thanks to <b>Dave Cuny</b> for the original idea, and to Pete Eberlein, Greg Haberek, Kenneth Rhodes,
+	 Ron Tarrant, C.K. Lester, Don Cahela, Mike Sabal, Jerry Story,
+     Derek Parnell, Jeremy Cowgar, and numerous others for bug reports and coding assistance!
+    </p>
+	<hr>
+</header>
+
+<br clear="all" />
+
+<nav>
+	<div class="hdr">Quick Links:</div>
+	<a href="#installation"><button>Installing</button></a>
+	<a href="#starting"><button>Getting Started</button></a>
+	<a href="#programming"><button>Writing your programs</button></a>
+	<a href="#errors"><button>Error messages</button></a>
+	<a href="#c"><button>Compare with C code</button></a>
+	<a href="#platforms"><button>Tested Platforms</button></a>
+	<a href="#features"><button>New Features</button></a>
+	<a href="#syntax"><button>New Syntax</button></a>
+	<a href="#plugins"><button>New Plugins</button></a>
+	<a href="#changes"><button>Recent Changes</button></a>
+	<a href="#settings"><button>Settings</button></a>
+	<a href="#broadway"><button>Broadway</button></a>
+	<a href="#bear"><button>BEAR</button></a>
+	<a href="#history"><button>History</button></a>
+	<a href="#legal"><button>Legal Disclaimer</button></a>
+	
+	<div class="hdr">Other Files:</div>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+	<a href="guide_a.html"><button>Alphabetical Guide</button></a>
+	<a href="dialogs.html"><button>Built-in EuGTK Dialogs</button></a>
+	<a href="treeviews.html"><button>ListView/TreeView widgets</button></a>
+	<a href="pango_markup.html"><button>Markup</button></a>
+	<a href="printing.html"><button>Printing</button></a>
+	<a href="ServerHelp.html"><button>Web Server</button></a>
+	<a href="functions.html"><button>Quick Function List</button></a>
+	<a href="Glade.html"><button>Glade GUI Builder</button></a>   
+	<a href="platforms.html"><button>Platforms</button></a>
+	<a href="fileselector.html"><button>GtkFileSelector</button></a>
+</nav>
+
+<content>
+
+
+<h3><hr />Introduction:<hr /></h3>
+
+<h4>GTK</h4>
+
+<p>
+GTK3 is better both in ease of use and in 
+the ability to produce attractive, modern program interfaces than any other GUI libraries
+ I've tried. GTK3 is one of the very few GUI libraries that is currently being maintained and 
+ updated regularly, and is certainly one of the most complete.
+</p>
+
+<h4>EuGTK</h4>
+
+<p>
+EuGTK wraps the GTK calls in an object-oriented style, to make GUI programming with 
+Euphoria easy.
+</p>
+
+<p>
+EuGTK does not require dozens of support files, '.h' files, 'make' files, or multitudes of 
+source files. There is only one 'include' you <i>must</i> add to all EuGTK programs:  
+<em class="kw">include</em> <em class="gtk">GtkEngine.e</em>
+</p>
+
+<p>
+Only a few files need to be available when you write,  
+run, bind or compile your programs: GtkEngine.e and GtkEnums.e (adding, when used, 
+GtkPrinter.e, etc...).
+</p>
+
+<p>
+No additional files are produced or needed other than the code you write and the  
+Euphoria 4.1 standard library. This makes project management simpler, and 
+if you want to ship EuGTK with your program, the required files only add about 350k to 
+the total package (80k if compressed!).
+</p>
+
+<p>
+Also, EuGTK is easier to use because EuGTK adds some 'intelligence' that is missing when using other
+languages, such as C or Python; for example, the ability to create images from a variety of sources without the 
+programmer having to call a different function for each source type. See <a href="HowItWorks.html#variants">variants</a>.
+</p>
+
+<p>
+In addition, EuGTK is easy to keep up-to date with the latest versions of GTK
+because <i>all</i> of EuGTK is written in Euphoria, so it can be maintained by anyone,
+with no re-compiling or other tricky steps involved.
+</p>
+
+<p>
+You'll need the latest Euphoria 4.1 interpreter
+from <a href="http://openeuphoria.org">OpenEuphoria.org</a>.
+I use Euphoria 4.1.0 beta 2.
+</p>
+
+<p>
+Also, you'll <i>really need</i> the latest GTK 3.0 docs (from <a href="http://gtk.org">gtk.org</a>), since there 
+are more GTK methods and properties available than I have used in the demos. 
+How are you going to know about them if you don't read the GTK docs? 
+</p>
+
+<div class="quote boxshadow" border="thin,solid black;">
+<table class="testing">
+<tr>
+<th>CAUTION:</th>
+</tr>
+<tr>
+<td>
+When reading the GTK docs, please <u>ignore totally</u> the first 
+chapter: <i>"GTK+ Overview"</i>. It will only discourage you and get you started
+in the wrong direction. GTK programs do not need to be that convoluted
+and difficult, as you'll quickly see if you read the rest of these doc pages and
+try some of the sample programs!
+
+<p>
+Chapters II thru IV in the GTK documentation <i>will</i> be useful, since
+they describe the various Gtk widgets and their associated properties and signals.
+Be sure to refer to these as you write your programs.
+</p>
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<a name="installation" />
+<h3><hr /><img src="../thumbnails/gconf-editor.png"  align="cener" height="30px" />Installation<hr /></h3>
+<p>
+Just open the gzipped package and drag the 'demos' folder into your home folder.
+All files are in the demos folder (and subfolders thereof). 
+Try them so you'll know what you can do with GTK!
+</p>
+
+<h4><em>Important!</em></h4>
+
+<p>
+Be sure to add a eu.cfg, otherwise eu programs will 
+not be able to find the necessary GtkEngine.e!. 
+</p>
+
+<div class="hint boxshadow">
+<img src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<p>You may put a eu.cfg in each folder which has EuGTK programs, or
+if you prefer, you can edit the [all] section in 
+/usr/local/bin/eu.cfg or C:\Euphoria\bin\eu.cfg to include the lines:<br /><br /> 
+-i ~/demos<br />
+-i C:\Users\<i><u>your name</u></i>\demos<br />
+<p>
+</div>
+
+<p>
+Note: if you are using Windows&trade;, you must modify the second line to point to
+your own user home directory. For Linux, it can be removed or ignored.
+</p>
+
+<div class="quote boxshadow" border="thin,solid black;">
+<table class="testing">
+<th>Please do the installation as instructed above.</th> 
+<tr><td>
+Don't put 
+the demos elsewhere and then complain that nothing works. 
+When you write your own EuGTK programs, you can put those, along with associated
+images, etc. wherever you want. See <a href="../packaging/README.html">Packaging</a>.
+</td>
+</table>
+</div>
+
+<a name="starting" />
+<h3><hr />Getting Started:<hr /></h3>
+
+<p>
+First, open an x-term, cd to the demos directory, and run a program: 
+<div class="scrn" width="80%"><tt>$> eui test0</tt></div>
+</p>
+
+<a href="../screenshots/test0.png">
+<img src="../screenshots/test0.png" align="left" float="right" height="560px" />
+</a>
+
+<p><br />
+<b><i>Running from an x-term is mandatory</i></b> while you are writing your 
+Euphoria/GTK programs, so that you can see error messages and crash reports,
+but not necessary once you have your program working and debugged.
+
+<div class="scrn"><tt><pre>************************************
+Fatal Error: no libgtk-3.so.0 found!
+************************************
+</pre></tt></div>
+
+<p>If you get the above error message, either you do not have 
+libgtk-3 installed (try apt-get or your package manager), or it has 
+been installed in an unexpected location. Check lines 90 thru 100 at the top of
+GtkEngine.e and make changes as necessary.
+</p>
+
+<p>
+Now try as many of the test programs as you can, they will help you find incompatibilities (if any) with the
+version of the GTK library you are using.
+</p>
+
+<br clear="all" />
+
+<div class="urgent">
+
+You may also get the above error if you are trying to run		 
+32-bit Euphoria on a computer with 64-bit libraries (or vice-versa). 
+
+</div>
+
+<a name="programming" />
+
+<h3><hr /><img src="../thumbnails/applications-development.svg" height="30px" />Programming<hr /></h3>
+
+<p> 
+Before you start madly coding, please read and understand <a href="HowItWorks.html">HowItWorks</a>.
+</p>
+
+<h3>Editors:</h3>
+
+<p>
+You can use any plain text editor to create your EuGTK programs. I use
+either Pete Eberlein's WEE editor <a href="https://github.com/peberlein/WEE/">(github link)</a> 
+written in Euphoria; sometimes Pluma or <a href="http://www.geany.org">Geany</a>, 
+ or the <a href="bear.html">BEAR</a>. See <a href="../resources/README.html">Programmer's Resources</a>
+ for an overview.
+ </p>
+ 
+<p>
+This cross-platform editor (highly recommended!) automatically colorizes Euphoria source code, and moves the cursor to 
+the file/line where a syntax error occurs. 
+</p>
+
+<div class="quote boxshadow">
+<img src="../thumbnails/wee.png" alt="hint" width="30px" align="left" float="right" />
+<p>
+<b>WEE</b> offers pop-up help for both Euphoria and GTK keywords by pressing the <b>[F1]</b> key. See 
+instructions <a href="#weemods">here</a>.
+</p>
+<img src="../thumbnails/mongoose.png" alt="BEAR" width=30px" align="left" float="right" />
+<p>
+The latest version of the <a href="bear.html"><b>BEAR</b></a> also includes pop-up help in the browser pane. Click on the Docs button when 
+a GTK widget name or Euphoria keyword is highlighted.</p>
+</div>
+
+<h4>Geany</h4>
+<p>
+In the <a href="../resources/geany_syntax/README.html">~/demos/resources/geany_syntax</a> folder you will find 
+files to add Euphoria syntax highlighting to <a href="http://www.geany.org/">Geany</a>,
+as well as an add-on program by Kenneth Rhodes which moves the Geany edit cursor to the error line in your Eu program.
+</p>
+
+<h4>Gedit</h4>
+<p>
+In the <a href="../resources/gedit_syntax/README.html">~/demos/resources/gedit_syntax</a> folder you will find 
+files to add Euphoria syntax highlighting to Pluma, GEdit, GtkSourceView, the <a href="bear.html">BEAR</a>, etc.
+</p>
+
+<h3><hr /><img src="../thumbnails/glade.png"  align="center" height="30px"  />Visual (Drag &amp; Drop) Program design:<hr /></h3>
+
+<p>
+It is also possible to use <a href="http://glade.gnome.org/">Glade</a> to design your program layout.
+You will need the latest version of Glade (3.16 or up). See the programs
+in the demos/glade folders. Also, please read <a href="guide_a.html#xml">XML/GtkBuilder</a>.
+</p>
+
+<p>Bear in mind, however, that if you do not understand how to code EuGTK programs
+using a plain text editor, you'll never be able to figure out why you aren't having
+success when using Glade. (Same advice applies to Visual Basic&trade;, Delphi&trade; etc.)
+</p>
+
+<a name="errors" />
+
+<h3><hr /><img src="../thumbnails/error.png" align="center" height="30px" />Error Messages:<hr /></h3>
+
+<p>There are three possible sources of error messages: Euphoria, GTK, and EuGTK.<br /><br />
+
+<b>Euphoria</b> gives you the line number and description of the error, but these will <b><i>only</i></b> appear 
+in a console - there will not be a pop-up error dialog - since these come directly from the Euphoria 
+interpreter, before GTK is running! Spelling errors, undeclared variables, and such will appear here:
+</p>
+
+<div class="scrn" style="width:100%"><tt><pre><0074>:: Errors resolving the following references:
+	'GtkBufton' (text16.ex:39) has not been declared.
+
+constant okbtn = create(GtkBufton,"gtk-ok","Foo")
+						  ^</pre></tt></div>
+
+<p>
+<b>GTK</b> errors, which also only appear when running from a console, 
+will sometimes display an enigmatic message that will take some 
+effort to understand. Best way to debug these errors is to comment out blocks of code, and then 
+uncomment one line of code at a time, and see which line triggers the error message. Then consult the GTK docs
+to see what GTK is expecting vs. what you've written:
+</p>
+
+<div class="scrn" style="width:100%"><tt><pre>
+(test174.ex:3126): Gtk-WARNING **: Can't set a parent on a toplevel widget
+**
+Gtk:ERROR: /build/buildd/gtk+3.0-3.4.2/./gtk/gtkcontainer.c:3292:
+gtk_container_propogate_draw: assertion failed: (gtk_widget_get_parent(child) ==
+GTK_WIDGET (container))
+Aborted
+</pre></tt></div>
+
+<p>
+ In the case above, I was trying to add a dialog to a window 
+ (dialogs are 'run', not added to containers).
+</p>
+
+<p>
+<b>EuGTK</b> itself will (hopefully) display easy-to-understand messages like the one below.
+Both warnings and fatal errors are displayed here, so if your program doesn't run,
+or doesn't seem to run correctly, <u><b><i>run it from a terminal! </i></b></u>  
+ (x-term, mate-terminal, cmd.com, etc... whatever you have)
+</p>
+
+<div class="scrn" style="width:100%"><tt><pre>Error: function Foo is not in scope
+****** make it global or link via _("Foo")</pre></tt></div>
+
+<p>
+Another possible error occurs when you attempt to create a GTK widget with an older version of libgtk-3 which
+does not implement that widget. You have 3 choices in this event: use something else, create your own  
+custom object to simulate the new widget, or update your version of libgtk-3. 
+</p>
+
+<div class="scrn" style="width:100%">
+<tt><pre>Fatal Error: GtkMenuButton
+************ not implemented in this GTK library version</pre></tt></div>
+
+<p>When you use a recently-implemented GTK widget in a program you plan to distribute, it is a good idea to check the 
+libgtk version and if necessary present an error message. Use the <em class="gtk">requires()</em> function for this, 
+e.g: <em class="gtk">requires</em>(<em class="str">"3.6","GtkMenuButton"</em>). 
+See <a href="../test193.ex"> test193</a>.
+</p>
+
+<p>
+Similarly, if you will be calling a 'helper' program, such as grep, check to see that
+it is available with <em class="gtk">uses</em>()</i>, e.g: <em class="gtk">uses</em>(<em class="str">"grep"</em>)
+See <a href="../browser.ex">browser.ex</a>
+</p>
+
+<p>
+There are several flags you can set to display debugging info. See the
+ <a href="HowItWorks.html#debugging">Debugging section </a> of HowItWorks.html
+</p>
+
+<a name="features" />
+
+<b><hr />Icons<hr /></b>
+<p>
+Starting with GTK version 3.10, the old GTK stock icons for buttons and menu items are deprecated, and new programs 
+should try to use named icons. 
+<p>
+Named icons may change their appearance to match the user's selected window manager theme.
+</p>
+
+<p>To see the available icons, run <a href="../examples/utilities/icons.ex">icons.ex</a>. 
+It includes a handy search feature, which is a great help
+when choosing button and menu decorations for your nifty new program!
+</p>
+
+
+<img src="../screenshots/buttons.png" alt="buttons" />
+
+<p>
+<pre><code>    <b>Old Style:</b>
+    <em class="kw">constant</em> btn1 = <em class="gtk">create</em>(GtkButton,<em class="str">"gtk-edit"</em>,...)
+    
+    Button caption and icon are pre-set, not easily changed,
+    but nice-looking and easy to use. This is the leftmost button above.
+
+    <b>New Style:</b> <em>-- note the hashtag (#) syntax</em>
+
+    <em class="kw">constant</em> btn2 = <em class="gtk">create</em>(GtkButton,<em class="str">"text-editor#_Edit"</em>,...)
+    
+    This allows changing the caption and hot-key as desired.
+    Icon name is first, caption second, separated by #. 
+    Optional underscore prepends the hot-key in caption.
+    This button is shown above, center.
+    
+    <em class="kw">constant</em> btn3 = <em class="gtk">create</em>(GtkButton,<em class="str">"~/demos/thumbnails/4_rhombuses.gif#_Colors"</em>,...)
+    
+    You can set the button image from a file (even animated!),
+    so you can customize your program's appearance.
+    You can even have "check images" that change depending 
+    upon their state! (see <a href="../test15.ex">test15</a>)
+</code></pre>
+
+<b><hr />ImageMenuItems<hr /></b>
+
+<a href="../screenshots/imagemenu.png">
+<img src="../screenshots/imagemenu.png" alt="image menu" title="Image Menu" align="right" width="300" float="left" /></a>
+<p>
+Someone in charge of GTK decided that having images on buttons and menu items was a bad idea.
+They cite some academic study which 'proved' that people are quicker at choosing the correct button out of an array of buttons if the buttons contain 
+nothing but boring text captions.
+</p>
+
+<p>
+Did this same 'academic study' prove that drivers react more quickly if these signs:
+<img src="../thumbnails/stop.png" width="40px" align="right"  />  
+<img src="../thumbnails/yield.png" width="45px" align="right" /><br /> 
+are the same shape and color as "no overnight parking"signs?  If not, why not?
+</p>
+
+<p>
+I guess they didn't know that users can easily turn off the button and menu images if
+they wish, using their window manager settings; they'd
+rather force everyone to do without than give them a choice.
+</p>
+
+<p>
+If you don't like images, you don't have to use 'em, but if you do like them,
+don't worry too much, EuGTK can  put those images back. You can, if you wish, even override the
+user's preferences - but that would be impolite. 
+</p>
+
+<a name="settings" />
+
+<h3><hr /><img src="../thumbnails/gconf-editor.png" align="center" height="30px">Settings<hr /></h3>
+
+The ability to very easily save default settings and user-selected options from one run to the next was added in EuGTK 4.10.0.
+This includes saving the state of active controls, such as spin buttons and check buttons, the value of color buttons,
+font buttons, and other common properties such as the preferred
+position and size of windows, etc., from run to run. You can do this without having to write lines of code to save, parse, and restore each setting. 
+Just supply the name of an .ini file and a list of controls you wish to save and restore to the <em class="gtk">settings:Save</em>() function.
+</p>
+<p>
+e.g: <em class="gtk">settings:Save</em>(inifile,{win,inp1,btn1})
+</p>
+<p>
+Additionally, with just one extra line of code, you can save non-default properties
+to the .ini. These too will be automatically restored upon the next run of your
+program.
+</p>
+
+<p>
+Refer to <a href="../test153.ex">test153.ex</a>, <a href="../resources/test153.ini">test153.ini</a>, 
+<a href="../test173.ex">test173.ex</a>, <a href="../resources/test173.ini">test173.ini</a>,
+<a href="../test201.ex">test201.ex</a>, and <a href="../resources/.test201.ini">test201.ini</a> , and the
+<a href="../BEAR.ex">BEAR</a> for some examples. Below is a sample .ini file, which can have any name/extension,
+ and extension. (but <i>.ini</i> works fine, and is familiar) Note that the file is plain text, so it's 
+is easily edited, and comments are preserved when it is updated.
+</p>
+
+<div class="quote boxshadow">
+
+</p><pre><em>-- test153.ini
+-- Following --! items are 'persistent', 
+-- only changed by editing this file:
+-------------------------------------------------------------------</em>
+--!MainWindow.icon=<em class='green'>face-smile</em>
+--!MainWindow.border width=<em class='orange'>20</em>
+
+--!Label1.text=<em class='green'>Move, resize, change color, etc...</em>
+--!ColorChooserButton.tooltip text=<em class='green'>Pick a color</em>
+--!Font Button.tooltip text=<em class='green'>Select font for calendar</em>
+<em>------------------------------------------------------------------
+-- Items without a leading --! or + sign have their default values
+-- saved automatically. You simply pass a list of names or handles 
+-- of the selected controls to the settings:Save() function.
+</em>
+ColorChooserButton.rgba=<em class='orange'>#FCE94F</em>
+Font Button.font name=<em class='green'>TakaoPGothic Bold Italic 12</em>
+MyCalendar.date=<em class='orange'>{2016,6,8}</em>
+<em>
+-- Properties beginning with + are added via the settings:Set()
+-- function called in your program code, because they are not a
+-- default widget property as defined in GtkSettings.e
+-- They can also be added by manually editing the ini file,
+-- where they remain in effect unless overwritten by your program.
+</em><em class='blue'>
++MainWindow.background=<em class='orange'>#FCE94F</em>
++MyCalendar.font=<em class='green'>TakaoPGothic Bold Italic 12</em>
+<em>
+-- You may also save and restore non-property values in a widget's 
+-- data space:
+</em>
++MainWindow.Foobar=<em class='green'>Baz!</em>
++MainWindow.Message=<em class='green'>Thanks a lot!</em></em>
+</pre>
+</p>
+</div>
+
+<p>
+To retrieve and restore saved property settings, just call <em class="gtk">settings:Load</em>().
+</p>
+
+<p>
+Values which are not actual properties of controls can be saved and retrieved manually, as part of the same .ini file. For example, if previously you saved the value
+of the GtkSourceView's <i>current_style</i> variable to the .ini with: <br />	
+&nbsp;&nbsp;<em class="gtk">settings:Set</em>(ini,<em class="str">"SrcView","current_style",</em><i>current_style</i>)<br />
+<br />
+Then you can restore that value after loading the .ini by calling:<br /> 
+&nbsp;&nbsp;<i>current_style</i> = <em class="gtk">settings:Get</em>(<em class="str">"SrcView","current_style"</em>) 
+</p>
+
+<p>
+<em>New!:</em> You may also use ini files to translate your programs into another
+language without having the language installed and without modifying the source code.
+This would allow your program's users to convert your program to their own language, event
+if it is one you don't understand!
+See <a href="../examples/misc/multi.ex">~/demos/examples/misc/multi.ex</a>.
+</p>
+
+<p>
+For any of the above to work requires that the widgets be named.
+</p>
+
+<a name="syntax" />
+
+<h3><hr />New Syntax<hr /></h3>
+<p>
+In order to make programming even easier, I've added a new way to set 
+multiple properties at the time a widget is created. This doesn't replace the previous <em class="gtk">set</em>(widget,<em class="str">"property"</em>,...) functions, just 
+allows you to use a shorter method if you wish. It may also be faster than
+the old method, since it can avoid multiple lookups. 
+<pre><code><em class="kw">constant</em> win = <em class="gtk">create</em>(GtkWindow,{
+    {<em class="str">"name","MainWindow"</em>},
+    {<em class="str">"title"</em>,<em class="str">"Simple Text Viewer"</em>},
+    {<em class="str">"default size"</em>,600,500},
+    {<em class="str">"position"</em>,GTK_WIN_POS_CENTER},
+    {<em class="str">"icon"</em>,<em class="str">"~/demos/thumbnails/mongoose.png"</em>},
+    {<em class="str">"connect"</em>,<em class="str">"destroy"</em>,<em class="str">"Quit"</em>}})
+</code></pre></p>
+<p>
+In many cases, an even easier-to-use and much shorter and cleaner syntax is possible using key=value pairs.
+(See screenshot at top of page.) 
+<pre><code><em class="kw">constant</em> win = <em class="gtk">create</em>(GtkWindow,
+  <em class="str">"name=Main,title=Hello world!,size=300x100,background=green,border=10,$destroy=Quit"</em>)
+</code></pre></p>
+ 
+<p>You can freely mix these styles in your program, using whichever notation is the cleanest and clearest.
+Because this last version uses Eu 4 key/value pairs, not all settings can be made this way. You can't, for 
+example, easily pass Eu variables, routine_id's, or GTK constants as part of the settings string, except for the constants TRUE, FALSE, YES, NO, HORIZONTAL, VERTICAL, CENTER, and MOUSE 
+which are specifically allowed. These can be upper or lower case.
+</p
+
+<p>
+Examples of all of these variations can be 
+found in the demo programs.
+</p>
+   
+<a name="plugins" /> 
+<h3><hr />Plugins<hr /></h3>
+<p>
+EuGTK 4.8.9+ has a new 'plug-in' feature, added in order to 
+implement the GtkSourceView and WebKit widgets.
+</p>
+
+<a href="../screenshots/test201.png">
+<figure style="float:right; border:solid thin black;" >
+<img src="../screenshots/test201.png" alt="SourceView" title="SourceView" width="400"/>
+<figcaption>&nbsp;<small><i>New GtkSourceView plugin</i></small></figcaption>
+</figure>
+</a>
+
+<h5>SourceView Plugin</h5>
+
+<p>
+The SourceView widget offers automatic language recognition and syntax highlighting
+for a huge number of programming languages (about 110, I think).
+</p>
+
+<p> I've put the SourceView functions into a plugin. This loads the additional required shared library and the links to the functions contained in that library. 
+You only need to include the <a href="../GtkSourceView.plugin">GtkSourceView.plugin</a> when you want to use this 
+editor widget.
+</p>
+
+<p>A set of syntax files for Euphoria 4.0 created by Mario Steele can be found in /demos/resources/gedit-syntax.
+Just copy them as instructed in the README.
+</p>
+
+<p> The reason for making this a plugin is that some OS installations don't automatically 
+include the GtkSourceView library. Making the sourceview code an integral part of GtkEngine.e would cause 
+problems if the sourceview library could not be found.
+</p>
+<small>
+<p><i><em>To Do:</em> implement code completion and search functions</i></p>
+</small>
+
+<hr />
+
+<a href="../screenshots/webkit_test.png">
+<figure style="float:right; border:thin solid black;" >
+<img src="../screenshots/webkit_test.png" alt="Webkit" title="Webkit demo" align="right" width="400" />
+<figcaption><small><i>&nbsp;Webkit demo</i></small></figcaption>
+</figure>
+</a>
+
+<h5>WebKit Plugin</h5>
+
+<p> EuGTK also includes a <a href="../GtkWebKit.plugin">WebKit plugin</a>, 
+which allows you to incorporate a web browser widget into your program. 
+You are free to implement - in Euphoria! - features that may 
+not even be available on Firefox&trade; or Chrome&trade;!
+</p>
+
+<p>
+The WebKit plugin includes a pop-up Web Inspector, similar to that in 
+Firefox&trade; and Chrome&trade;.
+</p>
+
+<p>Like the SourceView, this plugin is still under development, but is quite usable already.
+See <a href="../examples/webserver/webkit.ex">webkit.ex</a> and the <a href="../BEAR.ex">BEAR</a>.
+</p>
+
+<p>Note: no up-to-date LibWebkit dll is available for the Windows&trade; platform.</p>
+
+<small>
+<p><i><em>To Do:</em> implement security and script-running features</i></p>
+</small>
+
+<a name="broadway" />
+
+<h3><hr />Broadway Server<hr /></h3>
+
+<a href="../screenshots/Screenshot from 2018-08-14.png">
+<figure style="float:right; border:thin solid black;">
+<img src="../screenshots/Screenshot from 2018-08-14.png" alt="Broadway" title="Broadway" align="right" width="400" />
+</figure>
+</a>
+
+<p>
+With the latest versions of GTK, you can specify the Broadway server 
+(<i>broadwayd</i>) to run your EuGTK programs, and you - or anyone connected to your local network - can run them on 
+any connected device which has an up-to-date HTML5 web browser such as Firefox&trade;. Neither Euphoria nor EuGTK are required on the client!
+</p>
+
+<p>The screenshot shows broadwayd running the WEE editor which is editing and test-running a calendar program (test222.ex)
+all in a Firefox&trade; browser window!
+</p>
+
+<p>I have had as many as 50 EuGTK programs running simultaneously in
+a single Firefox browser window, while only using about 50% CPU. See <a href="platforms.html#broadway">
+platforms.html</a> for more info on setting this up.
+</p>
+
+<p>There's a small utility program <a href="../on_broadway.ex">on_broadway.ex</a> included which can be used 
+to launch EuGTK programs in a web browser.  </p>
+
+<p>USAGE:<br />
+$> eui on_broadway <i>test0</i>
+<em>-- replace <i>test0</i> with whatever program you want to run</em>
+</p>
+
+<p>There's also a similar program named <a href="../on_wayland.ex">on_wayland.ex</a>, which 
+runs Eu programs in the Wayland environment, if you have installed that.
+</p>
+
+<a name="bear" />
+<h3><hr />BEAR <small><small>(<u>B</u>rowse, <u>E</u>dit <u>A</u>nd <u>R</u>un)</small></small><hr /></h3>
+<figure style="float:right; border:thin solid black;">
+<a href="../screenshots/Screenshot-12.png">
+<img src="../screenshots/Screenshot-12.png" alt="bear" width="400px" align="right" title="Click for a larger view" />
+</a>
+<figcaption><small>&nbsp;The <i>BEAR</i> editing a Euphoria program with GTK docs</small></figcaption>
+</figure>
+
+<p>
+The <a href="bear.html">BEAR</a> is basically a "Swiss Army Knife" for Euphoria,
+it can edit and run Euphoria code, view and download web pages, create, edit and display HTML, edit CSS, and 
+act as a syntax-aware editor for about 100 different programming languages.
+</p>
+
+<p>Written in Euphoria, the program interface only 
+requires about 140 lines of code. The complete program is done in less than 1000 lines.
+I estimate that if this were written in C or C++, it truly <i>would</i> be a 'bear' - 
+requiring many thousands of lines of code in dozens of files. 
+</p>
+
+<p>The BEAR has already been used extensively to edit these doc pages.
+The BEAR actually beats many commercial web page editing programs, 
+provided you know a bit about html, and don't require someone to hold your hand.
+</p>
+
+<p>
+Look at the raw html for these doc pages, you'll see how clean it is.
+</p>
+
+<p>Encorporating a full-fledged web browser widget similar to Firefox&trade;, 
+ and a syntax-aware source-code editor which can recognize over 100 programming languages, the BEAR allows you to 
+ view and edit web pages, and if those pages contain links to Euphoria source code, load and 
+ edit the source. You can also test run a temporary copy of the program! 
+</p>
+
+<p>
+The web browser panel has buttons to zoom in and out, and the editor panel 
+has selectable fonts, optional line numbers and the ability to make  
+"white space" characters, such as spaces and tabs, visible. You can select various syntax 
+color schemes. A few are supplied with this package, in the 
+resources/gedit_syntax folder. Many others are available on-line,
+search for "gedit syntax files".
+</p>
+
+<p>
+As html pages are edited, the Web view is refreshed whenever the editor
+Save button is clicked, so that changes are instantly visible.
+</p>
+
+<p>
+Modified Euphoria source code is saved to temp files for the test run.
+Your BEAR preferences are stored in a hidden file:
+<i>.bear.ini</i> located in your $HOME directory.
+</p>
+
+<p>
+If you wish to <i>keep</i> changes to your source code after test runs,
+be sure to click on the Save or SaveAs buttons!
+</p>
+
+<p>The BEAR requires the latest versions of both libgtksourceview-3 and libwebkit2gtk-3, 
+so it's unlikely to run on Windows&trade;.</p>
+
+<small>
+<p><i><em class="star">New in EuGTK4.12.2! :</em><br /> Pop-up ex.err reporting and jump to error location when editing Euphoria code.</i></p>
+</small>
+
+<a name="c" />
+<h3><hr />Compared to C<hr /></h3>
+
+<p>
+Below is a simple "Hello World!" program written in C, taken from the GTK docs
+(comments removed). Following that is the same program written in EuGTK.
+</p>
+
+<div class="quote boxshadow">
+<table>
+<thead>
+    <th>
+	   C Code
+    </th>
+</thead>
+
+<tbody>
+<tr>
+<td>
+<code><pre>
+
+#include &lt;gtk/gtk.h&gt;
+
+static void
+print_hello (GtkWidget *widget,
+	gpointer   data)
+{
+  g_print ("Hello World\n");
+}
+
+static gboolean
+on_delete_event (GtkWidget *widget,
+	    GdkEvent  *event,
+	    gpointer   data)
+{
+  g_print ("delete event occurred\n");
+  return TRUE;
+}
+
+int
+main (int   argc,
+	 char *argv[])
+{
+  GtkWidget *window;
+  GtkWidget *button;
+
+  gtk_init (&argc, &argv);
+
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title (GTK_WINDOW (window), "Hello");
+  g_signal_connect (window, "delete-event", G_CALLBACK (on_delete_event), NULL);
+  g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+  button = gtk_button_new_with_label ("Hello World");
+  g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+  g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_widget_destroy), window);
+  gtk_container_add (GTK_CONTAINER (window), button);
+  gtk_widget_show (button);
+  gtk_widget_show (window);
+  gtk_main ();
+
+  return 0;
+}
+</pre></code>
+</td>
+</tr>
+</table>
+</div>
+
+<div class="quote boxshadow">
+<table>
+<th>Euphoria</th>
+
+<td>
+<pre><em>-----------------------------------------------------------------
+-- Purpose:
+-- Show a window with a button; when the button is clicked, 
+-- print "Hello World" on the terminal, then exit.
+---------------------------------------------------------------------</em>
+
+<b>include</b> GtkEngine.e
+
+<em class="kw"><b>constant</b></em> window = <em class="gtk">create</em>(GtkWindow,
+   <em class="str">"title=Hello,border=10,$destroy=Quit,$delete-event=on_delete_event"</em>)
+
+<em class="kw"><b>constant</b></em> button = <em class="gtk">create</em>(GtkButton,
+   <em class="str">"label=Hello World,$clicked=print_hello,$clicked=Quit")
+
+<em class="gtk">add</em>(window,button) <em>-- add widget to container</em>
+<em class="gtk">show_all</em>(window)   <em>-- make container and contents visible</em>
+<em class="gtk">main</em>()             <em>-- enter main GTK event loop</em>
+
+<em class="kw"><b>global function</b></em> <b>print_hello()</b>
+    <em class="kw">puts</em>(<em class="num">1</em>,<em class="str">"Hello World\n"</em>)
+    <em class="kw">return</em> FALSE
+<b><em class="kw">end function</em></b>
+
+<em class="kw"><b>global function</b></em><b> on_delete_event()</b>
+    <em class="kw">puts</em>(<em class="num">1</em>,<em class="str">"delete event occurred\n"</em>)
+    <em class="kw">return</em> FALSE
+<b><em class="kw">end function</em></b>
+</pre>
+</td>
+</tr>
+</table>
+</div>
+
+<p>
+Even with this simple program, you can see the difference. As C programs grow larger,
+they become increasingly littered with type-casts, pointer references, etc.,  
+while the Euphoria code remains shorter and much more readable. 
+</p>
+<p> 
+For example, compare the following two equivalent lines of code: 
+<ul>
+    <li><b>gtk_window_</b>set_title <b>(GTK_WINDOW (</b> <i>window</i><b>)</b>, "Hello"); <em>/* C */</em></li>
+    <li><em class="gtk">set</em>(<i>window</i>,<em class="str">"title","Hello"</em>) <em>-- Euphoria </em></li>
+</ul>
+The code shown in <b>bold</b> is required because C is not object-oriented, so you must specify the correct _set_title() routine to be 
+called, and must tell C what type of object the <i>window</i> variable is. EuGTK tracks objects as they are
+created, so it knows what type of object it is dealing with and which routine
+to call without  the programmer having to specify each time.
+</p>
+
+<p>
+Or to put it another way, the C code is full of distracting 'noise', while Euphoria is cleaner and quieter. Other than that,
+the program structure is in other respects pretty similar, so that you <i>can</i> port a C or Python program to Eu in many cases without
+much difficulty. I've done just that for many of the test programs in this package.
+</p>
+
+<a name="changes"></a>
+<h3><hr />Recent Changes<hr /></h3>
+
+<p>
+<em>4.11.5</em>: To make space for new openGL graphics, the seldom-used Pango text and Cairo drawing functions have been moved to their own include:
+GtkCairo.e. If your program uses Cairo graphics or PangoFont calls, the only change needed in your source code is to include GtkCairo.e following GtkEngine.e. See <a href="../test60.ex">test60</a> for example.
+</p>
+
+<p>
+<em>4.13.1</em>: Added grep function to the browser.ex program, reorganized the Glade demos.
+Added Euphoria syntax color-coding to GtkPrinter.e. Print your programs in living color!
+</p>
+
+<a href="../screenshots/greek.png"">
+<img src="../screenshots/greek.png" width="300px" align="right" title="ini translations" alt="ini translations" />
+</a>
+
+<p><em>4.14.0</em> Extensive additions were made to GtkTreeView/GtkListView capabilities, including
+a very easy way to format list view columns to allow a variety of fonts, formats,
+colors, blank-when-zero cells, and even a way to connect to your own custom formatting functions.
+Read about it <a href="treeviews.html#formatting">here</a>, and
+see ~/demos/examples/diet/DIET.ex for an example program.</p>
+
+<p><em>4.14.2</em> Improvements made to GtkSourceView and GtkWebKit plugins in order
+to more reliably locate the most current version of those dll's/so's.
+<br />
+Also, new ways implemented to allow programmer as well as users to easily translate buttons, menus, and help text.
+You can bind, shroud or compile your program so it can't be 'messed with', while still 
+making it easy for users to customize for their language. See <a href="../examples/misc/multi.ex">multi.ex</a> 
+and associated files.
+</p>
+
+<em>4.14.6</em>: "multi-tasking" added to EuGTK to allow loading lengthy listviews "async".
+This means you can start loading a large data set and at the same time
+instantiate your user interface and update a progress bar. This makes for a much more professional
+appearance. If you have more than one huge data set, create a task for each.<br />
+(This will probably only be needed if you're loading tens of thousands of line items.)</p></p>
+
+<p>
+To use this:
+<code><pre>
+<em class="kw">include </em>GtkEngine.e
+multi_tasking = <em class="kw">TRUE</em> <em>-- turn on before creating any widgets or reading a file</em>
+
+<em>-- create task(s)</em>
+
+<em class="kw">atom</em> t1 = <em class="kw">task_create</em>(<em class="kw">routine_id</em>("task1"),{})
+<em class="kw">task_schedule</em>(t1,{0.001,0.01})
+<em class="kw">boolean</em> t1_running = <em class="kw">TRUE</em>
+ 
+<em class="gtk">show_all</em>(win) 
+StartTask() <em>-- start loading file while GTK puts together the interface</em>
+<em class="gtk">main()</em>
+
+<em>------------------------------</em>
+<em class="kw">procedure</em> StartTask() 
+<em>------------------------------</em>
+    <em class="kw">while</em> t1_running <em class="kw">do</em>
+        <em class="gtk">main_iteration_do</em>(1)
+        <em class="kw">task_yield</em>()
+    <em class="kw">end while</em> <em>
+    -- repeat above lines as needed for t2, t3...</em> 
+<em class="kw">end procedure</em>
+
+<em>-------------------------------</em>
+<em class="kw">procedure</em> task1() <em>-- duplicate this proceedure for task2, etc.</em>
+<em>-------------------------------</em>
+<em class="gtk">set</em>(<em class="str">"mainwin","cursor"</em>,GDK_WATCH)
+<em class="gtk">set</em>(custstore,<em class="str">"data"</em>,customers) <em>-- this is the huge data set!</em>
+t1_running = <em class="kw">FALSE</em><em> -- EOF, kill task</em>
+<em class="gtk">set</em>(<em class="str">mainwin","cursor"</em>,GDK_ARROW)
+<em class="kw">end procedure</em>
+</pre></code>
+
+<a name="weemods"></a>
+<h3><hr />Wee Help Mod<hr /></h3>
+
+<p>To add <b>[F1]</b> pop-up html help for 
+Gtk widgets, as well as Euphoria keywords, 
+make the change shown below to wee.exw.
+</p>
+
+<table width="95%">
+<thead><th>Existing WEE code:</th></thead>
+<tr>
+<td><pre>
+<em class="kw"><b>global</b> procedure</em> context_help()
+    <em class="kw">sequence</em> text, decls, word, name_space, path
+    <em class="kw">integer</em> pos, junk
+    <em class="kw">object</em> help
+
+    text = get_edit_text()
+    pos = get_pos()
+    word = word_pos(text, pos)
+    <em class="kw">if length</em>(word) < 2 then
+	name_space = <em class="str">""</em>
+	word = <em class="str">""</em>
+    else
+	name_space = word[2]
+	word = word[1]
+    <em class="kw">end if</em></pre>
+  </td>
+  </tr>
+
+  <tr>
+  <th><small><small><< Insert the following 4 lines here to add pop-up GTK help:</small></small> </th>
+  <tr>
+  <td><pre>
+  <em class="kw">if match</em>("Gtk",word) = 1 <em class="kw">then</em>
+    ui_show_uri(<em class="str">"FILE://"</em> & <em class="kw">canonical_path(sprintf</em>(<em class="str">"~/gtk3/%s.html"</em>,{word})))  
+    <em class="kw">return</em>
+  <em class="kw">end if</em></pre>
+  </td>
+  </tr>
+  </table>
+  
+ <div class="hint boxshadow">
+<img src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<p>Download the latest GTK3 docs from:<a href="https://developer.gnome.org/gtk3/">https://developer.gnome.org</a>, 
+ unzip and drop into your home folder, and then rename the folder 
+ to gtk3 (remove the version numbers).</p>
+ 
+ <p>WEE will look for the GTK docs in /home/<i>*username*</i>/gtk3.
+ Adjust this as necessary for your setup.
+</p>
+
+</div>
+
+<a name="platforms"></a>
+<h3><hr />Tested Platforms:<hr /></h3>
+
+<table class="testing" border="thin, black" width="95%">
+
+<thead>
+    <tr>
+	   <th colspan="5"><em>Tested with</em></th>
+    </tr>
+    <tr class="subtitle">
+	   <th>Euphoria</th>
+	   <th>GTK</th>
+	   <th>Distro</th>
+	   <th>Arch</th>
+	   <th>Platform</th>
+    </tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td colspan="4"></td>
+    <td rowspan="10" class="bc">Intel Core 2 Quad CPU<br />&nbsp;2.33 ghz clock<br />&nbsp;8 gig memory</td>
+</tr>
+
+<tr>
+	<td>4.1.0</td><td>3.6.4</td><td><em>Windows 7</em></td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 b2</td><td>3.10.8</td><td>Mint 17</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 b2</td><td>3.14</td><td>Ubuntu Vivid</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 development</td><td>3.16.6</td><td>Ubuntu MATE 15.10 </td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 6318</td><td>3.16.6</td><td>Mint 17 <small> works fine!</small></td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 6318</td><td>3.18.9</td><td>Ubuntu 16 <small> has a few bugs</small></td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 6318</td><td>3.18.9</td><td>Mint 18</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 6318</td><td>3.22</td><td>Windows&trade; 7</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 6318</td><td>3.18.9</td><td>Mint 18.3 (Sylvia)</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 dev.<br />2015-02-02</td><td>3.22.11</td><td>Raspian Stretch</td><td>32-bit</td><td class="y">Raspberry Pi 3</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 5861</td><td>3.18.9</td><td>Ubuntu 18.04</td><td>64-bit</td><td class="bb" rowspan="4">AMD FX 8-core CPU<br />&nbsp;4 ghz clock.<br />&nbsp;16 gig memory</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 5861</td><td>3.18.9</td><td>Mint 18.1 Cinnamon</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 5861</td><td>3.18.9</td><td>Mint 19.1 Cinnamon</td><td>64-bit</td>
+</tr>
+
+<tr>
+	<td>4.1.0 rev. 5861</td><td>3.24.2</td><td><em>Windows 10</em></td><td>64-bit</td>
+</tr>
+
+</table>
+
+<a name="history" />
+
+<table class="testing" border="thin, black" width="95%">
+
+<tr>
+	<th colspan="2"><em>History</em></th>
+</tr>
+
+<tr>
+<td>EuGTK 4.10.0</td><td>Added convenient functions to save control values and states to  
+an ini type file.</td>
+</tr>
+<tr>
+<td>EuGTK&nbsp;4.10.1</td><td>Added demos of GtkSourceView and GtkWebKit plugins.</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.0</td><td>Updated demos and documentation. Tested new GTK 3.16 widgets and functions.</td>
+</tr>
+<tr>
+<td>EuGTK 4.11.2</td><td>Added plug/socket demo, updated plug-ins, improved GtkPrinter, fixed some memory leaks.</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.4</td><td>Fixed most (hopefully, all) memory leaks, added SourceView functions.</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.5</td><td>Moved Cairo functions to a separate include; graphics will use GtkGLArea in the future.</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.6</td><td>Updated numerous programs &amp; documentation, new browser program and BEAR.ex</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.7</td><td>Improved httpd.ex and webserver.ex; colorized documentation sourcecode</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.8</td><td>Improved httpd.ex, added GTK 3.21 functions</td>
+</tr>
+
+<tr>
+<td>EuGTK 4.11.9</td><td>Debugged and tested on Windows 7&trade;; about 80% working.</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.11.10</td><td>Windows&trade; debugging, improved stability of the BEAR.</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.11.11</td><td><a href="#broadway">Broadway</a> server works with 90% of demos! (Mint 18); more stable BEAR!</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.12.0</td><td>95% of demos run on Windows 7, added style chooser to SourceView editor.</td>
+</tr>
+<tr>
+<td>EuGTK&nbsp;4.12.1</td><td>Added style chooser to BEAR</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.12.2</td><td>Added Gtk help to BEAR, new <a href="../wee/README.html">ui_gtk for WEE</a></td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.12.4</td><td>Minor bug fixes for Raspbian Stretch</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.13.1</td><td>Added grep to file browser, updated to GTK3.22.29</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.14.0</td><td>Update to GTK3.22.30, tested on Windows&trade; &amp; Linux Mint 19</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.14.1</td><td>Minor bug fixes, added extended Calendar demo
+ (See <a href="../test219.ex">test219</a>)</td>
+</tr>
+
+
+<tr>
+<td>EuGTK&nbsp;4.14.2</td><td>Removed erroneous error message when compiled, added <a href="../test224.ex">talking clock</a> demo.
+</tr>
+
+
+<tr>
+<td>EuGTK&nbsp;4.14.4</td><td>Updated Glade handler, added listview filter demo.</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.14.6</td><td>Named dialog parameters, popups, multi-tasking support for listviews</td>
+</tr>
+
+<tr>
+<td>EuGTK&nbsp;4.15.0</td><td>Improvements to GtkFileSelector.e, better GtkPrinter color-coding, added print web page or source code as PDF to the BEAR</td>
+</tr>
+
+<tr>
+	<th colspan="2"><em>Disclaimer</em></th>
+</tr>
+
+<tr>
+<td colspan="2">
+<p class="legal">With the many different options available, I cannot guarantee that everything
+will work 'just fine' everywhere. Different platforms, window managers,
+themes, and unpredictable user-settings make this impossible.</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+<a name="legal" />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a> and EuGTK.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins 
+	</p>
+ </div>
+</footer>
+
+</content>
+
+</body>
+</html>

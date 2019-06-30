@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Eu Server</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<header>
+	<img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK Logo">
+	<img src="../thumbnails/mongoose.png" alt="OpenEuphoria Logo">
+	<img src="../screenshots/Screenshot-14.png" align="right" alt="server" width="50%" />
+
+	<hr />
+	<h2>EuGTK</h2>
+	<h3>Euphoria Web Server</h3>
+
+	<p>
+	This uses a heavily modified <a href="../examples/webserver/httpd.ex">httpd.ex</a> 
+	(from the Eu demos) to serve up files over the local network.
+	</p>
+</header>
+
+<nav>
+<div class="hdr">Quick Links</div>
+	<a href="#options"><button>Options</button></a>
+	<a href="#screenshots"><button>Screenshots</button></a>
+</nav>
+
+<nav>
+<div class="hdr">Other Files</div>
+	<a href="README.html"><button>Readme First</button></a>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+	<a href="dialogs.html"><button>Dialogs</button></a>
+	<a href="printing.html"><button>Printing</button></a>
+	<a href="pango_markup.html"><button>Markup</button></a>
+	<a href="treeviews.html"><button>TreeViews</button></a>
+	<a href="guide_a.html"><button>Alphabetical Guide</button></a>
+	<a href="functions.html"><button>Quick Function List</button></a>
+	<a href="Glade.html"><button>Glade GUI Builder</button></a>
+	<a href="platforms.html"><button>Platforms</button></a>
+</nav>
+
+<br clear="all" />
+
+<article {width: 950px; display: table;}
+
+<p>
+Apache would work, but who wants to deal with all that arcane stuff?, Besides,
+I'd still have to write cgi code to display the pages...  so why go thru all that 
+just to share some files?
+This solution is much simpler, and is written in Euphoria, so you can modify it as you wish!
+</p>
+
+<p>
+Httpd.ex can work from a command line - just issue
+<samp> %> eui httpd </samp> to see the options. When running from the command line, you'll need to enter 
+your server's IP address (use ifconfig to get that), and port, perhaps 8080, and the root (starting directory).
+</p>
+
+<p>
+You can run more than one server at a time, just use a different port for each. For example, 
+set the root to your Music/Blues folder, using port 8081, and the root to your 
+Music/Opera folder, using port 8082 - that way, listeners won't have to wade thru albums they may not care to hear.
+</p>
+
+<p>  
+To make the server easier to use, I've added the EuGTK GUI shown above, which lets you select some options, and then starts the server running in the background
+ when you click the OK button. Once it's running, you just enter the IP address and port in your tablet or phone's  
+browser address bar to connect. e.g: <samp>192.168.1.100:8080</samp>
+</p>
+
+<a name="options" />
+<h3><hr />httpd.ex<hr /></h3>
+<ul>
+	<li class="opts"><i>-bind</i> <dfn><em><b>required</b></em> ip_address:port, e.g. 192.168.1.100:8080</dfn></li>
+	<li class="opts"><i>-root</i> <dfn> <em><b>required</b></em> e.g. /home/irv/demos/documentation</dfn></li>
+	<li class="opts"><i>-log</i> <dfn>optional, name of log file</dfn></li>
+	<li class="opts"><i>-h</i> <dfn>optional, show hidden files in directory listing</dfn></li>
+	<li class="opts"><i>-s</i> <dfn>optional, sort directory listings</dfn></li>
+	<li class="opts"><i>-r</i> <dfn>optional, include full request and response in log</dfn></li>
+	<li class="opts"><i>-t</i> <dfn>optional, number of tries to obtain port before giving up</dfn></li>
+</ul>
+
+<h3><hr />webserver.ex <small>(the GUI)</small><hr /></h3>
+<ul>
+	<li><b>IP</b>: 
+		<dd>Your network address, or 127.0.0.1 (a.k.a. localhost) if not networked.
+		This should be filled in automatically. If it's wrong, use ifconfig
+		to get the network address of your computer.</dd>
+	</li>
+
+	<li><b>Port</b>: 
+		<dd>use 8080, 8081, etc.<em> -- Avoid port 80</em></dd>
+	</li>
+
+	<li><b>Root</b>: 
+		<dd>Starting (root) directory to serve up. Set this to your Music directory or a mounted music CD.
+		Also, try your Pictures directory, Demos, etc...
+		I have tried to make it difficult to browse 'off-limits',
+		i.e: into files or folders which are not in or subfolders of doc_root.
+		You may have better ideas than I do on this topic. Please contribute!</dd>
+	</li>
+
+	<li><b>Log file</b>: 
+		<dd>Name of a file to write transactions to. A new log file will be created if necessary.
+		You should delete it when no longer needed, since it continues to grow...
+		I suggest you make the log file a hidden file, so it won't show in normal directory listings.
+		Log entries will have date and time, client IP, plus name of file requested.</dd>
+	</li>
+
+	<li><b>Tail -f</b>:
+		<dd>If checked, opens a terminal which follows the log file.
+
+	</li>
+
+	<li><b>Sort</b>: 
+		<dd>If checked, sorts the file listing.</dd>
+	</li>
+
+	<li><b>Show Full Request</b>
+		<dd>Adds the full request string to the server log. 
+	</li>
+
+	<li><b>Show Hidden</b>: 
+		<dd>If checked, show hidden files along with others in the directory listing.</dd>
+	</li>
+</ul>
+</p>
+
+<a name="screenshots" />
+
+<a href="../screenshots/Vancouver.png">
+<img src="../screenshots/Vancouver.png" alt="Screenshot-18" width="80%" />
+</a>
+
+<p>
+The appearance of the page is controlled by a file named .httpd.css, if it exists in the 
+currently-browsed folder. This is done so that directory 
+listings from different folders can have their own individual appearance (see screenshot above). 
+If no .httpd.css exists in a given folder, defaults built into 
+httpd.ex will be used.
+</p> 
+
+<a href="../screenshots/Screenshot-11.png">
+<img src= "../screenshots/Screenshot-11.png" alt="Screenshot-11" />
+</a>
+
+<p>
+Above, webserver.ex serving a specified file as entered on the address bar, or by clicking on a link in a previous page.
+</p>
+
+<p>
+After closing the server, or a crash, it may take several seconds or minutes for your computer to 
+free the port you've used. Trying to run again too soon using the same port will result in an error (-2).
+I have included a loop which will retry up to 20 times (unless overridden by the -t option), and 
+then abort. If this happens, and you are running from the GUI, you can try hitting the OK button again,
+or change to a different port.
+</p>
+
+</article>
+
+<br clear="all" />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+
+</body>
+</html>

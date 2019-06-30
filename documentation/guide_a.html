@@ -1,0 +1,1705 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Alphabetical Guide</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+<nav class="alpha">
+   <a href="#top"><button class="star" title="To Top"></button></a>
+	<a href="#a"><button>A</button></a>
+	<a href="#b"><button>B</button></a>
+	<a href="#c"><button>C</button></a>
+	<a href="#d"><button>D</button></a>
+	<a href="#e"><button>E</button></a>
+	<a href="#f"><button>F</button></a>
+	<a href="#g"><button>G</button></a>
+	<a href="#h"><button>H</button></a>
+	<a href="#i"><button>I</button></a>
+	<a href="#j"><button>J</button></a>
+	<a href="#k"><button>K</button></a>
+	<a href="#l"><button>L</button></a>
+	<a href="#m"><button>M</button></a>
+	<a href="#n"><button>N</button></a>
+	<a href="#o"><button>O</button></a>
+	<a href="#p"><button>P</button></a>
+	<a href="#q"><button>Q</button></a>
+	<a href="#r"><button>R</button></a>
+	<a href="#s"><button>S</button></a>
+	<a href="#t"><button>T</button></a>
+	<a href="#u"><button>U</button></a>
+	<a href="#v"><button>V</button></a>
+	<a href="#w"><button>W</button></a>
+	<a href="#x"><button>X</button></a>
+</nav>
+
+<a name="top" />
+
+
+	<img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK LOGO" />
+	<img src="../thumbnails/mongoose.png" alt="mongoose" />
+	<a href="../screenshots/t.png">
+	<img src="../screenshots/t.png" width="300px" align="right" />
+    </a>
+    
+	<h2>EuGTK</h2>
+	<h3>Alphabetical guide to GTK widgets</h2>
+  
+<nav>
+	<div class="hdr">Quick links to topics of interest:</div> 
+	<br />
+	<a href="#frame"><button>Frames</button></a>
+	<a href="#css"><button>CSS</button></a>
+	<a href="#xml"><button>XML/GtkBuilder</button></a>
+	<a href="#fonts"><button>Fonts</button></a>
+	<a href="#colors"><button>Colors</button></a>
+	<a href="#images"><button>Images</button></a>
+	<a href="#textview"><button>TextView</button></a>
+	<a href="#sourceview"><button>SourceView</button></a>
+	<a href="#webkit"><button>WebKit</button></a>
+	<br />
+
+	<div class="hdr">Links to Other Files:</div> 
+	<br />
+	<a href="README.html"><button>README</button></a>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+	<a href="dialogs.html"><button>Built-in Dialogs</button></a>
+	<a href="treeviews.html"><button>ListView/TreeView</button></a>
+	<a href="pango_markup.html"><button>Markup</button></a>
+	<a href="printing.html"><button>Printing</button></a>
+	<a href="ServerHelp.html"><button>Web Server</button></a>
+	<a href="functions.html"><button>Quick Function List</button></a>
+	<a href="Glade.html"><button>Glade GUI Builder</button></a>
+	<a href="platforms.html"><button>Platforms</button></a>
+</nav>
+
+<br clear="all" />
+
+<div class="hint boxshadow" style=" padding-bottom:20px;">
+<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<p>Please browse this page using BEAR.ex if possible. That will allow
+you to click on a link to a program, view the source, and edit or run it,
+all within the BEAR window!
+</p>
+</div>
+
+
+<a name="a" />
+<b class="btn" >A</b><hr class="blue" />
+
+<a href="../test28.ex" alt="test28" >
+<img src="../screenshots/test28.png" alt="test28" title="GtkAboutDialog" width="300px"  align="right" />
+</a>
+
+<ul>
+<li>AboutDialog   
+<dfn> <a href="../test28.ex">test28</a></dfn>
+  <dd>a pre-built pop-up dialog to display credits, license, etc...</dd>
+</li>
+
+<li>Accelerators
+   <dfn><a href="../test25.ex">test25</a>, <a href="../test80.ex">test80</a>, <a href="../test144.ex">test144</a></dfn>
+</li>
+
+<li>Adjustment 
+<dfn><a href="../test45.ex">test45</a>, <a href="../test83.ex">test83</a>, <a href="../test154.ex">test154</a></dfn>
+</li>
+
+<li>Alignment 
+  <dd><em>(deprecated, use 'align' and 'margin' properties instead)</em></dd>
+</li>
+
+<li>Animated gifs  <dfn><a href="../test10.ex">test10</a></dfn>
+   <dd>on buttons:  <a href="../test102.ex">test102</a></dd>
+</li>
+
+<li>AppChooserButton <dfn><a href="../test123.ex"> test123</a></dfn> 
+  <dd>choose approprite app based on filetype</dd>
+</li>
+
+<li>AppChooserDialog <dfn> <a href="../test115.ex"> test115</a></dfn>
+  <dd>as above, but as a pop-up dialog</dd>
+</li>
+
+<li>AppChooserWidget <dfn><a href="../test124.ex">test124</a></dfn></li>
+ <dd>as above, but as a widget to add to your program window</dd>
+</li>
+
+<li>Arrows <dfn><a href="../test93.ex">test93</a></dfn>
+   <dd><em>(deprecated as of GTK 3.14 - use icons instead)</em></dd>
+</li>
+
+<li>AspectFrame  <dfn><a href="../test140.ex">test140</a>, <a href="../test161.ex">test161</a></dfn>
+  <dd>a frame which maintains its relative proportions when resized</dd> 
+</li>
+
+<li>Assistant <dfn> <a href="../test62.ex">test62</a></dfn>
+  <dd>a step-by-step guide for your users, helpful for program installation, setup, etc...</dd> 
+</li>
+
+<li>Auto-scrolling text <dfn> <a href="../test130.ex">test130</a></dfn>
+  <dd>(implemented with a timer)</dd>
+</li>
+
+</ul>
+
+<a name="b"></a>
+<b class="btn">B</b><hr class="blue" />
+
+<a href="../test157.ex" alt="test157" >
+<img src="../screenshots/test157.jpg" alt="test157" title="CSS Radial Background" width="300px" align="right" />
+</a>
+
+<ul>
+<li>Background 
+  <dd> colors:  <a href="../test25.ex">test25</a></dd>
+  <dd> images: <a href="../test72.ex">test72</a>  uses <a href="../resources/mystyle.css">mystyle.css</a> </dd>
+  <dd> gradients  <a href="#css"><em>see CSS below</em></a> 
+    <ul>
+    <li>linear: <a href="../test158.ex">test158</a>  uses <a href="../resources/mystyle3.css">mystyle3.css</a> </li>
+    <li>radial: <a href="../test157.ex">test157</a>  uses <a href="../resources/mystyle2.css">mystyle2.css</a> </li>
+	<li>css: <a href="../test212.ex">test212</a> uses <a href="../resources/css_multiplebgs.css">css_multiplebgs.css</a></li>
+</ul>
+ </dd>
+</li>
+
+<li>BEAR
+<dd>HTML and Euphoria browse/edit/run: <a href="bear.html">BEAR</a></dd>
+</li>
+
+<li>Browsing Cows <dfn><a href="../test188.ex">test188</a></dfn>
+   <dd> a simple demo</dd>
+</li>
+
+<li>Builder <dfn>Please read the <a href="Glade.html">Glade instructions</a></dfn>
+<dd>Also, see <a href="#xml"><em>note below</em></a></dd> 
+</li>
+
+<li>Built-in EuGTK Dialogs <dfn>See <a href="dialogs.html">Dialogs</a></dfn>
+</li>
+
+<a href="../test19.ex">
+<img src="../screenshots/test19.png" width="300px" align="right" />
+</a>
+<li>Buttons ~ All: <a href="../test19.ex">test19</a>
+
+<small> 
+<ul>
+    <li> stock: <a href="../test39.ex">test39</a></li>
+    <li> toggle: <a href="../test104.ex">test104</a></li>
+    <li> check: <a href="../test104.ex">test104</a></li>
+    <li> switch: <a href="../test15.ex">test15</a></li>
+    <li> custom: <a href="../test104.ex">test104</a></li> 
+</ul>
+</small>
+
+</li>
+
+<li>ButtonBox 
+	<dfn>automatically arranges sets of buttons</dfn>
+	<small>
+		<ul>
+			<li>Using Icons <a href="../test59.ex">test59</a></li>
+			<li>Margins and Layout <a href="../test195.ex">test195</a></li>
+			<li>Layout and ChildSecondary <a href="../test186.ex">test186</a></li>
+		</ul>
+	</small>
+</li>
+</ul>
+
+<br clear="all" />
+
+<a name="c"></a>
+<b class="btn">C</b><hr class="blue" />
+<a href="../test65.ex" alt="test65" >
+<img src="../screenshots/test65.png" alt="test65" title="Cairo" align="right" width="250px" />
+</a>
+
+<ul>
+<li>Cairo graphics <dfn><a href="../test60.ex">test60</a>,
+	<a href="../test65.ex">test65</a>,<a href="../test70.ex">test70</a></dfn>
+    <br />
+    <a href="https://www.cairographics.org/tutorial/">Cairo tutorial (online)</a>
+</li>
+
+<li>Calendar <dfn> <a href="../test31.ex">test31</a></dfn>
+	<dd> See <a href="../documentation/HowItWorks.html#calendar">Calendars</a></dd>
+</li>
+
+<li>CellRendererCombo  <dfn><a href="../test121.ex">test121</a></dfn>
+	<dd>drop-down selections in lists</dd>
+</li>
+
+<li>CellRendererPixbuf   <dfn><a href="../test35.ex">test35</a>, <a href="../test116.ex">test116</a></dfn>
+	<dd>display images in list rows</dd>
+</li>
+
+<li>CellRendererProgress <dfn><a href="../test33.ex">test33</a></dfn>
+	<dd>display progress bars in list rows</dd>
+</li>
+
+<li>CellRendererSpin <dfn><a href="../test148.ex">test148</a></dfn>
+   <dd>display numeric input in list rows</dd> 
+</li>
+
+<li>CellRendererText <dfn><a href="../test33.ex">test33</a>, <a href="../test96.ex">test96</a></dfn>
+  <dd>display text in list rows</dd>  
+</li>
+
+<li>CellRendererToggle <dfn> <a href="../test35.ex">test35</a>, <a href="../test96.ex">test96</a></dfn>
+	<dd>display toggle or check buttons in list rows</dd>
+</li>
+
+<a href="../test13.ex">
+<img src="../screenshots/test13.png" width="250px" align="right" />
+</a>
+
+<li>CheckButton <dfn><a href="../test13.ex">test13</a>, <a href="../test15.ex">test15</a></dfn>
+</li>
+
+<li>CheckMenuItem <dfn><a href="../test54.ex">test54</a>, <a href="../test25.ex">test25</a></dfn>
+</li>
+
+<li>Clipboard
+	<small>
+	<ul>
+		<li>paste image: <a href="../test92.ex">test92</a> </li>
+		<li>paste text: <a href="../test91.ex">test91</a> </li>
+		<li>monitoring the clipboard <a href="../test90.ex">test90</a></dd>
+	</ul>
+	</small>
+</li>
+
+<li>Colors <dfn>see <a href="HowItWorks.html#colors">RGBA Colors</a></dfn> 
+	<dd><em>see also <a href="#css">CSS</a> below</em></dd>
+</li>
+
+<li>ColorButton <dfn><a href="../test59.ex">test59</a></dfn>
+	<dd>small button to select colors</dd>  
+</li>
+
+<li>ColorChooserDialog  <dfn><a href="../test185.ex">test185</a></dfn>
+	<dd>pop-up dialog to select colors</dd>
+</li>
+
+<li>ColorChooserWidget <dfn><a href="../test169.ex">test169</a></dfn>
+	<dd>widget to add to your window to select colors</dd> 
+</li>
+</ul>
+
+<ul>
+<li>ComboBox <dfn><a href="../test116.ex">test116</a></dfn>
+	<dd>choose from a drop-down list of options</dd>   
+</li>
+
+<li>ComboBoxEntry <dfn><a href="../test16.ex">test16.ex</a></dfn>
+	<dd>as above, but includes an input box so user can type in an unlisted item</dd> 
+</li>
+
+<li>ComboBoxText <dfn><a href="../test12.ex">test12</a></dfn>
+  <dd>as above, but easy-to-use for simple text options </dd>
+</li>
+
+<li>Control 'data' fields <dfn><a href="../test22.ex">test22</a></dfn>
+	<dd>associative lists to pass data via control actions</dd>  
+</li>
+
+<a href="../test212.ex">
+<img src="../screenshots/test212.png" alt="test212" align="right" width="300px" />
+</a>
+
+
+<li>CSS <dfn><a href="#css"><em>see CSS note below</em></a></dfn>
+	<small>
+	<ul>
+	<li>background images: <a href="../test72.ex">test72</a></li>
+	<li>radial gradient: <a href="../test157.ex">test157</a></li>
+	<li>linear gradient: <a href="../test158.ex">test158</a></li>
+	<li>as inline data: <a href="../test160.ex">test160</a></li>
+	<li>Animated images: <a href="../test211.ex">test211</a></li>
+	<li>css backgrounds: <a href="../test212.ex">test212</a></li>
+	</ul>
+	</small> 
+</li>
+
+<li>Custom cursors <dfn><a href="../test2.ex">test2</a></dfn>
+</li>
+
+<li>Custom buttons  <dfn><a href="../test29.ex">test29</a>, <a href="../test104.ex">test104</a>, <a href="../test102.ex">test102</a></dfn>
+	<dfn>See also <a href="../documentation/README.html#features"><em>new features</em></a></dfn>
+</li>
+
+<li>Custom dialogs <dfn><a href="../test200.ex">test200</a></dfn>
+</li>
+
+<li>Custom tooltips <dfn><a href="../test64.ex">test64</a>, <a href="../test134.ex">test134</a></dfn>
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="d"></a>
+<b class="btn">D</b><hr class="blue" />
+
+<a href="../examples/utilities/dbd.ex">
+<img src="../screenshots/dbd.png" align="right" height="300px" /></a>
+
+<ul>
+<li>Data Passing
+	<dd>attaching data items to controls, see <a href="HowItWorks.html#datapassing"><em>Data Passing</em></a></dd>
+</li>
+
+<li>Days Between Dates
+   <dfn><a href="../test222.ex">test222.ex</a></dfn>
+   <dd>by Kenneth Rhodes</dd>
+</li>
+
+<li>Decorated property <dfn><a href="../test110.ex">test110</a></dfn>
+	<dd> creates window without title-bar, etc. <em>use with caution!</em></dd> 
+</li>
+
+<li><i>delete-event</i> (trapping)  <dfn><a href="../test114.ex">test114</a><dfn>
+</li>
+
+<li>Default buttons <dfn><a href="../test4.ex">test4</a>, <a href="../test13.ex">test13</a>, <a href="../test14.ex">test14</a>
+</li>
+
+<li>Dialogs <dfn> built-in dialogs, see: <a href="dialogs.html"><em>dialogs.html</em></a></dfn>
+</li>
+
+<li><i>Diet</i> <dfn><a href="../examples/diet/DIET.ex">Diet recorder</a> using almost <u>all</u> EuGTK listview options. Good to learn from!</dfn>
+</li>
+
+<li><i>Display status</i>  <dfn><a href="../test76.ex">test76</a></dfn>
+	<dd>(screen size, pointer location, etc.)</dd>
+</li>
+
+<li><i>Drawing with Cairo</i>
+  <small>
+   <ul> 
+    <li>complex demo with numerous examples: <a href="../test60.ex">test60</a></li>
+    <li>graphics primitives: <a href="../test61.ex">test61</a></li>
+    <li>shapes, borders and transparency: <a href="../test65.ex">test65</a></li>
+    <li>text: <a href="../test70.ex">test70</a></li>
+   </ul>
+  </small>
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="e"></a>
+<b class="btn">E</b><hr class="blue" />
+
+<a href="../test7.ex">
+<img src="../screenshots/test7.jpg" alt="entry" title="GtkEntry"height="100px" align="right" />
+</a>
+
+
+<ul>
+
+<li>Entry
+  <small>
+  <ul>
+    <li> single-line text entry widget: <a href="../test7.ex">test7</a></li>
+    <li>selecting text: <a href="../test146.ex">test146</a></li>
+    <li>with shared buffer: <a href="../test57.ex">test57</a></li>
+    <li>with clickable icons: <a href="../test174.ex">test174</a></li>
+    <li>with &lt;enter&gt; key that works like Windows&trade; <a href="../test220.ex">test220</a></li>
+  </ul>
+  </small>
+</li>
+
+<br />
+
+<a href="../test131.ex">
+<img src="../screenshots/test131.png" alt="test131" title="GtkExpander" width="280px" align="right" />
+</a>
+
+<li>EntryCompletion <dfn><a href="../test58.ex">test58</a></dfn>
+  <dd>show pop-down list of matching items</dd>  
+</li>
+
+<li>Error dialog <dfn> see <a href="dialogs.html"><em>dialogs.html</em></a></dfn> 
+</li>
+
+<li>EventBox <dd>trap events, add background colors to labels,etc.. <a href="../test188.ex">test188</a></dd>
+</li>
+
+<li>Expander <dfn><a href="../test131.ex">test131</a></li></dfn>
+ <dd>show/hide subsidiary info</dd>  
+</ul>
+
+<br clear="all" />
+
+<a name="f"></a>
+<b class="btn">F</b><hr class="blue" />
+
+<a href="../test136.ex" alt="test136" >
+<img src="../screenshots/test136.jpg" alt="test136" title="FontChooserDialog" width="280px" align="right" />
+</a>
+
+<ul>
+
+<li>FileChooserButton <dfn><a href="../test120.ex">test120</a></dfn>
+  <dd>small button to pop up a file chooser</dd> 
+</li>
+
+<li>FileChooserDialog <dfn><a href="../test23.ex">test23</a>, <a href="../test25.ex">test25</a></dfn>
+  <dd>pop-up dialog to select a file</dd>  
+</li>
+
+<li>FileChooserWidget <dfn><a href="../test122.ex">test122</a></dfn>
+  <dd>to add to your window</dd>
+</li>
+
+<li>FileFilter <dfn><a href="../test23.ex">test23</a>, <a href="../test25.ex">test25</a></dfn>
+  <dd>select only certain types of files to show in the Chooser</dd>  
+</li>
+
+<li>Fixed 
+  <dfn><em> don't use this!</em><i> <a href="#fixed"> See note below</a></i></dfn>
+</li>
+
+<li>FlowBox <dfn><a href="../test202.ex">test202</a></dfn>
+ <dd>container that allows reflowing its children</dd>
+ <dd><em> requires GTK3.12+ </em></dd>
+</li>
+
+<li>Fonts <dfn> <a href="../test97.ex">test97</a>, <a href="../test133.ex">test133</a></dfn>
+   <dd>See also: <a href="#fonts"><em>fonts</em></a></dd>
+</li>
+
+<li>FontChooserDialog <dfn> <a href="../test136.ex">test136</a></dfn>
+  <dd>pop up to select a font</dd> 
+</li>
+
+<li>FontSelectionDialog 
+  <dd><em> deprecated, do not use!</em></dd>
+</li>
+
+<li>FontButton <dfn><a href="../test36.ex">test36</a>, <a href="../test59.ex">test59</a></dfn>
+ <dd>small button to add to your window to select a font</dd> 
+</li>
+
+<li>FontChooserWidget <dfn><a href="../test183.ex">test183</a></dfn>
+  <dd>widget to add to your window to select a font <em>(deprecated)</em></dd>  
+</li>
+
+<li>FontFilter <dfn><a href="../test36.ex">test36</a></dfn>
+ <dd>use with font choosers</dd> 
+</li>
+
+<li>Frames <dd><em><a href="#frame">See note below</a></em></dd>
+  <small>
+   <ul>
+    <li>styled with css <a href="../test138.ex">test138</a></li>
+    <li>with image in place of title: <a href="../test137.ex">test137</a></li>
+  </ul>
+ </small>
+   
+ </li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="g"></a>
+<b class="btn">G</b><hr class="blue" />
+<a href="../test34.ex" alt="test34" >
+<img src="../screenshots/test34.jpg" alt="test34" title="Grid" width="300px" align="right" />
+</a>
+
+<ul>
+<li>Glade <dfn>for designing XML interfaces. See <a href="#xml"><em>XML/Builder</em></a></dfn>
+  <small>
+   <ul> 
+    <li>Calendar.ex <a href="../glade/calendar/calendar.ex">calendar.ex</a></li> 
+    <li>Calendar.glade <a href="../glade/calendar/calendar.glade">calendar.glade</a></li>
+   <li>Calculator.ex<a href="../glade/calculator/calculator.ex">calculator.ex</a></li>
+  <li>Calculator.glade<a href="../glade/calculator/calculator.glade">calculator.glade</a></li>  
+   </ul>
+  </small>
+
+</li>
+
+<li>Grid <dfn><a href="../test34.ex">test34</a>, <a href="../test37.ex">test37</a>, <a href="../test117.ex">test117</a>,<a href="../test207.ex">test207</a></dfn>
+  <dd>handy for laying out widgets</dd> 
+</li>
+
+</ul>
+
+<a name="h"></a>
+<b class="btn">H</b><hr class="blue" width="50%" align="left" />
+
+<ul>
+
+<li>HeaderBar <dfn><a href="../test196.ex">test196</a> <em>requires GTK 3.10+ </em></dfn>
+</li>
+<li>'Hot Keys' <dfn>See <a href="#l">Labels with <u>m</u>nmemonics</a></dfn></li>
+</ul>
+
+<a name="i"></a>
+<b class="btn">I</b><hr class="blue" width="50%" align="left" />
+
+    <a href="../examples/utilities/icons.ex">
+    <img src="../screenshots/icons.png" alt="icons" title="Theme icons" width="300px" align="right" />
+  </a>
+
+<ul>
+<li>Icons
+ <small>
+ <ul> 
+   <li>viewing/saving: <a href="../examples/utilities/icons.ex">examples/icons.ex</a></li>
+   <li>from stock: <a href="../test141.ex">test141</a></li>
+   <li>named (themed) icons <a href="../test71.ex">test71</a>, <a href="../test147.ex">test147</a></li>
+   <li>adding to toggle and check buttons: <a href="../test166.ex">test166</a></li>
+   <li>adding to window <a href="#icons"> title bar</a></li>
+ </ul>
+ </small>
+</li>
+
+<li>IconView <dfn><a href="../examples/utilities/icons.ex">icons.ex</a></dfn>
+</li>
+
+<li>Image 
+ <small>
+ <ul>
+  <li>from file: <a href="../test2.ex">test2</a>, <a href="../test6.ex">test6</a>, <a href="../test23.ex">test23</a></li>
+  <li>from pixbuf: <a href="../test24.ex">test24</a>, <a href="../test59.ex">test59</a></li>
+  <li>resizing: <a href="../test86.ex">test86</a></li>
+ </li>
+ </ul>
+ </small>
+</li>
+
+<li><i>ini files</i><dfn> 
+<a href="../test213.ex">test213</a>, <a href="../examples/misc/initest.ex">initest.ex</a>,<br /> 
+<a href="../examples/misc/multi.ex">multi.ex</a>,
+<a href="../examples/misc/test2ini.en">test2ini.en</a>,
+<a href="../examples/misc/test2ini.fr">test2ini.fr</a>,
+<a href="../examples/misc/test2ini.ge">test2ini.ge</a>,
+<a href="../examples/misc/test2ini.gr">test2ini.gk</a>,
+<a href="../examples/misc/test2ini.ru">test2ini.ru</a>
+</dfn>
+ <dd>see GtkSettings.e</dd></li>
+
+<li>Info dialog  <dfn> see <a href="dialogs.html"><em>dialogs.html</em></a></dfn>
+</li>
+
+<li>Info (EuGTK) <dfn> <a href="../test0.ex">test0</a></dfn>
+<dd>Lots of info about the run-time environment</dd>
+</li>
+
+<li>InfoBar <dfn><a href="../test26.ex">test26</a></dfn>
+ <dd>add to your window to present important messages</dd>
+</li>
+
+<a  href="../examples/games/hangman.ex">
+<img src="../screenshots/hangman.jpg" alt="hangman" align="right" width="300px" />
+</a>
+
+<li>Internet <dfn><a href="../test53.ex">test53</a></dfn>
+ <dd>ways to detect network and internet connectivity</dd>
+</li>
+
+</ul>
+
+<a name="j"></a>
+<b class="btn">J</b><hr class="blue" align="left" />
+
+<ul>
+ <li><i>Justify</i>  <dfn>property for labels  <a href="../test11.ex">test11</a></dfn>
+ </li>
+</ul>
+
+<a name="k"></a>
+<b class="btn">K</b><hr class="blue" align="left" />
+
+<ul>
+<li>Keyboard Accelerators  <dfn><a href="../test144.ex">test144</a></dfn>
+  <dd>using alt-key or ctl-key combinations</dd>
+</li>
+
+<li><i>Keypress</i><dd> event processing - see <a href="../examples/games/hangman.ex">hangman</a></dd> </li>
+</ul>
+
+<a name="l"></a>
+<b class="btn">L</b><hr class="blue" />
+
+<a href="../test5.ex" alt="test5" >
+<img src="../screenshots/test5.jpg" alt="test5" title="Labels with Markup" width="300px" align="right" />
+</a>
+
+<ul>
+<li>Labels 
+ <small>
+  <ul>
+    <li>with <u>m</u>nemonics (hot-keys): <a href="../test79.ex">test79</a></li>
+    <li>with markup: <a href="../test5.ex">test5</a></li>
+    <li>with url web link:  <a href="../test103.ex">test103</a></li>
+  </ul>
+ </small>
+</li>
+
+<li>Layout <dfn><a href="../test38.ex">test38</a></dfn>
+  <dd>specify exact x/y positioning - avoid when possible!</dd> 
+</li>
+
+<li>LevelBar <dfn><a href="../test187.ex">test187</a></dfn>
+   <dd>changes color based on value</dd>
+   <dd><em>requires GTK 3.6+</em></dd>  
+</li>
+
+<li><i>Links</i> <dd>to web pages in labels:  <a href="../test103.ex">test103</a></dd>
+</li>
+
+<li>LinkButton <dfn> <a href="../test53.ex">test53</a></dfn>
+  <dd>button with web link</dd>
+</li>
+
+<li><i><u>Linking to Euphoria Functions</u></i>
+ <dfn> <a href="../test4.ex">test4</a> </dfn>
+    <dd>See  <a href="HowItWorks.html#connecting"><em>HowItWorks</em></a></dd>
+    <dd>linking multiple functions: <a href="../test108.ex">test108</a></dd>
+    </li>
+
+<a href="../test121.ex">
+<img src="../screenshots/test226.png" alt="test226.ex" align="right" width="300px" />
+</a>
+
+<li>ListBox   
+<dfn><a href="../test213.ex">test213</a> </dfn>
+    <dd><em>requires GTK 3.10+</em></dd>
+</li>
+
+
+<li>ListView 
+  <small>(See <a href="treeviews.html">ListView/TreeView</a>)</small>
+  <br /><br />
+
+   <ul>
+    <li>simple demo: <a href="../test3.ex">test3</a></li>
+    <li>generic demo: <a href="../test66.ex">test66</a></li>
+    <li>complete demo: <a href="../test33.ex">test33</a></li>
+    <li>sorting: <a href="../test48.ex">test48</a></li>
+    <li>filtering: <a href="../test226.ex">test226</a></li>
+    <li>with images: <a href="../test35.ex">test35</a></li>
+    <li>editing cells: <a href="../test96.ex">test96</a></li>
+	<li>with drop-down combo for selections: <a href="../test121.ex">test121</a></li>
+  </ul>
+
+</li>
+
+<li>Locale <dfn><a href="../test31.ex">test31</a></dfn>
+  <dd>customizing numbers and dates for your area</dd>  
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="m"></a>
+<b class="btn">M</b><hr class="blue" />
+
+<a href="../test25.ex">
+<img src="../screenshots/menus.png" alt="menus" title="Menus" align="right" width="300px" />
+</a>
+
+<ul>
+
+<li>Maps
+ <dfn><a href="../test179.ex">test179</a>, , <a href="../test84.ex">test84</a></dfn>
+  <dd>using Euphoria maps to pass data</dd>   
+</li>
+
+<li>Menus <dfn><a href="../test54.ex">test54</a>, <a href="../test23.ex">test23</a>, <a href="../test25.ex">test25</a></dfn>
+</li>
+
+<li>MenuButton <dfn><a href="../test193.ex">test193</a></dfn>
+<dd><em> requires GTK 3.6+  </em></dd>
+</li>
+
+<li>MenuToolButton  <dfn><a href="../test132.ex">test132</a></dfn>
+ <dd>tool button with a drop-down submenu</dd>
+</li>
+
+<li>Margins <dfn><a href="../test94.ex">test94</a>, <a href="../test195.ex">test195</a></dfn>
+<dd>widgets can have extra space added on left, right, top or bottom</dd>  
+</li>
+
+
+<li>Markup <dfn><a href="../test5.ex">test5</a>, <a href="../test133.ex">test133</a></dfn>
+ <dd>See also <a href="pango_markup.html">Pango Markup</a></dd>
+</li>
+
+<li>Menu <dfn><a href="../test144.ex">test144</a></dfn>
+<dd>with keyboard accels</dd></li>
+
+<li>MessageDialog <dfn> <a href="../test170.ex">test170</a></dfn>
+<dd>The old-fashioned way</dd></li>
+
+<li>Mouse 
+    <dd>position in window: <code>get(mouse,"position")</code></dd>
+    <dd>position on display: <a href="../test75.ex">test75</a></dd>
+    <dd>with custom cursor: <a href="../test2.ex">test2</a></dd>
+    </li>
+</ul>
+
+<br clear="all" />
+
+<a name="n"></a>
+<b class="btn">N</b><hr class="blue" />
+
+<ul>
+
+<li>Network 
+	<dfn><a href="../test53.ex">test53</a>, <a href="../test103.ex">test103</a></dfn>
+	<dd>detection: <a href="../test99.ex">test99</a></dd> 
+</li>
+
+<li>Notebook <dfn><a href="../test155.ex">test155</a></dfn>
+    <dd>with animated tab: <a href="../test42.ex">test42</a></dd>
+    <dd>with custom tabs: <a href="../test129.ex">test129</a></dd>
+    </li>
+</a>
+
+<a href="../test77.ex">
+<img src="../screenshots/test77.jpg" width="300px" alt="test78" title="Numerable Icons" align="right" />
+</a>
+
+<li>Notification <dfn><a href="../test205.ex">test205</a></dfn></li>
+
+<li>NumerableIcons     
+<dd><em>(deprecated as of GTK3.14 </em></dd> 
+   <small>
+   <ul>
+    <li>Arabic numerals: <a href="../test77.ex">test77</a></li>
+    <li>Roman numerals:  <a href="../test78.ex">test78</a></li>
+
+   </ul>
+   </small> 
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="o"></a>
+<b class="btn">O</b><hr class="blue" width="50%" align="left" />
+
+
+<a href="../test109.ex">
+<img src="../screenshots/test109.png" width="240px" title="Opacity - test109" alt="test109" align="right" />
+</a>
+
+<ul>
+<li><i>Opacity</i> property 
+<dfn><a href="../test109.ex">test109</a>, <a href="../test209.ex">test209</a></dfn>
+<dd>if window manager allows</dd>
+</li>
+
+<li>OS Info <dfn><a href="../test0.ex">test0</a>, <a href="../test160.ex">test160</a></dfn>
+</li>
+
+<li>Overlay <dfn><a href="../test113.ex">test113</a></dfn>
+</li>
+
+<li>Override Color <dd> use "color" in most instances</dd>
+</li>
+
+<li>Override Cursor <dfn><a href="../test2.ex">test2</a></dfn>
+  <dd> use "cursor"</dd>
+</li>
+
+<li>Override Font
+  <dd>use "font" </dd>
+</li>
+
+</ul>
+
+<a name="p"></a>
+<b class="btn">P</b><hr class="blue" width="50%" align="left" />
+
+<ul>
+<li>Paned  <dfn><a href="../test46.ex">test46</a>, <a href="../test180.ex">test180</a></dfn>
+ <dd>splits container into two, with adjustable slider between</dd> 
+
+<a href="../test211.ex">
+<img src="../screenshots/test211.png" alt="test211" width=250px; align="right" />
+ </a>
+ 
+
+<li>Pango <dfn>see <a href="pango_markup.html">Pango Markup</a></dfn>
+</li>
+
+<li>PangoCairoLayout <dfn> <a href="../test70.ex">test70</a></dfn>
+</li>
+
+<li>PangoFont <dfn><a href="../test36.ex">test36</a>, <a href="../test70.ex">test70</a></dfn>
+</li>
+
+<li><i>Paper sizes</i>  for printing <dfn> see   <a href="../resources/papersizes.txt">papersizes.txt</a></dfn>
+</li>
+
+<li><i>Passing  data attached to controls</i>
+  <small>
+   <ul> 
+    <li>Euphoria routine-id's: <a href="../test106.ex">test106</a></li>
+    <li>Formatting strings: <a href="../test107.ex">test107</a></li>
+    <li>Generic data using maps: <a href="../test179.ex">test179</a>, <a href="../test84.ex">test84</a></li>
+    <li>Generic data using key/value pairs: <a href="../test181.ex">test181</a></li>
+  </ul>
+ </small>    
+</li>
+
+
+<li>Passwords <dfn><a href="../test69.ex">test69</a>, <a href="../test57.ex">test57</a>, <a href="../examples/utilitiess/passwords.ex"> passwords.ex</a></dfn>
+</li>
+
+<a href="../test225.ex">
+<img src="../screenshots/popup.png" height="150px" align="right" />
+</a>
+
+<li>Pixbuf <dfn> <a href="../test23.ex">test23</a>, 
+    <a href="../test24.ex">test24</a>, 
+    <a href="../test35.ex">test35</a>
+    <a href="../test197.ex">test197</a></dfn><br />
+	<a href="../test211.ex">test211</a></dfn>
+	<dd>The "spinning mushroom" demo from GTK</dd>
+</li> 
+
+
+<li>PlacesSidebar <dfn><a href="../test198.ex">test198</a></dfn> 
+     <dd><em>requires GTK 3.10+</em></dd> 
+</li>
+
+<li>Pointer 
+  <small>
+   <ul>
+    <li>changing: <a href="../test2.ex">test2</a></li>
+    <li>position on display: <a href="../test75.ex">test75</a> </li>
+    <li>position and size: <a href="../test76.ex">test76</a></li>
+  </ul>
+ </small>
+</li>
+    
+
+<li>Popover <dfn><a href="../test214.ex">test214</a></dfn></li>
+
+<li>Popup <dfn><a href="../test225.ex">test225.ex</a></dfn>
+</li>
+
+<a href="../test17.ex">
+<img src="../screenshots/test17.jpg" alt="progressbar" align="right" />
+</a>
+
+<li>Preview <dfn>in file dialogs <a href="../test23.ex">test23</a></dfn>
+</li>
+
+<li>Printing <a href="../test150.ex">test150</a>, <a href="../test190.ex">test190</a>, <a href="../test191.ex">test191</a>
+    <dd>Include GtkPrinter.e for an easy-to-use print engine! 
+    See <a href="printing.html">printing</a> for more info</dd>
+
+<li>ProgressBar <a href="../test17.ex">test17</a>
+    <dd>GtkEntry as progress <a href="../test57.ex">test57</a></dd>
+    </li>
+</ul>
+
+<a name="q"></a>
+<b class="btn">Q</b><hr class="blue" />
+
+<ul>
+    
+<img src="../screenshots/std_question.png" alt="question dialog" title="Question dialog" align="right" />
+<li>Question dialog <dfn>see <a href="dialogs.html">dialogs.html</a></dfn>
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="r"></a>
+<b class="btn">R</b><hr class="blue" />
+ 
+<a href="../test175.ex">
+<img src="../screenshots/test175.png" width="300px" align="right" />
+</a>
+
+<ul>
+<li>RadioButton <dfn><a href="../test14.ex">test14</a>, <a href="../test67.ex">test67</a></dd>, <a href="../test96.ex">test96</a></dfn>
+<dd>for selecting one item in a group of buttons</dd>
+</li>
+
+<li>RadioMenuItem <dfn><a href="../test54.ex">test54</a>, <a href="../test23.ex">test23</a>, <a href="../test25.ex">test25</a></dfn>
+ <dd>same, for menus</dd>
+</li>
+
+<li>RadioToolButton <dfn> <a href="../test175.ex">test175</a></dfn>
+ <dd>for selecting one from a group of tool buttons</dd>
+</li> 
+
+<li>RecentChooser <dfn><a href="../test125.ex">test125</a>, <a href="../test126.ex">test126</a></dfn>
+</li>
+
+<li>RecentChooserDialog <dfn><a href="../test73.ex">test73</a></dfn>
+ <dd>pop-up window for above</dd>
+</li>
+
+<li>RecentChooserMenu <dfn><a href="../test25.ex">test25</a></dfn>
+ <dd>menu version of above</dd>
+</li>
+
+<li>RecentFilter <dfn> <a href="../test25.ex">test25</a> <a href="../test125.ex">test125</a></dfn>
+ <dd>select what files are shown based on file types</dd>
+</li>
+
+<a href="../test59.ex">
+<img src="../screenshots/test59.png" alt="test59" align="right" title="Rich Text Editor - test59" width="300px" />
+</a>
+
+<li><em class="gtk">requires</em>() <dfn><a href="../test214.ex">test214</a></dfn>
+<dd>Check GTK version at runtime</dd></li>
+
+<li>Resizing images <dfn><a href="../test27.ex">test27</a>, <a href="../test86.ex">test86</a></dfn>
+ <dd>using GdkPixbuf</dd>
+</li>
+
+<li>Revealer <dfn><a href="../test199.ex">test199</a></dfn>
+<dd>fade in/out or slide left/right/up/down to show/hide items</dd>
+<dd><em>requires GTK 3.10+</em></dd> 
+</li>
+
+<li><i>RGBA Colors</i> <dfn> see <a href="HowItWorks.html#colors">RGBA Colors</a></dfn> 
+</li>
+
+<li>Rich Text <dfn> <a href="../test59.ex">test59</a></dfn>
+
+
+</li>
+
+</ul>
+
+<a name="s"></a>
+<b class="btn">S</b><hr class="blue" />
+
+<a href="../test9.ex" alt="test9" >
+<img src="../screenshots/test9.jpg" alt="test9" title="GtkScale - test9" width="300px" align="right" />
+</a>
+
+<ul>
+<li>ScaleButton <dfn><a href="../test55.ex">test55</a></dfn>
+ <dd>button which changes icons based on value</dd>
+</li>
+
+<li>Scale <dfn><a href="../test9.ex">test9</a>, <a href="../test134.ex">test134</a></dfn>
+ <dd>for getting/setting numeric values</dd>
+  <small>
+   <ul>
+    <li>using an adjustment: <a href="../test82.ex">test82</a></li>
+    <li>setting steps: <a href="../test128.ex">test128</a></li>
+    <li>with fill level: <a href="../test142.ex">test142</a></li>
+  </ul>
+ </small>
+</li>
+
+<li>SearchBar <dfn><a href="../test167.ex">test167</a></dfn> 
+     <dd><em>requires GTK 3.10+</em></dd> 
+</li>
+
+<li>SearchEntry <dfn><a href="../test192.ex">test192</a></dfn> 
+<dd>text entry field with search and clear icons</dd>  
+<dd><em>requires GTK 3.6+</em></dd>
+</li>
+
+<li>Search function for ListView <dfn><a href="../browser.ex">browser.ex</a></dfn></li>
+
+<li>Screen Dimensions> <dfn> <a href="../test76.ex">test76</dfn>
+<dd><img src="../screenshots/test76.png" width="300px" align="right" /></dd>
+</a></li>
+
+<li>ScrolledWindow  <dfn><a href="../test48.ex">test48</a></dfn>
+<dd>container for long lists, large pix, etc</dd>
+</li>
+
+<li>Scrolling text <dfn><a href="../test130.ex">test130</a></dfn>
+<dd>auto-scroll some lengthy text</dd>
+</li>
+
+
+<li>Separator <dfn><a href="../test139.ex">test139</a></dfn>
+<dd>~ a thin horizontal or vertical divider bar  </dd>
+</li>
+
+<li>SeparatorMenuItem  <dfn><a href="../test54.ex">test54</a>, <a href="../test25.ex">test25</a></dfn>
+ <dd> ~ a horizontal divider for drop-down menus</dd>
+</li>
+
+<li><em class="gtk">show_uri</em>() 
+<dfn><a href="../test120.ex">test120</a>, <a href="../test103.ex">test103</a></dfn>
+<dd>build-in function which calls the registered handler app for most common files</dd>  
+</li>
+
+<li>SizeGroup <dfn><a href="../test94.ex">test94</a></dfn> 
+<dd>force all widgets in the group to be identical size  </dd>
+</li>
+
+<li>SourceView  
+<dfn><a href="../test201.ex">test201</a> also, read <a href="#sourceview">SourceView</a></dfn>
+<dd>view and edit source code in many languages</dd>
+<dd><em>(must install Euphoria syntax files from ~/demos/resources)</em></dd>
+</li>
+
+<a href="../test101.ex">
+<img src="../screenshots/test101.png" title="StatusIcon" align="right", width="200px" />
+</a>
+
+<li>Spectrum
+<dfn><a href="../examples/misc/spectrum.ex">spectrum.ex</a></dfn>
+<dd>by Loki (L. Patrick)</dd>
+</li>
+
+<li>SpinButton <dfn><a href="../test8.ex">test8</a></dfn>
+ <dd>for numeric entry</dd>	
+ <dd></dd>
+</li>
+
+<li>Spinner <dfn><a href="../examples/misc/task.ex">task.ex</a></dfn>
+ <dd>round and round it goes....</dd>
+</li>
+
+<li>Stack <dfn><a href="../test156.ex">test156</a>, <a href="../test168.ex">test168</a></dfn> 
+     <dd><em>requires GTK 3.10+</em></dd> 
+	<dd>
+	<a href="../test213.ex">
+	<img src="../screenshots/test213.png" title="Syntax color demo" width="200" align="right" /></a></dd>
+
+</li>
+
+<li>StatusIcon <dfn><a href="../test101.ex">test101</a></dfn>
+<dd>adds an icon to your screen's status bar:</dd>
+</li>
+
+
+<li>Stock Items  <dfn><a href="../test39.ex">test39</a></dfn> 
+   <dd>(deprecated as of GTK3.10 - use named icons instead)</dd>
+   <dd>See <a href="README.html#features">README</a>)</dd>
+</li>
+
+
+<li>Stock Icons <dfn><a href="../test141.ex">test141</a></dfn>
+ <dd>these are the replacements for stock items</dd>
+</li>
+
+<li>SVG images <dfn><a href="../test27.ex">test27</a></dfn>
+ <dd>the best choice if images are to be resized</dd>
+</li>
+
+
+<li>Switch <dfn><a href="../test15.ex">test15</a></dfn>
+<dd>a simple on/off button</dd>
+</li>
+
+<li>Syntax color chooser demo <dfn><a href="../test213.ex">test213</a></dfn>
+</li>
+
+</ul>
+
+<a name="t"></a>
+<b class="btn">T</b><hr class="blue" />
+
+<a href="../test224.ex" alt="test224" title="test224.ex" >
+<img src="../screenshots/talkingclock.png" height="250px" align="right" />
+</a>
+
+<ul>
+
+<li>
+<strike>Table</strike> <dfn><em> deprecated. Use GtkGrid </em></dfn>
+</li>
+
+<li>Talking Clock
+<dfn>Kids learn to tell time</dfn>
+<dd><a href="../test224.ex">test224.ex</a></dd>
+</li>
+
+
+<li>Test All
+ <dfn>a EuGTK program which runs test programs 10 at a time.</dfn> 
+<dd><a href="../examples/utilities/test_all.ex">test_all</a></dd>
+
+</li>
+
+<li>TextBuffer
+    <small>
+    <ul>
+    <li>inserting text: <a href="../test177.ex">test177</a></li>
+    <li>shared: <a href="../test57.ex">test57</a></li>
+    <li>multiple buffers: <a href="../test112.ex">test112</a></li>
+    </ul>
+    </small>
+</li>
+
+
+<li>Text angle property <dfn><a href="../test137.ex">test137</a></dfn>
+ <dd>rotate text in labels</dd>
+</li>
+
+<li>Text Editor <dfn><a href="../test201.ex">test201</a></dfn>
+ <dd>uses GtkSourceView</dd>
+</li>
+
+<li>Text justification <dfn>in labels <a href="../test11.ex">test11</a></dfn>
+ <dd>justify <u>multi-line</u> text in labels; right, left, center</dd>
+</li>
+
+<li>TextTags <dfn> <a href="../test59.ex">test59</a></dfn>
+<dd>creating named style tags which can be applied to text </dd>
+</li>
+
+<li>TextView <dfn><a href="../test112.ex">test112</a>, <a href="../test25.ex">test25</a>, <a href="../test59.ex">test59</a><a href="#textview"></dfn>
+  <dd><em>see note below</em></a></dd>
+</li>
+<a href="../examples/utilities/test_all.ex">
+<img src = "../screenshots/test_all.png" alt="test_all" title="test_all" align="right" width="300px" />  
+</a>
+   
+<li>Themed Icons <dfn><a href="../examples/utilities/icons.ex">examples/icons.ex</a></dfn>
+ <dd>for a list of icons see <a href="../resources/themeicons.txt">themeicons.txt</a></dd>
+</li>
+
+<li>Timers 
+ <dfn><a href="../test51.ex">test51</a>, <a href="../test52.ex">test52</a></dfn>
+ <dd>~ call a function every x/1000 sec, or whenever computer is not otherwise busy  </dd>
+</li>
+
+<li>Title property <dfn><a href="../test2.ex">test2.ex</a></dfn>
+ <dd>text to appear on window titlebar</dd>
+</li>
+
+<li>TitleBar <dd><em>-- new in GTK 10+ (but not worth the effort right now, wait for improvements.)</em></dd>
+</li>
+
+<li>Titlebar icon <dfn><a href="../test5.ex">test5</a></dfn>
+ <dd>see <a href="#icons">note below</a></dd>
+</li>
+
+<li>ToggleButton <dfn><a href="../test15.ex">test15</a></dfn>
+</li>
+
+<li>ToggleToolButton <dfn><a href="../test176.ex">test176</a></dfn>
+</li>
+
+<li>ToolButtons <dfn><a href="../test118.ex">test118</a>, <a href="../test119.ex">test119</a>, <a href="../test132.ex">test132</a></dfn>
+</li>
+
+
+<a href="../test118.ex">
+<img src="../screenshots/test118.png" width="300px" align="right" />
+</a>
+
+<li>ToolBars 
+   <small>
+   <ul> 
+    <li>with stock icons: <a href="../test119.ex">test119</a></li>
+    <li>with custom icons: <a href="../test118.ex">test118</a></li>
+    </ul>
+   </small>
+</li>
+
+<li>ToolPalette  <dfn><a href="../test132.ex">test132</a></dfn>
+ <dd>~ show/hide groups of toolbuttons  </dd>
+</li>
+
+<li>Tooltips 
+  <small>
+  <ul>
+    <li>text: <a href="../test17.ex">test17</a></li>
+    <li>markup: <a href="../test64.ex">test64</a> </li>
+    <li>custom: <a href="../test134.ex">test134</a>, <a href="../test127.ex">test127</a> </li>
+    <li>in listviews: <a href="../test96.ex">test96</a></li>
+   </ul>
+  </small>
+</li>
+
+<li><em class="gtk">trap_enter_key</em> <dfn><a href="../test220.ex">test220</a></dfn>
+<dd>make input form which works like Windows&trade;</dd>
+</li>
+
+<li>TreeView <dfn><a href="../test33.ex">test33</a>, <a href="../test63.ex">test63</a></dfn>
+ <dd>generic container for List and Tree Views</dd>
+</li>
+
+</ul>
+
+<a name="u"></a>
+<a name="v"></a>
+<b class="btn">U,V</b><hr class="blue" />
+
+<img src="../screenshots/utf.png" height="200px" alt="utf" title="Unicode" align="right" />
+
+<ul>
+
+<li>Unicode <dfn><a href="../test111.ex">test111</a></dfn>
+</li>
+
+<li>URI <dfn><a href="../test85.ex">test85</a></dfn>
+ <dd>clickable links in labels</dd>
+</li>
+
+<li>Versions <dfn><a href="../test0.ex">test0</a></dfn>
+ <dd>display versions of EuGTK, GTK, and Euphoria</dd>
+</li>
+
+<li>VolumeButton <dfn><a href="../test56.ex">test56</a></dfn>
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="w"></a>
+<b class="btn">W</b><hr class="blue" />
+<img src="../screenshots/std_warn.png" align="right" />
+<ul>
+<li>Warning dialog <dfn><a href="dialogs.html">see dialogs.html</a></dfn> 
+</li>
+
+<li>Window <dfn><em> (any of the demo programs!)</em></dfn> 
+<dd>decorated: <a href="../test110.ex">test110</a> <em>use with great care!</em></dd>
+<dd>opacity: <a href="../test109.ex">test109</a> <em>must be running a compositing window manager!</em></dd>
+</li>
+
+<li>Window Size <dfn><a href="../test65.ex">test65</a></dfn></li>
+
+<li>Window Title <dd>if you don't enter one, default is the program filename </dd>
+</li>
+
+</ul>
+
+<br clear="all" />
+
+<a name="x"></a>
+<b class="btn">X</b><hr class="blue" />
+<ul>
+<li>Xcolors <dfn>see <a href="#colors">Colors</a>, and <a href="../resources/xcolors.txt">xcolors.txt</a></dfn>
+</li>
+
+<li>XML for building user-interfaces <dfn>see <a href="#xml">XML/GtkBuilder</a></dfn>
+</li>
+
+<li>XPM images as include files; 
+	<dfn>see <a href="../examples/utilities/xpm_to_eu_include.ex">xpm_to_eu_include.ex</a></dfn></li>
+
+</ul>
+
+<em><h2><hr class="blue" />Notes:<hr class="blue" /></h2></em>
+
+ <a name="fixed"></a>
+ 
+ <h3>GtkFixed</h3>
+ 
+ <p>The GtkFixed widget lets you lay out things the Windows&trade; way, which is - no surprise -  
+	the <i>wrong</i> way.
+ </p>
+
+<div class="quote boxshadow">
+<p>
+Quote from the GTK docs:<br /><br />
+<i><small>
+"For most applications, you should not use this container! It keeps you from having to learn about the other GTK+ containers, but it results in broken applications. With GtkFixed, the following things will result in truncated text, overlapping widgets, and other display bugs:
+ <ul>
+    <li>Themes, which may change widget sizes.</li>
+    <li>Fonts other than the one you used to write the app will of course change the size of widgets containing text; keep in mind that users may use a larger font because of difficulty reading the default, or they may be using Windows or the framebuffer port of GTK+, where different fonts are available.
+    <li>Translation of text into other languages changes its size. Also, display of non-English text will use a different font in many cases.</li>
+ </ul>
+In addition, the fixed widget can't properly be mirrored in right-to-left languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the interface to put labels to the right of the thing they label, but it can't do that with GtkFixed. So your application will not be usable in right-to-left languages.</li>
+</p>
+
+<p>
+Finally, fixed positioning makes it kind of annoying to add/remove GUI elements, since you have to reposition all the other elements. This is a long-term maintenance problem for your application.
+"
+</small> </i>
+</div>
+
+<p>
+This is good advice. If you choose to ignore it, you'll have to do a lot of extra work, only to find that users are upset that your programs
+don't work as they expect well-behaved programs to work.
+</p>
+
+<hr class="blue" />
+
+<a name="icons"></a>
+<h3>Window Icons</h3>
+<p>
+<img src="../screenshots/titlebar.png" /><br />
+Window Icons are the small icons that appear on the titlebar (see mongoose at far left), but where 
+these appear, and whether they appear at all, depends upon the theme in use. If you don't see 
+these in the demos, try changing your window theme. 
+</p>
+
+<p>
+Icons can be made from .jpg, .png, .gif, etc... files, gtk-stock items, or named icons from your 
+current theme. Run <a href="../test39.ex">test39</a> to see stock items, and 
+<a href="../examples/utilities/icons.ex"> examples/icons.ex</a> to view and enumerate available theme icons 
+in <a href="../resources/themeicons.txt">themeicons.txt</a>.
+</p>
+
+<hr class="blue" />
+
+<a name="fonts"></a>
+<h3>Fonts</h3>
+<p>
+There are several ways to modify fonts. For text controls, such as labels:
+</p>
+<h5>For the entire control:</h5>
+<pre>
+    <em class="gtk">set</em>(ctl,<em class="str">"font","Courier 12"</em>) <em>-- set font face and size</em>
+    <em class="gtk">set</em>(ctl,<em class="str">"font","36"</em>) <em>-- sets size only, keep user's font preference</em>
+    <em class="gtk">set</em>(ctl,<em class="str">"font","italic"</em>) <em>-- italicises user's preferred font. Try also 'bold', 'bold italic', etc.</em>
+</pre>
+<p>
+You can specify more than one font. Gtk will use the first one it finds on the computer,
+so put your preference as the first on the list. If you want to specify a point size, put it last
+on the list (not separated with a comma!)
+<pre>
+    <em class="gtk">set</em>(ctl,<em class="str">"font","Century Schoolbook L, Serif, Purisa, Bitstream Charter"</em>)
+    <em class="gtk">set</em>(ctl,<em class="str">"font","Purisa, Courier, Sans 18"</em>) <em>-- first valid font will be shown in 18pt</em>
+</pre> 
+</p>
+<p>
+<h5>To mark up portions of the text:</h5>
+<pre>
+   <em class="gtk">set</em>(ctl,<em class="str">"markup","This is some &lt;b&gt;marked-up&lt;/b&gt; &lt;i&gt;text&lt;/i&gt;"</em>) <em>-- styling text using a subset of HTML markup</em>
+   <em class="gtk">set</em>(ctl,<em class="str">"markup","&lt;span font='Sans 24' color='red'&gt;Hello&lt;/span&gt;"</em>) <em>-- selecting font style and size using markup</em>
+</pre>
+See <a href="pango_markup.html">Pango Markup</a> for details on the available markup attributes.<br />
+</p>
+
+<p>
+For other controls, such as buttons, the appearance is determined by the chosen window theme.
+</p>
+
+<p>
+In certain situations where you need more control, consider using CSS to change fonts. The CSS can be loaded either from a standard *.css file, or inline in your program.
+Example: <a href="../test72.ex">test72</a> and <a href="../resources/mystyle.css">mystyle.css</a>
+</p>
+<p>
+The GTK docs have some detailed info on css options.
+</p>
+
+<hr />
+
+<h3>Font Choosers</h3>
+<p>
+When writing a program which uses a GtkFontButton, GtkFontChooser or GtkFontDialog, you will 
+probably want to have some control over which fonts are shown in the list of available fonts.
+You can do this by writing a simple filter function to examine the font names and/or font face 
+names, and returning TRUE if that font should be shown in the dialog, or FALSE if not.
+</p>
+
+<p>As an example, suppose you want only mono-spaced fonts
+to be shown, write the simple filter function:<code><pre>
+<em class="kw">function</em> MyFontFilter(<em class="gtk">FontFamily</em> family)
+<em class="kw">return</em> <em class="gtk">get</em>(family,<em class="str">"is monospace"</em>)
+<em class="kw">end function</em></pre></code>
+Then connect the font button or font dialog's filter function to your filter routine: <br /><br />
+<code><em class="gtk">set</em>(btn,<em class="str">"filter func"</em>,<b>_(</b><em class="str">"MyFontFilter"</em><b>)</b>)</code><br /><br />
+See <a href="../test201.ex">test201</a> for an example.
+</p>
+
+<hr class="blue" />
+
+<a name="frame"></a>
+
+<a href="../test138.ex">
+<img src="../screenshots/test138.png" alt="test138" align="right" width="200px" />
+</a>
+
+<h3>Frames</h3>
+<p>In the transition to using CSS to control GTK widget appearance, some  of the frame attributes have been lost,
+meaning that the style settings (raised, sunken, etc) don't have any effect.
+Therefore, if the exact appearance is important, you may have to use both the old-style settings plus the 
+new CSS styling below.</p>
+<hr class="blue" />
+
+<a name="css"></a>
+
+<h3>CSS</h3>
+<p>
+With CSS, you can create some interesting effects, such as creating decorative backgrounds, rounded corners 
+on buttons and frames, and 'animations'.
+</p>
+
+<p>
+See <a href="../test138.ex">test138</a> and  <a href="../test157.ex">test157</a> 
+for examples.
+</p>
+
+<p>
+You can load css from a separate file, or directly in-line as part of your Eu code. See <a href="../test160.ex">test160.</a></p>
+
+<p>An alternative to css in some cases can be to use an ini file to control colors and styles
+of specific widgets. See <a href="../test153.ex">test153</a>,  <a href="../test173.ex">test173</a> 
+and <a href="../examples/misc/initest2.ex">initest2</a>.
+</p>
+
+<hr class="blue" />
+
+<a name="colors"></a>
+
+<h3>Colors</h3>
+<p>
+EuGTK has simplified GTK color managment. You can specify colors in 
+various ways - as hex values: <em class="brown">#FF0000</em>, quoted hex: <em class="str">"#FF0000"</em>, 
+as Red/Green/Blue strings: <em class="str">"rgb(255,0,0)"</em> or <em class="str">"rgb(100%,0%,0%)"</em> 
+or as Red/Green/Blue/Alpha strings: <em class="str">"rgba(255,0,0,0.5)"</em> .
+</p>
+
+<p>
+The simplest way, however, is by name: <em>"red"</em>. The names used are 
+the xcolor names. See <a href="../resources/xcolors.txt">xcolors.txt</a>.
+Case doesn't matter.
+</p>
+
+<h5>Gtk Widget Colors</h5>
+<p>
+For normal GTK widgets, you can set foreground color, which generally applies to labels, etc.
+and background color, which applies to windows, etc., but not labels, which have a 
+transparent background. Setting the background color for a container such as a GtkBox
+does nothing, as these containers have a transparent background,
+but setting the box's foreground color will affect any labels added to the box. 
+</p>
+
+<p>
+You can determine what will happen by examining the 'properties' of a given widget,
+as well as the widget's ancestor properties - or, you can do this the easy way: just
+set a color and see what happens.
+</p>
+
+<p>
+In addition to all the above ways to adjust GTK widget colors, you can also use 
+<a href="#css">CSS!</a>
+</p>
+
+<h5>Cairo Colors</h5>
+<p>
+When you are drawing with Cairo, you have several ways to choose a drawing color:
+<ol>
+    <li><em class="gtk">set</em>(cr,<em class="str">"color","red"</em>)  <em>-- easy</em> </li>
+    <li><em class="gtk">set</em>(cr,<em class="str">"color"</em>,<em class="orange">#FF0000</em>)  <em>-- hex value</em> </li>
+    <li><em class="gtk">set</em>(cr,<em class="str">"color","#FF0000"</em>)  <em>-- quoted hex value</em> </li>
+    <li><em class="gtk">set</em>(cr,<em class="str">"source rgb"</em>,<em class="brown">1,0,0</em>)  <em>-- to conform to the Cairo way. values are r,g,b in range 0=>1.0</em> </li>
+    <li><em class="gtk">set</em>(cr,<em class="str">"source rgba"</em>,<em class="brown">1,0,0,0.5</em>)  <em>-- the Cairo way to set color and alpha. ranges are 0=>1.0</em> </li>
+</ol>
+Note that you cannot use the <em class="str">"rgb(255,0,0)"</em> or<em class="str">"rgba(255,0,0,1)"</em> string formats when defining colors for Cairo.
+These only work for GtkWidgets.
+</p>
+
+<hr class="blue" />
+
+<a name="xml"></a>
+<a href="../screenshots/glade.png" alt="glade" title="Click for a larger view">
+<img src="../screenshots/glade.png" alt="glade"  align="right" height="300px" />
+</a>
+
+<h3>XML/GtkBuilder</h3>
+<p>GTK has a GtkBuilder object which can parse XML markup to create your user 
+interface. This means you can use Glade to build the interface visually, rather 
+than coding it by hand. You should try to update Glade so that it knows about 
+the latest GTK3 objects. Glade 3.16.1 seems to work ok, older versions, not so much.
+</p>
+ 
+<p> 
+See <a href="Glade.html">EuGTK and Glade</a> and Glade examples in ~/demos/glade.
+</p>
+
+<hr class="blue" />
+
+<a name="images"></a>
+<h3>Images</h3>
+
+<p>
+Images can be created from almost any graphic file format: .jpg, .png, 
+.tiff, .gif, .xpm.... etc. simply by specifying the filename:<br />
+<code><pre>
+    <em class="kw">constant</em> img = <em class="gtk">create</em>(GtkImage,<em class="str">"~/demos/thumbnails/mongoose.png"</em>)
+<em> -- canonical_path() is automatically called to correct the filepath</em>
+</pre></code>
+This will create an image 'widget' which can be used exactly <i>once</i>, 
+and it will be created at the same size as the original image in the file.
+</p>
+
+<p>Sometimes this is not what you want.</p>
+
+<p>
+If you need to re-use an image without having to reload it repeatedly, 
+or if you need to change its size, then you should load the image into 
+memory as a pixbuf, and create your image(s) from that pixbuf (which <i>can</i> be re-used).
+<code><pre>
+    <em class="kw">constant</em> pix = <em class="gtk">create</em>(GdkPixbuf,<em class="str">"~/demos/thumbnails/mongoose.png"</em>) 
+   <em>-- note that this call is to G</em><b><u>d</u></b><em>kPixbuf, not G</em><b><u>t</u></b><em>kPixbuf!</em>
+    <em class="kw">constant</em> img = <em class="gtk">create</em>(GtkImage,pix)
+</pre></code>
+</p>
+
+<small>
+<p>Notes: When calling create(GdkPixbuf,...)
+<ol>
+<li>If the above create() line contains only a filename
+<dd>a pixbuf is returned at the natural size of the image file</dd></li>
+
+<li>If one number follows the filename
+<dd>the image will be scaled to
+that width (original height x width ratio is retained)</dd></li>
+
+<li>If two numbers follow the filename, (height x width)
+<dd>the image will be stretched to those dimensions, predictably with ugly results,
+unless you retained the h/w ration when figuring the new dimensions!</dd></li>
+
+<li>If three numbers follow the filename, the third must be 1 or 0
+ ~ a.k.a. TRUE or FALSE
+<dd>if TRUE, then the original h x w ration will be maintained, and the
+image will be scaled to either h or w, whichever is smaller.</dd>
+<dd>if FALSE, then results will be the same as in line (3) above</dd></li>
+</ol>
+</small>
+
+<p>
+In addition, images can be created from GtkStock items (deprecated), 
+or from named icons.
+When using named icons, you can specify a size for the icon, either as one of 
+the GTK_ICON_SIZE enums, or in pixels, or omit the size altogether:
+<code><pre>
+    <em class="kw">constant</em> oops = <em class="gtk">create</em>(GtkImage,<em class="str">"face-surprise"</em>,GTK_ICON_SIZE_DIALOG) <em>-- see GTK_ICON_SIZE_ enums</em>
+    <em class="kw">constant</em> oops = <em class="gtk">create</em>(GtkImage,<em class="str">"face-surprise"</em>,<em class="brown">128</em>) <em>-- width in pixels</em>
+    <em class="kw">constant</em> oops = <em class="gtk">create</em>(GtkImage,<em class="str">"face-surprise"</em>) <em>-- 'natural' size</em>
+</pre></code>
+</p>
+
+<p>
+You cannot (AFAIK) load named icons into GdkPixbufs. If you need to do this, convert the icon into a .png or .jpg, 
+using a graphic program such as the Gimp or <a href="../examples/utilities/icons.ex">icons.ex</a>.
+</p>
+<p>
+In EuGTK 4.10.0+, there's a simple utility to convert .xpm image files into
+Euphoria includes. When imported as a normal include.e file, the image(s)
+become part of the source code, and are bound into the executable, so you can distribute 
+a bound, shrouded, or compiled program without having to also distribute a number 
+of separate image files. See <a href="../examples/xpm_include_test.ex">xpm_include_test.ex</a> in the demos/examples folder.
+
+</p>
+
+<hr class="blue" />
+
+<a name="textview"></a>
+<h3>TextView</h3>
+<div class="quote boxshadow">
+<p>
+Quote from the GTK docs:<br /><br />
+<i> 
+"GTK+ has an extremely powerful framework for multiline text editing."
+ </i>
+</p>
+</div>
+<p>
+With power comes complexity, because it has to deal with multi-byte characters, 
+different text directions, input methods, fonts, etc... See <a href="../test59.ex">test59</a>. 
+</p>
+<p>
+The good news; it <i>does</i> work, and for most purposes, it will not be 
+necessary to delve into the arcane commands too deeply.
+After all, you are not likely to write a full-fledged rich-text editor
+in Euphoria, since there are dozens of these things already freely available,
+LibreOffice being just one.
+</p>
+
+<p>
+The TextView widget might be used in programs which require simple mult-line text entry, but the GtkSourceView editor is both easier to implement 
+and more versatile if you want to edit source code.
+</p>
+
+<hr class="blue" />
+
+<a name="sourceview"></a>
+
+<a href="../screenshots/test201.png">
+<img src="../screenshots/test201.png" alt="sourceview" align="right" width="300px" />
+</a>
+
+<h3>SourceView Plugin</h3> 
+<p>
+Beginning with EuGTK 4.10.0, there's a GtkSourceView plugin which can be added to
+EuGTK. This will allow your program to view/edit syntax-colored source code for over 100
+different programming languages.
+</p>
+<p>
+Only the most important parts of the SourceView widget have been 'wrapped' so far,
+but the control is already quite usable. I even use it for editing these
+html pages. Additional features, such as auto-completion, 
+searching, etc. will be added as time permits.
+</p>
+<p>
+<ul>
+<li><a href="../GtkSourceView.plugin">GtkSourceView.plugin</a>
+  <dd>The plugin itself</dd></li>
+<li><a href="../test201.ex">test201</a>
+  <dd>Eu program to demonstrate plugin</dd></li>
+</ul>
+</p>
+
+<br clear="all" />
+
+<hr class="blue" />
+<a name="webkit"></a>
+
+<h3>WebKit Plugin</h3>
+<a href="../screenshots/webkit.png">
+<img src="../screenshots/webkit.png" alt="webkit" title="Click for a larger view" align="right" width="300px" />
+</a>
+<p>
+Also, there's a plug-in for LibWebKit, which adds a web browser 'widget' to
+EuGTK. This includes a pop-up 'inspector', which works very nicely.
+</p>
+
+<p>
+<ul>
+<li><a href="../GtkWebKit.plugin">GtkWebKit.plugin</a>
+  <dd>The plugin itself</dd></li>
+<li><a href="../examples/webserver/webkit.ex">examples/webkit.ex</a>
+  <dd>Eu program to demonstrate plugin</dd></li>
+</ul>
+</p>
+
+<br clear="all" />
+<hr />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+<pre>
+
+<!--
+  space to allow scrolling footer past button bar
+-->
+
+</pre>
+
+</body>
+</html>

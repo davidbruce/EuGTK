@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>  
+	<title>EuGTK Printing</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+<heading>
+    <img src="../thumbnails/gtk-logo-rgb.gif" alt="gtk logo" />
+    <img src="../thumbnails/mongoose.png" alt="mongoose" />
+    <a href="../test150.ex" alt="test150" title="click me" >
+	<figure style="float:right; border:solid thin black;">
+    <img src="../thumbnails/document-print.png" alt="printer" title="printer" width="300px" align="right" />
+    </a>
+    </figure>
+
+    <h2><hr />EuGTK</h2>	
+    <h3>Printer support functions</h3>
+    <p>
+	GtkPrinter.e adds very easy-to-use printing capabilities to 
+	EuGTK; most printing tasks require only one or two extra lines 
+	of code. In addition, EuGTK now can now automatically apply syntax color-coding to Eu 
+	programs!
+	</p>
+	
+	<hr />
+
+</heading>
+
+<nav>
+    <div class="hdr">Quick Links:</div>
+    <a href="#setup"><button>Setup</button></a>
+    <a href="#printing"><button>Printing</button></a>
+    <a href="#connecting"><button>Connecting</button></a>
+    <a href="#calling"><button>Calling print functions</button></a>
+    <a href="#headers"><button>Custom headers &amp; footers</button></a>
+    <a href="#progress"><button>ProgressBar</button></a>
+    <a href="#custom"><button>Custom Tabs</button></a>
+    </div>
+
+<br /><br />
+
+    <div class="hdr">Other Files:</div>
+    <a href="README.html"><button>README</button></a>
+    <a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+    <a href="guide_a.html"><button>Alphabetical Guide</button></a>
+    <a href="dialogs.html"><button>Built-in Dialogs</button></a>
+    <a href="pango_markup.html"><button>Markup</button></a>
+    <a href="treeviews.html"><button>ListView/TreeView</button></a>
+    <a href="ServerHelp.html"><button>Web Server</button></a>
+    <a href="functions.html"><button>Quick Function List</button></a>
+    <a href="Glade.html"><button>Glade GUI Builder</button></a>
+    <a href="platforms.html"><button >Platforms</button></a>
+    <br />
+</nav>
+
+<a name="setup" />
+<h3><hr>Setup<hr></h3>
+
+<p>
+When printing, font size, lines-per-page, and page length 
+must be taken into account.
+Obviously, the larger the font, the fewer lines will fit 
+on a given page.
+</p>
+
+<p>
+By default (on Linux), GtkPrinter.e will print using an Ubuntu Mono 10pt. font and print 
+65 lines per 8.5x11 inch (na_letter) paper.
+Other standard paper sizes and orientations are available from the pop-up printer dialog,
+and these should also be computed automatically, as long as the font isn't changed. 
+Try <a href="../test190.ex">test190</a>.
+</p>
+
+<p>
+Other fonts may not work so well with the default lines_per_page settings. They often take up more (or less) space, both vertically 
+and horizontally, than the same size Ubuntu Mono font. For these, you must set lines_per_page manually.
+</p>
+
+<p>Example 1:
+<pre>
+        <em class="gtk">printer:font</em> = <em class="str">"Ubuntu mono 8"</em>
+        <em class="gtk">printer:lines_per_page</em> = 80
+</pre>
+Example 2:  
+<pre>      
+        <em class="gtk">printer:font</em> = <em class="str">"Purisa 12"</em>
+        <em class="gtk">printer:lines_per_page</em> = 34
+</pre>
+</p>
+
+<p>
+Some options,
+like the paper size and orientation, can also be changed by selections in 
+the pop-up printer dialogs. When paper size or orientation is changed via
+the pop-up dialog, the auto_lpp will adjust for those. If you're specifying 
+fonts manually, or auto_lpp is FALSE, you'll have to set these in advance.
+</p>
+
+<p>
+Your program can override <i>many</i> other settings exported by GtkPrinter.e,
+some of the most useful being:
+<ul class="small">
+    <li>Customized page headers and/or footers 	
+		<dfn>(see <a href="#headers">headers</a>)</dfn>
+	</li>
+
+    <li>paper_name 
+		<dfn>default is us_letter, 
+		see <a href="../resources/papersizes.txt">resources/papersizes.txt</a></dfn>
+	</li>
+
+    <li>lines_per_page <dfn>default is 65</dfn></li>
+
+    <li>use_line_numbers <dfn>default is TRUE</dfn></li>
+
+    <li>use_color <dfn>default is TRUE</dd>
+	</li>
+
+    <li>font <dfn>the usual font description: e.g. "Courier 12", or "Georgia bold 16"...</dfn>
+	</li>
+
+    <li>show_progress <dfn>default is TRUE, see <a href="#progress">progress bar</a></dfn>
+	</li>
+
+    <li>orientation <dfn>portrait, landscape </dfn></li>
+
+    <li>quality <dfn>draft, etc.</dfn></li>
+
+    <li>number_up <dfn>print 2-up or 4-up on a single sheet</dfn></li>
+
+    <li>number_up_layout <dfn>see GTK docs</dfn></li>
+
+    <li>margins <dfn>top_margin, left_margin, etc.; default is .25 inch</dfn></li>
+
+    <li>units <dfn>default is GTK_UNIT_INCH</dfn></li>
+
+    <li>scale <dfn>default is 100%</dfn></li>
+
+    <li>n_pages <dfn>max number of pages to print, defaults to full document</dfn></li>
+
+    <li>order <dfn>0 = normal (first to last page), 1 = reverse (last to first)</dfn></li>
+
+    <li>name <dfn>printer name</dfn></li>
+
+    <li>plaintext <dfn>set to TRUE to print text containing &lt; or &gt; or &amp; chars</dfn></li>
+
+    <li>wrap_at <dfn>default is 0 (no wrap)</dfn></li>
+
+    <li>tabs <dfn>replace each tab with spaces or other chars, default is 2 spaces</dfn></li>
+
+    <li>jobname <dfn>shown in printer queue, defaults to filename and job #</dfn></li>
+
+    <li>track_status <dfn>default is TRUE</dfn></li>
+
+	<li>settings_file <dfn>filename to save print job settings to. 
+		<dd><em>-- this is <u>not</u> the same as the GtkSettings ini file!</em></dd></dfn>
+	</li>
+
+	<li>setup_file <dfn>see the GTK docs</dfn></li>
+
+	<li>parent <dfn>pass the main window handle here [optional]</dfn></li>
+
+	<li>action <dfn>one of the following enums:</dfn>
+	   <ul>
+		<li>GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG 
+			   <dd><em>-- show printer setup dialog, then print (this is the default)</em></dd>
+		</li>
+		<li>GTK_PRINT_OPERATION_ACTION_PRINT 
+			<dd><em>-- print without showing any dialogs</em></dd>
+		</li>
+		<li>GTK_PRINT_OPERATION_ACTION_PREVIEW
+			<dd><em>-- preview only, without dialogs, don't print</em></dd>
+		</li>
+		<li>GTK_PRINT_OPERATION_ACTION_EXPORT
+			<dd><em>-- write a pdf to [export_file] without dialogs</em></dd>
+		</li>
+		</ul>
+	</li>
+
+    <li>export_file <dfn>name to use for .pdf file </dfn></li>
+
+    <li>confirm <dfn>pop up a dialog when job is complete, default is FALSE</dfn></li>
+</ul>
+
+Use the <em class="gtk">printer:</em> namespace when modifying the above variables.
+Note that some of these items (quality, for example) depend upon the capabilities of the printer.
+If it can't do more than one printing quality, that option will not be shown in the dialog.
+Certain other things, such as selecting a range of pages to print, or
+putting a job on hold, can only be done by the user via the print setup 
+dialogs, not from within your program, at this time.
+</p>
+
+<a name="printing" />
+<h3><hr>Printing<hr></h3>
+<p>
+Adding print capability to your program is actually pretty easy. There are two main options:
+<ol>
+    <li>Print from a disk file</li>
+    <li>Print from in-line or program-generated text</li>
+</ol>
+And, there are two ways to start the print process:
+<ol>
+    <li>Connect the print_file or print_text function to a button, and attach the filename or text as the button's data item</li>
+    <li>Call the exported function PrintFile() or PrintText()</li>
+</ol>
+
+<a name="connecting" />
+<h3><hr>Connecting to buttons<hr></h3>
+<p>
+Often, you can save a lot of typing by simply connecting a call to print_file or 
+print_text to a button, followed by the file name, file handle or text to print as the data item:
+</p>
+
+<p><pre><code>    <em class="kw">constant</em> btn1 = <em class="gtk">create</em>(GtkButton,<em class="str">"gtk-print"</em>,print_file,<em class="str">"~/demos/GtkEngine.e"</em>)<em>
+    -- default title will be GtkEngine.e</em>
+    
+    <em class="kw">constant</em> btn2 = <em class="gtk">create</em>(GtkButton,<em class="str">"gtk-print"</em>,print_text,LGPL) <em>
+    -- text stored in a constant/variable, in this case LGPL 
+    -- which is included as a global constant in EuGTK</em>
+    
+    <em class="kw">constant</em> btn3 = <em class="gtk">create</em>(GtkButton,<em class="str">"gtk-print"</em>,print_file,fn) <em>
+    -- using a Eu file handle to a previously opened file</em></code></pre>See <a href="../test189.ex">test189</a> and <a href="../test190.ex">test190</a> for various ways to call these functions.
+</p>
+
+<a name="calling" />
+<h3><hr>Calling via function calls<hr></h3>
+<p>
+If you call the print routines via a normal function call, you have the option to add
+a page title to appear in the header.<pre><code>    <em class="gtk">PrintFile</em>(<em class="str">"~/demos/GtkEngine.e"</em>) <em>-- default title will be "GtkEngine.e"</em>
+    <em class="gtk">PrintFile</em>(<em class="str">"License Terms","~/demos/license.txt"</em>) <em>-- title will be "License Terms"</em></code></pre>
+
+See <a href="../test189.ex">test189</a> and <a href="../test190.ex">test190</a> for various ways to call these functions.<pre><code>    <em class="gtk">PrintText</em>(<em class="str">""</em>,LGPL) <em>-- no title</em>
+    <em class="gtk">PrintText</em>(<em class="str">"Lesser General Public License"</em>,LGPL) <em>-- prints "Lesser General Public License" as the title</em>
+</code></pre>
+
+See <a href="../test191.ex">test191</a> to see how to print direct to a .pdf file.
+</p>
+
+<a name="headers" />
+<h3><hr>Headers and Footers<hr></h3>
+<p>
+You may wish to override the default page header, subheader, and/or footer formats.
+Header will be printed at top of each page, unless there is a 
+subheader declared, in which case header appears on page 1, and 
+subheader on pages 2 .. $.
+<br />
+Headers and footers are processed by text:format(), so you can choose what info shows
+and in what order by using numbers in square brackets.<br />For example:
+<pre><code> <em class="gtk">printer:header</em> = <em class="str">""</em> <em> -- no header</em>
+ <em class="gtk">printer:header</em> = <em class="str">"Title: &lt;b&gt;[1]&lt;/b&gt; User: [9]\nPage [5] of [6]\n\n"</em></pre> 
+Line above prints page title (bold) and user name, plus page n of n.
+The numbers in the format brackets in the header or footer will be replaced with: <br />
+<ol class="small">
+    <li>page title <em>*</em> <dfn>heading for all pages, unless there's a subtitle</dfn></li>
+    <li>page subtitle <em>*</em> <dfn>heading to use on pages after pg 1</dfn></li>
+    <li>file name <dfn> with full path</dfn></li>
+    <li>short name <dfn>file name w/o path or extension</dfn></li>
+    <li>current page number</li>
+    <li>n_pages printed</li>
+    <li>n_copies requested</li>
+    <li>today's date <dfn> in date_format</dfn></li>
+    <li>user name</li>
+    <li>real name</li>
+    <li>font name <dfn>used for this print job</dfn></li>
+    <li>file length (bytes) <dfn>for named files only</dfn></li>
+    <li>file timestamp <dfn>for named files only</dfn></li>
+    <li>export filename <dfn>for pdf files</dfn></li>
+    <li>printer name <dfn> if actual printer is installed </dfn></li>
+    <li>job name <dfn> automatically assigned if not set in code </dfn></li>
+</ol>
+
+<em>*</em> <small>These are generated automatically, unless overridden by
+declaring your own header or subheader.</small>
+</p>
+</code></pre>
+
+<p>
+You can use these in any order and combined with other text as you wish.
+If you define custom headers or footers, be sure to end the header string, and begin the footer string, with one or two '\n' to separate them from the body text!
+You may use any of the normal <a href="pango_markup.html">markup</a> tokens in the header and footer, including font and color specifications.
+</p>
+
+<p>
+<em>Important: on Windows&trade;, you'll <u>always</u> have to set up custom page headers and footers,
+since Windows is, as usual, uncooperative.</em>
+</p>
+
+<img src="../screenshots/header1.png" alt="header" />
+</p>
+<p>
+If you use custom headers or footers, be <i>sure</i> to declare them <i>after</i> you call 
+<code>  show_all(mainwindow)</code>. This way, they won't be accessed until after the GTK engine has been fully initialized. Of course, if you print from
+a Eu function you have written, you can declare the header and/or footer formats at the start of the function. They won't be set until
+the function is called. This prevents some strange errors.
+</p>
+<p>
+The current date display format can be changed by overriding printer:date_format.The format strings are the same as used in std/datetime.e.</p>
+</p>
+
+<a name="progress" />
+<h3><hr>Progress Bar<hr></h3>
+<p>
+There's a ready-to use progressbar exported by GtkPrinter.e. To use it,
+just add it in the appropriate place on your window or dialog:
+<br />
+<tt><pre>
+ <em class="gtk">pack</em>(panel,printer:progress)
+</pre></tt>
+The progressbar will be updated automatically. Sometimes it's nice to 
+hide the progressbar until printing begins. See <a href="../test150.ex">test150</a>.
+</p>
+
+<a name="custom" />
+<h3><hr>Custom Tabs<hr></h3>
+<p>
+You can construct a custom tab and page which will be added to the print dialog. 
+To do so, you will need to override 3 variables in GtkPrinter.e. 
+<ol>
+    <li><i>custom_tab_label</i></li>
+    <li><i>custom_tab_func</i> 
+    	<dl><small>A call_back to your function which creates and returns the handle to a container (GtkBox or similar) with one or more controls embedded.<br />This will be the contents of your added page.</small></dl></li>
+    <li><i>custom_tab_hook</i> 
+    <dl><small>A call_back to your function which retrieves the settings from your embedded controls and applies them as appropriate.</small></dl></li>
+</ol>
+</p>
+
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+
+</body>
+</html>

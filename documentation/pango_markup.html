@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+	<title>Pango Markup</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<heading>   
+    <img src="../thumbnails/gtk-logo-rgb.gif" alt="gtk logo" />
+    <img src="../thumbnails/mongoose.png" alt="mongoose" />
+    <a href="../test5.ex" alt="test5" title="click me" >
+    <img src="../screenshots/test5.jpg" alt="test5" title="test5" align="right" width="300px" />
+    </a>
+    <hr />
+    <h2>EuGTK</h2>
+    <h3>Pango&nbsp;Markup</h3>
+    <hr />
+    
+</heading>
+
+<nav>
+    <div class="hdr">Other Files:</div>
+    <a href="README.html"><button>README</button></a>
+    <a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+    <a href="guide_a.html"><button>Alphabetical Guide</button></a>
+    <a href="dialogs.html"><button>Built-in Dialogs</button></a>
+    <a href="treeviews.html"><button>ListView/TreeView</button></a>
+    <a href="printing.html"><button>Printing</button></a>
+    <a href="ServerHelp.html"><button>Web Server</button></a>
+    <a href="functions.html"><button>Quick Function List</button></a>
+    <a href="Glade.html"><button>Glade GUI Builder</button></a>
+    <a href="platforms.html"><button>Platforms</button></a>
+    <br />
+</nav>
+
+<a name="markup" />
+<h3>Markup</h3>
+<p>
+While you can set text font, size and style for most Gtk widgets using normal 
+method calls, this affects <i>all</i> text displayed by that widget. 
+Changing only selected portions of the text cannot be done that way. 
+Instead, we can use a subset of HTML to embed changes within 
+the text string.
+</p>
+
+<small><i>Quote from the Pango Docs (formatting added)</i></small>
+
+<div class="quote boxshadow">
+<blockquote>
+<h3>Pango Text Attribute Markup Language</h3>
+<p>
+Frequently, you want to display some text to the user with attributes applied 
+to part of the text (for example, you might want bold or italicized words). 
+With the base Pango interfaces, you could create a PangoAttrList and apply 
+it to the text; the problem is that you'd need to apply attributes to some 
+numeric range of characters, for example "characters 12-17." This is broken 
+from an internationalization standpoint; once the text is translated, the 
+word you wanted to italicize could be in a different position.
+</p>
+
+<p>
+The solution is to include the text attributes in the string to be translated. 
+Pango provides this feature with a small markup language...
+</p>
+
+<p>
+A simple example of a marked-up string might be: 
+"&lt;span foreground='blue' size='x-large'&gt;Blue text&lt;/span&gt; is &lt;i&gt;cool&lt;/i&gt;!"
+</p>
+
+<p>
+Pango uses #GMarkup to parse this language, which means that XML features such as numeric
+ character entities such as &amp;#169;  for &#169; can be used too.
+</p>
+
+<p>
+The root tag of a marked-up document is &lt;markup&gt;, but pango_parse_markup() 
+allows you to omit this tag, so you will most likely never need to use it. 
+The most general markup tag is &lt;span&gt;, then there are some convenience tags. 
+&lt;span&gt; has the following attributes:
+</p>
+
+<p>
+<table class="testing boxshadow" border="1">
+<tr><th colspan="2">Attributes</th></tr>
+<tr>    
+    <td>font, font_desc</td>
+    <td>A font description string, such as "Sans Italic 12". 
+    See pango_font_description_from_string() for a description of the format of the
+     string representation . Note that any other span attributes will override this 
+     description. So if you have "Sans Italic" and also a style="normal" attribute, 
+     you will get Sans normal, not italic.</td>
+</tr>
+
+<tr>
+    <td>font_family, face</td>
+    <td>A font family name</td>
+</tr>
+
+<tr>
+    <td>font_size, size</td>
+    <td>Font size in 1024ths of a point, or one of the absolute sizes 'xx-small', 
+    'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', or one of the 
+    relative sizes 'smaller' or 'larger'. If you want to specify a absolute size, 
+    it's usually easier to take advantage of the ability to specify a partial font 
+    description using 'font'; you can use font='12.5' rather than size='12800'</td>
+</tr>
+
+<tr>
+    <td>font_style, style</td>
+    <td>One of 'normal', 'oblique', 'italic'</td>
+</tr>
+
+<tr>
+    <td>font_weight, weight</td>
+    <td>One of 'ultralight', 'light', 'normal', 'bold', 'ultrabold', 'heavy', 
+    or a numeric weight</td>
+</tr>
+
+<tr>
+    <td>font_variant, variant</td>
+    <td>One of 'normal' or 'smallcaps'</td>
+</tr>
+
+<tr>
+    <td>font_stretch, stretch</td>
+    <td>One of 'ultracondensed', 'extracondensed', 'condensed', 'semicondensed', 
+    'normal', 'semiexpanded', 'expanded', 'extraexpanded', 'ultraexpanded'</td>
+</tr>
+
+<tr>
+	<td>font_features</td>
+	<td>A comma separated list of OpenType font feature settings, in the same syntax
+	as accepted by CSS. E.g: font_features='dlig=1, -kern, afrc on'
+	</td>
+</tr>
+
+<tr>
+    <td>foreground, fgcolor, color</td>
+    <td>An RGB color specification such as '#00FF00' or a color name such as 'red'</td>
+</tr>
+
+<tr>
+    <td>background, bgcolor</td>
+    <td>An RGB color specification such as '#00FF00' or a color name such as 'red'</td>
+</tr>
+
+<tr>
+	<td>alpha, fgalpha</td>
+	<td>An alpha value for the foreground color, either a plain integer between 1 and 65535
+	or a percentage value like '50%'.</td>
+	</tr>
+	
+<tr>
+	<td>background_alpha, bgalpha</td>
+	<td>An alpha value for the background color, either a plain integer between 1 and 65536 
+	or a percentage value like '50%' </td>
+</tr>
+
+<tr>
+    <td>underline</td>
+    <td>One of 'none', 'single', 'double', 'low', 'error'</td>
+</tr>
+
+<tr>
+    <td>underline_color</td>
+    <td>The color of underlines; an RGB color specification such as '#00FF00' or a 
+    color name such as 'red'</td>
+</tr>
+
+<tr>
+    <td>rise</td>
+    <td>Vertical displacement, in Pango units. Can be negative for subscript, positive 
+    for superscript.</td>
+</tr>
+
+<tr>
+    <td>strikethrough</td>
+    <td>'true' or 'false' whether to strike through the text</td>
+</tr>
+
+<tr>
+    <td>strikethrough_color</td>
+    <td>The color of strikethrough lines; an RGB color specification such as '#00FF00' 
+    or a color name such as 'red'</td>
+</tr>
+
+<tr>
+    <td>fallback</td>
+    <td>'true' or 'false' whether to enable fallback. If disabled, then characters 
+    will only be used from the closest matching font on the system. No fallback will 
+    be done to other fonts on the system that might contain the characters in the text. 
+    Fallback is enabled by default. Most applications should not disable fallback.</td>
+</tr>
+
+<tr>
+    <td>lang</td>
+    <td>A language code, indicating the text language</td>
+</tr>
+
+<tr>
+    <td>letter_spacing</td>
+    <td>Inter-letter spacing in 1024ths of a point.</td>
+</tr>
+
+<tr>
+    <td>gravity</td>
+    <td>One of 'south', 'east', 'north', 'west', 'auto'.</td>
+</tr>
+
+<tr>
+    <td>gravity_hint</td>
+    <td>One of 'natural', 'strong', 'line'.</td>
+</tr>
+
+<tr>
+    <th colspan="2">The following convenience tags are provided:</th>
+</tr>
+
+<tr>
+    <td>&lt;b&gt;</td>
+    <td>Bold</td>
+</tr>
+
+<tr>
+    <td>&lt;big&gt;</td>
+    <td>Makes font relatively larger, equivalent to &lt;span size="larger"&gt;</td>
+</tr>
+
+<tr>
+    <td>&lt;i&gt;</td>
+    <td>Italic</td>
+</tr>
+
+<tr>
+    <td>&lt;s&gt;</td>
+    <td>Strikethrough</td>
+</tr>
+
+<tr>
+    <td>&lt;sub&gt;</td>
+    <td>Subscript</td>
+</tr>
+
+
+<tr>
+    <td>&lt;sup&gt;</td>
+    <td>Superscript</td>
+</tr>
+
+<tr>
+    <td>&lt;small&gt;</td>
+    <td>Makes font relatively smaller, equivalent to &lt;span size="smaller"&gt;</td>
+</tr>
+
+<tr>
+    <td>&lt;tt&gt;</td>
+    <td>Monospace font</td>
+</tr>
+
+<tr>
+    <td>&lt;u&gt;</td>
+    <td>Underline</td>
+</tr>
+</table>
+</p>
+</div>
+</blockquote>
+
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+
+</body>
+</html>
