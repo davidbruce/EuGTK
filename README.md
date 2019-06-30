@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/davidbruce/EuGTK/blob/master/logo.png?raw=true" />
+  <img src="https://github.com/davidbruce/EuGTK/blob/master/logo.png?raw=true" style="height: 135px;"/>
   <h3>
     GTK 3 wrapper for <a href="https://openeuphoria.org/">Open Euphoria</a> <br /><a href="http://htmlpreview.github.io/?https://github.com/davidbruce/EuGTK/blob/master/demos/documentation/README.html">View documentation</a>
   </h3>
@@ -7,6 +7,8 @@
 
 
 A cross-platform GTK3 library for the [Euphoria](http://openeuphoria.org) programming language. EuGTK makes it easy to create modern, professional programs quickly. 
+
+#Summary 
 
 Euphoria is a powerful but easy-to-learn programming language. It has a simple syntax and structure with consistent rules, and is also easy to read. You can quickly, and with little effort, develop applications, big and small, for Windows, Unix variants (Linux, FreeBSD, ...) and OS X. 
 
@@ -17,6 +19,17 @@ Development is fast, since Euphoria is one of the fastest interpreters available
 
 For more information:
 https://sites.google.com/site/euphoriagtk/Home
+
+#Dependencies
+[Euphoria 4.1](https://openeuphoria.org/wiki/view/DownloadEuphoria.wc#betafortestingeuphoria410beta2)
+
+[GTK 3.x](https://www.gtk.org/download/index.php)
+
+**NOTE:** Linux users should install GTK with their package manager and OSX users may want to install via [Macports](https://www.macports.org/)
+
+#Running Example programs
+Save the below Hello World program anywhere and run it with
+`eui -i path/to/EuGTK/src helloworld.ex`
 
 ```
 ----------------------------------------------------------------------------
