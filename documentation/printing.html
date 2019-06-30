@@ -9,11 +9,11 @@
 <body>
 
 <heading>
-    <img src="../thumbnails/gtk-logo-rgb.gif" alt="gtk logo" />
-    <img src="../thumbnails/mongoose.png" alt="mongoose" />
-    <a href="../test150.ex" alt="test150" title="click me" >
+    <img src="thumbnails/gtk-logo-rgb.gif" alt="gtk logo" />
+    <img src="thumbnails/mongoose.png" alt="mongoose" />
+    <a href="../demos/test150.ex" alt="test150" title="click me" >
 	<figure style="float:right; border:solid thin black;">
-    <img src="../thumbnails/document-print.png" alt="printer" title="printer" width="300px" align="right" />
+    <img src="thumbnails/document-print.png" alt="printer" title="printer" width="300px" align="right" />
     </a>
     </figure>
 
@@ -72,7 +72,7 @@ By default (on Linux), GtkPrinter.e will print using an Ubuntu Mono 10pt. font a
 65 lines per 8.5x11 inch (na_letter) paper.
 Other standard paper sizes and orientations are available from the pop-up printer dialog,
 and these should also be computed automatically, as long as the font isn't changed. 
-Try <a href="../test190.ex">test190</a>.
+Try <a href="../demos/test190.ex">test190</a>.
 </p>
 
 <p>
@@ -110,7 +110,7 @@ some of the most useful being:
 
     <li>paper_name 
 		<dfn>default is us_letter, 
-		see <a href="../resources/papersizes.txt">resources/papersizes.txt</a></dfn>
+		see <a href="../demos/resources/papersizes.txt">resources/papersizes.txt</a></dfn>
 	</li>
 
     <li>lines_per_page <dfn>default is 65</dfn></li>
@@ -223,7 +223,7 @@ print_text to a button, followed by the file name, file handle or text to print 
     -- which is included as a global constant in EuGTK</em>
     
     <em class="kw">constant</em> btn3 = <em class="gtk">create</em>(GtkButton,<em class="str">"gtk-print"</em>,print_file,fn) <em>
-    -- using a Eu file handle to a previously opened file</em></code></pre>See <a href="../test189.ex">test189</a> and <a href="../test190.ex">test190</a> for various ways to call these functions.
+    -- using a Eu file handle to a previously opened file</em></code></pre>See <a href="../demos/test189.ex">test189</a> and <a href="../demos/test190.ex">test190</a> for various ways to call these functions.
 </p>
 
 <a name="calling" />
@@ -233,11 +233,11 @@ If you call the print routines via a normal function call, you have the option t
 a page title to appear in the header.<pre><code>    <em class="gtk">PrintFile</em>(<em class="str">"~/demos/GtkEngine.e"</em>) <em>-- default title will be "GtkEngine.e"</em>
     <em class="gtk">PrintFile</em>(<em class="str">"License Terms","~/demos/license.txt"</em>) <em>-- title will be "License Terms"</em></code></pre>
 
-See <a href="../test189.ex">test189</a> and <a href="../test190.ex">test190</a> for various ways to call these functions.<pre><code>    <em class="gtk">PrintText</em>(<em class="str">""</em>,LGPL) <em>-- no title</em>
+See <a href="../demos/test189.ex">test189</a> and <a href="../demos/test190.ex">test190</a> for various ways to call these functions.<pre><code>    <em class="gtk">PrintText</em>(<em class="str">""</em>,LGPL) <em>-- no title</em>
     <em class="gtk">PrintText</em>(<em class="str">"Lesser General Public License"</em>,LGPL) <em>-- prints "Lesser General Public License" as the title</em>
 </code></pre>
 
-See <a href="../test191.ex">test191</a> to see how to print direct to a .pdf file.
+See <a href="../demos/test191.ex">test191</a> to see how to print direct to a .pdf file.
 </p>
 
 <a name="headers" />
@@ -289,7 +289,7 @@ You may use any of the normal <a href="pango_markup.html">markup</a> tokens in t
 since Windows is, as usual, uncooperative.</em>
 </p>
 
-<img src="../screenshots/header1.png" alt="header" />
+<img src="screenshots/header1.png" alt="header" />
 </p>
 <p>
 If you use custom headers or footers, be <i>sure</i> to declare them <i>after</i> you call 
@@ -311,7 +311,7 @@ just add it in the appropriate place on your window or dialog:
  <em class="gtk">pack</em>(panel,printer:progress)
 </pre></tt>
 The progressbar will be updated automatically. Sometimes it's nice to 
-hide the progressbar until printing begins. See <a href="../test150.ex">test150</a>.
+hide the progressbar until printing begins. See <a href="../demos/test150.ex">test150</a>.
 </p>
 
 <a name="custom" />
@@ -331,9 +331,9 @@ To do so, you will need to override 3 variables in GtkPrinter.e.
 
 <footer>
  <div class="hint boxshadow">
- <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+ <img class="hint" src="thumbnails/mongoose.png" alt="hint" align="left" float="right" />
 	<p>
-	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	This page edited by The <a href="README.html#bear">Bear</a>, 
 	a web-page and programming editor 
 	written in <a href="OpenEuphoria.org">Euphoria</a>.
 	</p>

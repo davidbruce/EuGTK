@@ -11,11 +11,11 @@
 <body>
 
 <heading>
-    <img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK LOGO" />
-    <img src="../thumbnails/mongoose.png" alt="mongoose" />	
+    <img src="thumbnails/gtk-logo-rgb.gif" alt="GTK LOGO" />
+    <img src="thumbnails/mongoose.png" alt="mongoose" />	
     <figure style="float:right; border:solid thin black;">
-    <a href="../screenshots/glade.png">
-    <img src="../screenshots/glade.png" alt="glade" align="right" width="300px" />
+    <a href="screenshots/glade.png">
+    <img src="screenshots/glade.png" alt="glade" align="right" width="300px" />
     </a>
     <figcaption><small>
     	&nbsp;Calendar program being edited in Glade</small>
@@ -33,12 +33,12 @@
 
 <nav>
     <div class="hdr">Quick Links</div>
-    <a href="../glade/StartingGlade.html"><button>Starting with Glade</button></a><br />
+    <a href="../demos/glade/StartingGlade.html"><button>Starting with Glade</button></a><br />
     <a href="#overview"><button>Overview</button></a>
     <a href="#namespaces"><button>Namespaces</button></a>
     <a href="#problems"><button>Problems?</button></a>
     <a href="#compile"><button>Compiling/Shrouding/Binding</button></a>
-    <a href="../packaging/README.html"><button>Packaging</button></a>
+    <a href="../demos/packaging/README.html"><button>Packaging</button></a>
     <br />
     <div class="hdr">Other Files:</div>
 	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
@@ -73,7 +73,7 @@ is the <a href="bear.html">BEAR</a>, and I did <i>not</i> use Glade to design it
 easier to get the look I wanted by simply hand-coding everything!
 </p>
 
-<p>Begin by reading <a href="../glade/StartingGlade.html">Starting Glade I and II</a> for an 
+<p>Begin by reading <a href="../demos/glade/StartingGlade.html">Starting Glade I and II</a> for an 
 introduction, then read the rest of this page for details.
 </p>
 
@@ -93,8 +93,8 @@ text editor you prefer.
 <p>This template will appear on the terminal from which you run your 
 program. See the screenshot below.
 </p>
-<a href="../screenshots/template.png">
-<img src="../screenshots/template.png" alt="template" clear="left" align="right" width="400px" />
+<a href="screenshots/template.png">
+<img src="screenshots/template.png" alt="template" clear="left" align="right" width="400px" />
 </a>
 <p>You <b><i>must</i></b> run programs from a terminal (x-term, for example) while
 developing and testing. There's no way around this.
@@ -135,7 +135,7 @@ Put these functions after the call to main().
 </p>
 
 <div class="hint boxshadow">
-<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<img class="hint" src="thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
 <p>
 When using Glade, your Euphoria code may use string identifiers to refer to 
 objects, rather than having to obtain a pointer (a.k.a. 'handle') to them first.
@@ -228,8 +228,8 @@ Your Eu file main.ex would then include the line:
 </p>
 
 <h4><hr />Namespaced names
-<a href="../screenshots/namespaces.png" title="Click for a larger view" >
-<img src="../screenshots/namespaces.png" width="300px" align="right" />
+<a href="screenshots/namespaces.png" title="Click for a larger view" >
+<img src="screenshots/namespaces.png" width="300px" align="right" />
 </a></h4>
 
 
@@ -261,8 +261,8 @@ It changes with every run.
 
 <p><b>Widget names</b>
 
-<a href="../screenshots/namespaces2.png" title="click for a larger view" >
-<img src="../screenshots/namespaces2.png" align="right" width="300px" />
+<a href="screenshots/namespaces2.png" title="click for a larger view" >
+<img src="screenshots/namespaces2.png" align="right" width="300px" />
 </a>
 
 <p>
@@ -280,8 +280,8 @@ function. That function could examine the control's 'Widget name' to determine w
 If, for example, the buttons select various colors, each button could have a different 
 color as the name property: 'red', 'green', or 'blue', etc.
 <br />
-See <a href="../glade/widgetname.ex">widgetname.ex</a> and 
-<a href="../glade/widgetname.glade">widgetname.glade</a>.
+See <a href="../demos/glade/widgetname.ex">widgetname.ex</a> and 
+<a href="../demos/glade/widgetname.glade">widgetname.glade</a>.
 </p>
 
 <p>A more complex use might be to pass function names to a central 'dispatch' function,  
@@ -389,7 +389,7 @@ will <i>still</i> try to load the GUI description from the Glade XML file at run
 </p>
 
 <div class="hint boxshadow" style="width:80%;" >
-<img class="hint" src="../thumbnails/hint.png" width="100px" alt="hint" align="left" float="right" />
+<img class="hint" src="thumbnails/hint.png" width="100px" alt="hint" align="left" float="right" />
 <p style="margin-left: 40px">
 <b>Knowing the way some users think...</b><br />
 It's almost certain that someone will see that Glade&trade;<sup><em>*</em></sup> file,<br />
@@ -434,9 +434,9 @@ completely trash your program, use this method along with an ini.
 
 <footer>
  <div class="hint boxshadow">
- <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+ <img class="hint" src="thumbnails/mongoose.png" alt="hint" align="left" float="right" />
 	<p>
-	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	This page edited by The <a href="README.html#bear">Bear</a>, 
 	a web-page and programming editor 
 	written in <a href="OpenEuphoria.org">Euphoria</a>.
 	</p>

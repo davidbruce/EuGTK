@@ -146,7 +146,7 @@ windows, changes fonts, etc., which makes your programs more user-friendly. Ever
 
 <hr />
 
-<img src="../screenshots/example.png" height="150px" align="right" />
+<img src="screenshots/example.png" height="150px" align="right" />
 
 <small><small>
 <p><b><u>Key to color codes used in this documentation</u></b>
@@ -186,7 +186,7 @@ See <a href="Glade.html">Glade.html</a>.</p>
 </p> 
 
 <a name="keywords"></a>
-<h3><hr /><img src="../thumbnails/passgrn.png" align="center" height="30px" />Keywords<hr /></h3>
+<h3><hr /><img src="thumbnails/passgrn.png" align="center" height="30px" />Keywords<hr /></h3>
 <p>EuGTK allows you to program in a <i>logical</i> object-oriented style.
 By logical, I mean that only things which deserve being made into objects are
 treated as such; to be specific, the GtkWidgets. There's no silly requirement to make <i>everything</i>, including
@@ -328,7 +328,7 @@ Some examples:
 </p>
 
 <div class="hint boxshadow">
-<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<img class="hint" src="thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
 <p>
 Note that you can use <i>names</i> to refer to controls, rather than handles,
 only if you give the widget its own individual name.<br />
@@ -642,7 +642,7 @@ If you do not need to access these parameters, just don't bother to declare them
 </p>
 
 <div class="hint boxshadow">
-<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<img class="hint" src="thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
 <p>Note that you can connect more than one signal and/or function to a control.
 </p>
 
@@ -872,7 +872,7 @@ or use one of the above methods instead.
     <em class="gtk">set</em>(btn3,<em class="str">"data","dessert","Birthday Cake"</em>)
     <em class="gtk">set</em>(btn3,<em class="str">"data","price","$2.10"</em>)
     <em class="gtk">set</em>(btn3,<em class="str">"data","pix"</em>,cake)
-<img src="../screenshots/flo.jpg" alt="flo.jpg" width="300px" align="right" />
+<img src="screenshots/flo.jpg" alt="flo.jpg" width="300px" align="right" />
 <em class="gtk">show_all</em>(win)
 <em class="gtk">main()</em>
 
@@ -890,7 +890,7 @@ or use one of the above methods instead.
 </p>
 
 <a name="calendar"></a>
-<h3><hr />Calendars<img src="../thumbnails/cal.png" alt="calendar" height="30px" align="left" /></h3><hr />
+<h3><hr />Calendars<img src="thumbnails/cal.png" alt="calendar" height="30px" align="left" /></h3><hr />
 
 <p>
 The calendar will normally open with the current computer date, 
@@ -899,7 +899,7 @@ if you don't tell it otherwise.
 <p>
 There are a variety of ways to set and get the calendar date:
 </p>
-<img src="../screenshots/test31.jpg" alt="calendar" width="300px" align="right" />
+<img src="screenshots/test31.jpg" alt="calendar" width="300px" align="right" />
 
 <pre>
 <em class="gtk">get</em>(cal,<em class="str">"day"</em>) => 26 <em>-- as integers</em>
@@ -961,14 +961,14 @@ so that holidays, meetings, etc. can be displayed below the day's date.<br />See
 
 <a name="colors"></a>
 <h3><hr />RGBA Colors
-<img src="../thumbnails/applications-graphics.png" alt="colors" height="30px" align="left" /></h3><hr />
+<img src="thumbnails/applications-graphics.png" alt="colors" height="30px" align="left" /></h3><hr />
 <p>
 GTK uses a 32-bit RGBA color structure which can be a bit tricky to use, so EuGTK 
 implements some functions to make the process simpler. With EuGTK, you can specify colors by:
 <ul>
     <li>name: "red" <em><small>--this is the preferred way, using the xcolor names</small></em> 
-    <small><br /> Refer to <a href="../resources/xcolors.txt">xcolors.txt</a> for a list of names, and 
-    <a href="../examples/utilities/colornames.ex">colornames.ex</a> 
+    <small><br /> Refer to <a href="../demos/resources/xcolors.txt">xcolors.txt</a> for a list of names, and 
+    <a href="../demos/examples/utilities/colornames.ex">colornames.ex</a> 
     to see names along with color samples.</small></li>
     <li>hex value: #FF0000 <em><small>-- #RRGGBB </small></em></li>
     <li>hex string: "#FF0000" <em><small>-- as above</small></em></li>
@@ -997,7 +997,7 @@ color formats.
 </p>
 
 <a name="memory"></a>
-<h3><hr />Memory Usage<img src="../thumbnails/mongoose.png" alt="goose" height="30px" align="left" /></h3><hr />
+<h3><hr />Memory Usage<img src="thumbnails/mongoose.png" alt="goose" height="30px" align="left" /></h3><hr />
 
 <p>
 <em><b><u>eui</u></b></em><br />
@@ -1045,7 +1045,7 @@ returning from the call to keep from wasting memory.
 </p>
 
 <a name="debugging"></a>
-<h3><hr />Debugging<img src="../thumbnails/bug-buddy.png" alt="bug" height="30px" align="left" /></h3><hr />
+<h3><hr />Debugging<img src="thumbnails/bug-buddy.png" alt="bug" height="30px" align="left" /></h3><hr />
 <p>
 In the table below are some command-line switches you may use to get into the inner 
 workings of EuGTK. 
@@ -1122,7 +1122,7 @@ ERR:GtkWidget get_frame_clock -1</pre></code></td>
     
 <tr>
 <td>-&nbsp;d&nbsp;BUILDER</td>
-<td><a href="../screenshots/builder.png">Screenshot</a></td>
+<td><a href="screenshots/builder.png">Screenshot</a></td>
 <td>Used to display namespaced objects loaded from Glade</td>	
 </tr>
 
@@ -1132,9 +1132,9 @@ ERR:GtkWidget get_frame_clock -1</pre></code></td>
 
 <footer>
  <div class="hint boxshadow">
- <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+ <img class="hint" src="thumbnails/mongoose.png" alt="hint" align="left" float="right" />
 	<p>
-	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	This page edited by The <a href="README.html#bear">Bear</a>, 
 	a web-page and programming editor 
 	written in <a href="OpenEuphoria.org">Euphoria</a>.
 	</p>
