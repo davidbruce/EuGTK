@@ -1,0 +1,25 @@
+
+-- Google अनुवाद द्वारा अनुवाद
+
+--! MainWindow.title =  टेस्ट प्रोग्राम 7
+--! MainWindow.border = 10
+
++ MainWindow.HelpCaption =  सहायता
++ MainWindow.HelpTitle =  इस कार्यक्रम के बारे में
++ MainWindow.HelpText =  बताने के लिए बहुत कुछ नहीं है, | it बस एक प्रोग्राम  ok है?
+
+--! Button1.tooltip text =  बाहर निकलने के लिए यहां क्लिक करें
+--! Button1.label = छोड़ना
+--! Button1.image = gtk-quit
+
+--! Button2.tooltip text = मदद के लिए यहां क्लिक करें
+--! Button2.label = के बारे में
+--! Button2.image = gtk-about
+
+--! Button3.tooltip text = रंग बदलने के लिए यहां क्लिक करें
+--! Button3.label = पीछे का रंग
+--! Button3.image = style
+
++MainWindow.background=#50D6C3
+MainWindow.size={397,510}
+MainWindow.position={529,8}

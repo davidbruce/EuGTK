@@ -1,0 +1,77 @@
+
+
+<!DOCTYPE html>
+<head><title>Glade README</title></head>
+	<style>
+		dd{font-size:small; color: blue;}
+	</style>
+<body>
+
+<h2>Glade Demo</h2>
+<hr />
+
+<p>
+The files in this folder demonstrate one way to build a program using
+Glade. This scheme is suitable for more-complex programs which need to be
+split up into 'modules' for easier maintenance.
+</p>
+
+<p>
+There will be two files associated with each window or dialog, one
+containing the Glade xml, which describes the user interface, and one 
+containing the Euphoria code which responds to user events assocated
+with that window or dialog.
+</p>
+
+<p>
+This simple program consists of:
+<ul>
+<li>A Main window
+	<dd><a href="main.glade">main.glade</a></dd></li>
+<li>An About dialog
+	<dd><a href="about.glade">about.glade</a></dd>
+	<dd><a href="about.e">about.e</a></dd></li>
+<li>A File dialog
+	<dd><a href="file.glade">file.glade</a></dd>
+	<dd><a href="file.e">file.e</a></dd></li>
+<li>A Preferences window
+	<dd><a href="prefs.glade">prefs.glade</a></dd>
+	<dd><a href="prefs.e">prefs.e</a></dd></li> 
+<li>The main 'driver' program
+	<dd><a href="namespace_demo.ex">namespace_demo.ex</a></dd></li>
+</ul>
+
+<p>
+<b>Note:</b> namespace_demo.ex should be run from an x-term!
+</p>
+<img src="../../screenshots/namespaces.png" />
+<p>
+Doesn't look so simple now, does it?
+</p>
+
+<p>
+Nevertheless, this is in fact a good way to structure very complex programs,
+so that you can locate and modify things without searching through page after
+page of code.
+</p>
+
+<p>
+In addition, working in this 'modular' way also makes it less likely you will 
+completely ruin your program by clicking the wrong thing in the Glade
+designer. Trust me, it's easy to do.
+</p>
+
+<p>
+Note that it is generally a good idea to name the files similarly: e.g. 
+about.glade and about.e. This makes namespacing simpler. Also, note 
+how simple and clean the code is in each of these <i>*.e</i> modules!
+</p>
+
+<p>
+There's a possible drawback to this scheme, in that all the functions called from Glade must
+be declared as <i>global</i>. 
+</p>
+
+</body>
+</html>
+

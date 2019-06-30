@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+<title>Eu/EuGTK Syntax files</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+
+
+<hr />
+<h3>Euphoria/EuGTK Syntax for Geany</h3>
+<hr />
+
+<img src="compileflag.jpg" alt="Geany" />
+
+<p>
+The <a href="https://www.geany.org/">Geany</a> editor is available for Windows, Linux and MacOSX.
+</p>
+
+<p>
+The files here allow you to do syntax highlighting for the Euphoria programming language. 
+</p>
+
+<p>
+I have included a modified version of Kenneth Rhodes' gneui.ex program which allows Geany to jump to the 
+location of an error. To use it, just set your Geany Build Command in the Execute box to: 
+<i>eui ~/demos/gneui.ex %f</i>&nbsp;
+and move gneui.ex to your working directory <i>(e.g: ~/demos)</i>. If there are problems with
+this, it's due to my modifications, blame not the original author!
+</p>
+
+In the ~/demos/resources/geany_syntax folder you will find two config files to trick Geany, Pluma, etc. 
+into thinking your Euphoria files are Lua source code, thus giving you syntax highlighting:
+<pre>
+Copy filetype_extensions.conf into ~/.config/geany/
+Copy filetypes.lua into ~/.config/geany/filedefs
+</pre>
+
+</p>
+
+<p>When you open an .ex file, use the Geany menu option:<br />
+<i><small>Document/Set Filetype/Scripting Languages/Lua source file</small></i><br />
+to enable color syntax coding.
+</p>
+
+<p>After restarting Geany, Geany's Execute button will call eui,
+the Build button runs eubind, and the Compile button starts euc
+ (as a background task).
+</p>
+
+<footer>
+ <div class="hint">
+  <img class="hint" src="../mongoose.png" alt="hint" align="left" float="right" width="60px" />
+	<p>
+	This page edited by The Bear, 
+	a web-page and programming editor 
+	written in <a href="http://OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019 &copy; 2005-2019 by Irv Mullins
+	</P>
+ </div>
+</footer>
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,19 @@
+/home/irv/demos/resources/test213.ini:3
+<0127>:: Punctuation missing in between number and 'r'
+Normal button.rgba=#000000
+              ^
+
+
+--- Defined Words ---
+EU4
+EU4_1
+EU4_1_0
+CONSOLE
+UNIX
+LINUX
+X86_64
+BITS64
+LONG64
+E64
+EUI
+-------------------

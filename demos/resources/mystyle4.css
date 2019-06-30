@@ -1,0 +1,57 @@
+
+/*
+ * mystyle4.css 
+ * used by test72.ex and test138.ex
+*/
+
+#mainwin {
+    background-image: url("../thumbnails/nature.jpg");
+    background-repeat: no-repeat;
+    }
+
+#frame1 {
+    border-style: none; 
+    background-color: skyblue;
+    }
+    
+#frame2 {border-style: inset;}
+
+#frame3 {
+    border-style: outset; 
+    border-color: yellow;
+    }
+
+#frame4 {
+    border-radius: 20px;  
+    padding: 20px;
+    background-image:
+    -gtk-gradient (linear, 
+        left top, right bottom,
+        from(@yellow), to(@blue));
+    }
+#frame5 {
+    font-weight: bold;
+    font-size: 14pt;
+    border-color: blue;
+    border-radius: 20px;
+    box-shadow: inset 10px 5px 5px alpha(black,0.5);
+    background-image: url("../thumbnails/nature.jpg");
+    background-repeat: no-repeat;
+    }
+    
+#frame6 {
+    border-color: cyan;
+    background-color: yellow;
+    background-image: url("../thumbnails/euphoria.gif");
+    }
+
+ .button:hover {
+      transition:900ms ease-in-out;
+    }
+
+#cowsay {
+	font-family: Comic Sans MS;
+	font-size: 36pt;
+    color: red; 
+    text-shadow: 1px 1px 0px blue, -2px -2px yellow;
+    }

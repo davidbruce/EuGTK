@@ -1,0 +1,16 @@
+
+/* used by test43 */
+
+GtkButton:hover {
+    background-color: #f00;
+    transition: 500ms linear
+    }
+    
+GtkNotebook tab:first-child {
+    background-color: lemonchiffon
+    }
+    
+GtkNotebook tab:last-child {
+    background-color: azure;
+    }
+    

@@ -1,0 +1,25 @@
+
+
+#Main {background-image: url("thumbnails/application512.png");} 
+
+GtkWindow > GtkBox > GtkLabel {font-weight: bold; background-color: red;}
+
+GtkButton {
+    color: blue;
+    background-image: linear-gradient(180deg, white,skyblue); 
+    border: 1px dashed red;
+    }
+
+#FancyDialog { 
+    background-image: url("thumbnails/nature.jpg"); 
+    background-repeat: no-repeat;
+    background-size:250px 150px;
+    background-position: 1px 1px;
+    border: 4px dotted blue;
+    color: white;
+    font-weight: bold;
+    }
+    
+#TranspDialog {
+    background: transparent;
+    }

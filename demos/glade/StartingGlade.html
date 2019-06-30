@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>  
+	<title>Starting Glade Chap. 1</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<img src="../screenshots/glade_test_1.png" alt="glade test 1" align="right" width="500" />
+
+<h2>Using Glade 1</h2>
+
+<a name="starting" />
+<h3>Getting Started</h3>
+<h4>Step 1 - Design a Window</h4>
+<p>
+<ol>
+	<li>Open Glade, and create a new file 
+		<dd>(File/New  menu item)</dd>
+	</li>
+</li>
+
+<li>Click on the Window icon <img class="x" src="../thumbnails/red_star.png" height="15px" />
+	<dd>(leftmost item under the Toplevels tab)</dd>
+	<dd>
+	This will add a main window to your glade program. 
+	It will be named <i>window1</i>.</dd>
+</li>
+
+<li>Next, click on the Common tab in the Window Properties pane 
+	<dd>(lower right) and scroll down a bit to the Widget Flags section.</dd>
+</li>
+
+<li>Check the Visible checkbox.
+	<dd><em>If you don't make the main window visible, 
+	how are you going to be able to tell if your program 
+	is running?</em>  :)</dd>
+</li>
+
+<li>Save it with the extension .glade, e.g. <i>test1.glade</i></li>
+</ol>
+</p>
+
+<p>
+This will produce a .glade xml file which describes the interface.
+</p>
+
+<p>
+You don't need to be concerned with this xml, there's no need even 
+to look at it, and you certainly don't want to edit it! The sample below is provided just 
+to satisfy your curiosity:
+</p>
+
+<div class="quote"><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!-- Generated with glade 3.18.3 --&gt;
+&lt;interface&gt;
+  &lt;requires lib="gtk+" version="3.12"/&gt;
+  &lt;object class="GtkWindow" id="window1"&gt;
+    &lt;property name="visible"&gt;True&lt;/property&gt;
+    &lt;property name="can_focus"&gt;False&lt;/property&gt;
+    &lt;child&gt;
+      &lt;placeholder/&gt;
+    &lt;/child&gt;
+  &lt;/object&gt;
+&lt;/interface&gt;</code></pre></div>
+
+<p>
+These .glade files become huge rather quickly.
+</p>
+
+<h4>Step 2 - Link to Euphoria</h4>
+<p>
+Create a Euphoria program to load and run the .xml you just created:
+</p>
+<div class="quote"><pre><code><em class="kw">include</em> GtkEngine.e
+
+<em class="gtk">add</em>(builder,<em class="str">"test1.glade"</em>) 
+
+<em class="gtk">main</em>()
+</code></pre></div>
+
+<p>
+Save this as <i>test1.ex</i>. You should keep the names of the main .glade file and the 
+main Euphoria .ex file the same. Bad things might happen if you don't.
+</p>
+
+<h4>Step 3 - Test Run</h4>
+
+<p>You will <b><i><u>always</u></i></b> run from an x-terminal (mate-terminal, etc) 
+until your program is completely finished. There is no way around this if you <i>ever</i> 
+expect to get it completely debugged.
+</p>
+
+<p><img src="../screenshots/glade_test1.png" alt="test1" align="left" />
+
+<br clear="all" />
+
+<hr />
+
+<a name="adding_widgets" />
+
+<h4>Step 4 - Adding Widgets</h4>
+<p><img src="../screenshots/x2.png" alt="x2" align="right" width="400" />
+<ul>
+	<li><em class="blue">Add a container for a menu and button to your window</em></li>
+		<ol>
+			<li>Go back to Glade, and select a container. 
+				<dd>Box will do nicely</dd>
+				<dd>(<sub><img src="../thumbnails/grn_star.png" height="15px" /></sub> in screenshot at top of page)</dd>
+			</li>
+
+			<li>Drag and drop it into the window 
+				<dd>(accept the default number of items, and click Create)</dd>
+			</li>
+		</ol>
+
+	<li><em class="blue">Add a standard menu to your window</em></li>
+		<ol>
+			<li>Click on File 
+				<dd>(in the little 3-sided box under Containers, also)</dd>
+			</li>
+
+			<li>Drop it into the top panel in the window.</li>
+		</ol>
+
+	<li><em class="blue">Add a Quit button to your window</em></li>
+		<ol>
+			<li>Click on the OK button 
+				<dd>(under the Control and Display tab)</dd>
+			</li>
+
+			<li>Drop that into the bottom panel of the window.</li>
+
+			<li>Click on the actual button (in the window) to select it.</li>
+
+			<li>Select the General tab under Button properties 
+				<dd>(lower right pane)</dd>
+			</li>
+
+			<li>Scroll down to the Button Content section, click Stock Button, and from the combo box select Quit 					<dd>(scroll down the list)</dd>
+			</li>
+
+			<li>Click on the Signals tab in the Button properties pane.</li>
+
+			<li>Select the <i>clicked</i> signal]
+				<dd>where it says &lt;Type here&gt;, enter Quit  <em>-- no quotes please</em></dd>
+			</li> 
+
+			<li>Be sure to hit enter or click on something else
+				<dd>(so that your typed entry will be saved. <em>-- this is a quirk of Glade</em>)</dd>
+			</li>
+		</ol>
+
+	<li><em class="blue">Save your work</em>
+		<ul> 
+			<li>Ctl-s, File/Save, or click on the "save the current project" toolbar icon.</li>
+		</ul>
+</ul>
+
+</p>
+
+<hr />
+
+<p>
+<img src="../screenshots/test2.png" alt="test2"  align="right" />
+You'll now have a window with a fairly complete menu and a functioning Quit button.
+</p>
+
+<p>
+<i>But wait!</i> ~ The Quit button works, but the File/Quit menu item doesn't!
+</p>
+
+<p>
+Let's fix that:
+<ul>
+	<li>In Glade, click on the File menu item on your new window 
+		<dd>
+		<dfn>(not the Glade File menu, <u>your</u> new menu)</dfn>
+		</dd>
+		<dd>
+		<ul>
+			<li>This will select <i>menuitem1</i> in the upper right Glade pane</li>
+			<li>Click the arrow to open the submenu (menu1)</li> 
+			<li>Click its arrow to expand the actual menu items</li>
+			<li>Select <i>imagemenuitem5</i>
+				(That will be <u>your</u> File/Quit menu item.)
+			</li>
+		</ul>
+		</dd>
+	</li>
+
+	<li>From the Menu Item Properties pane <dfn>(lower right)</dfn> select the Signals tab.</li>
+	<li>Select the <i>activate</i> signal, and as you did with the Quit button, type in Quit.</li>
+</ul>
+</p>
+
+<p><small>(That seems like quite a bit of work. If you had hand-coded this program, you would have only 
+had to type one extra word.)</small>
+</p>
+
+<p>
+Now when you run test1.ex, clicking on your File menu Quit option will cause the program to quit as expected.</p>
+</p>
+
+<hr />
+<h4>Step 5 - Connecting Euphoria Functions</h4>
+<p>
+Let's add some actual Euphoria code next. Follow the steps directly above, but this time click on 
+the Help menu item, and expand the list so that you can select <i>imagemenuitem10</i> (Help/About).
+<ul>
+	<li>In the Signals tab, select activate and type in help_me (again, no quotes, hit enter)</li>
+	<li>Save your work, and run <i>$> eui test1</i> again, from the terminal.</li>
+</ul>
+
+<p>You should see something like:</p>
+
+<div class="scrn">
+<tt><pre>
+-----------------------------------------------
+-- Undeclared function in test1.glade
+-----------------------------------------------
+
+---------------------------
+global function help_me() 
+---------------------------
+
+return 1
+end function
+
+</pre></tt></div>
+
+<p>
+What to do? Copy the function prototype  and paste it into your Euphoria program.
+Then edit it to look like the one below:
+</p><img src="../screenshots/test3.png" alt="test3" align="right" float="left" />
+
+<div class="quote" style="width:50%"><pre><em> --------------------------</em>
+<em class="kw"><b> global</b> function</em> help_me() 
+<em> --------------------------</em>
+ <em class="kw">return</em><em class="gtk"> Info</em>(,,<em class="str">"About","My fine program!"</em>)
+<em class="kw"> end function</em>
+</pre></div>
+
+<p>
+Run it again, and click on the Help/About menu item. Note that your program is still only 
+6  lines of actual code.
+</p>
+
+<br clear="all" />
+
+<p>
+<hr />
+<a href="StartingGlade2.html">On to topic two</a>
+<hr />
+</p>
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+
+</body>
+</html>
+

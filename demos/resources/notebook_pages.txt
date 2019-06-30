@@ -1,0 +1,59 @@
+--------------------------------------------------------
+-- Pages for test155.ex
+--------------------------------------------------------
+-- You can use generic text markup 
+-- ALL fields must have a key!
+-- Values must end with ; (optional for last field)
+-- Blank lines must be quoted: ""
+-- Key/value pairs may have spaces between for readability.
+-- Don't use tabs, use spaces instead.
+-- comments between pages or following ; only.
+-- Experiment!
+--------------------------------------------------------
+
+Title = Bird;
+Image = thumbnails/thunderbird.png;
+Text = This is the mythical <b>Thunderbird</b>,
+placed on the tops of totem poles by 
+Native Americans in order to receive
+e-mails from distant tribes.
+""
+<small><i>(I learned this on the Internet)</i></small>
+
+Title=Ladybug; -- a small insect;
+Image=thumbnails/bug-buddy.png;
+Text=<span font='URW Chancery L 18'><b>The Ladybug</b></span>
+A harmless and colorfully-dressed, 
+if not always stylish, little insect 
+
+Title=Dragon;
+Image=thumbnails/dragon.png;
+Text=<b>Dragons</b> are mythical beasts, 
+<u><i>but not as mythical as an honest politician</i></u>...
+
+Title=Elephant;
+Image=thumbnails/mouse.png;
+Text=<b><i><s>Elephant</s></i></b>
+     I guess this isn't an elephant,
+     (I didn't have a picture of an elephant)
+     but it's <u>just like</u> an elephant:
+     it is round, has big ears, and a thin tail...
+
+Title=Fox;
+Image=thumbnails/fox.png;
+Text=<b>The Fox</b>
+  A fox is smarter than a dog
+   <small> (because it doesn't take orders from people)</small>
+  and more clever than a coyote
+   <small> (because it never wastes money on <i><b>Acme</b></i> products)</small>
+
+Some garbage text here,
+which should never show up, since it is not keyed.
+
+Title=Mongoose;
+Image=thumbnails/mongoose.png;
+Text=<b>Mongoose</b>
+Not really a goose at all, it is the 
+<a href='http://OpenEuphoria.org'> OpenEuphoria </a>'mascot'.
+<small>
+(I guess its eyes are red from programming all night.)</small>

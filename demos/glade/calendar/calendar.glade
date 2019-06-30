@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 
+
+Copyright (C) 2019 
+
+This file is part of Calendar.ex.
+
+Calendar.ex is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Calendar.ex is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with Calendar.ex.  If not, see <http://www.gnu.org/licenses/>.
+
+Author: Irv Mullins
+
+-->
+<interface>
+  <requires lib="gtk+" version="3.12"/>
+  <!-- interface-license-type lgplv3 -->
+  <!-- interface-name Calendar.ex -->
+  <!-- interface-description Nice looking calendar program -->
+  <!-- interface-copyright 2019  -->
+  <!-- interface-authors Irv Mullins -->
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">x-office-calendar</property>
+    <property name="use_fallback">True</property>
+  </object>
+  <object class="GtkWindow" id="window1">
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="title" translatable="yes">Jessica Alba</property>
+    <property name="resizable">False</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">x-office-calendar</property>
+    <property name="urgency_hint">True</property>
+    <signal name="destroy" handler="Quit" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="box1">
+        <property name="name">cal1</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkImage" id="image1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="pixbuf">Jessica-Alba.jpg</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCalendar" id="calendar1">
+            <property name="name">calendar</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="show_details">False</property>
+            <signal name="day-selected-double-click" handler="on_calendar1_day_selected_double_click" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="padding">6</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButtonBox" id="buttonbox1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_bottom">5</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">True</property>
+            <property name="baseline_position">bottom</property>
+            <property name="layout_style">spread</property>
+            <child>
+              <object class="GtkButton" id="Quit_button">
+                <property name="label">gtk-quit</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_markup" translatable="yes">Click to &lt;b&gt;Quit&lt;/b&gt;</property>
+                <property name="margin_top">7</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="Quit" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">0</property>
+                <property name="non_homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="About_button">
+                <property name="label">gtk-about</property>
+                <property name="name">about_button</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_markup" translatable="yes">Click to show &lt;b&gt;&lt;i&gt;About...&lt;/i&gt;&lt;/b&gt; box.</property>
+                <property name="margin_top">7</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_About_button_clicked" object="aboutdialog1" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+                <property name="non_homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="OK_button">
+                <property name="label">_OK</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_markup" translatable="yes">Click to pop up an &lt;b&gt;&lt;i&gt;Info&lt;/i&gt;&lt;/b&gt; dialog
+with the currently selected date.</property>
+                <property name="margin_top">7</property>
+                <property name="image">image2</property>
+                <property name="use_underline">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_OK_button_clicked" object="calendar1" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="pack_type">end</property>
+                <property name="position">2</property>
+                <property name="non_homogeneous">True</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAboutDialog" id="aboutdialog1">
+    <property name="name">About!</property>
+    <property name="can_focus">True</property>
+    <property name="title" translatable="yes">Jessica Alba</property>
+    <property name="resizable">False</property>
+    <property name="window_position">center-always</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="icon_name">x-office-calendar</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="deletable">False</property>
+    <property name="transient_for">window1</property>
+    <property name="attached_to">window1</property>
+    <property name="program_name">Glade Calendar Demo</property>
+    <property name="version">vers 1.0</property>
+    <property name="copyright" translatable="yes">© 2016 by Irv Mullins</property>
+    <property name="comments" translatable="yes">Powered by</property>
+    <property name="website">http://openeuphoria.org</property>
+    <property name="website_label" translatable="yes">OpenEuphoria</property>
+    <property name="license" translatable="yes">
+		
+LGPL ~ GNU Lesser General Public License version 3.0
+
+This library is free software; you can redistribute it 
+and/or modify it under the terms of the GNU Lesser General 
+Public License as published by the Free Software Foundation;
+either version 2 of the License, or (at your option) any later 
+version. 
+
+This library is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+See the GNU Lesser General Public License for more details. 
+
+You should have received a copy of the GNU Lesser General Public 
+License along with this library; if not, write to the Free Software 
+Foundation, Inc., 59 Temple Pl, Suite 330, Boston, MA  02111-1307 USA 
+
+</property>
+    <property name="authors">Irv Mullins</property>
+    <property name="documenters">Donald Doc</property>
+    <property name="translator_credits" translatable="yes">Kay Pasa</property>
+    <property name="artists">Vince van Goo</property>
+    <property name="logo">eugtk.png</property>
+    <property name="wrap_license">True</property>
+    <property name="license_type">custom</property>
+    <signal name="activate-link" handler="check_link" swapped="no"/>
+    <signal name="response" handler="on_aboutdialog1_response" swapped="no"/>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="aboutdialog-vbox1">
+        <property name="can_focus">False</property>
+        <property name="double_buffered">False</property>
+        <property name="resize_mode">queue</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="aboutdialog-action_area1">
+            <property name="can_focus">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

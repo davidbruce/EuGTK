@@ -1,0 +1,32 @@
+
+-- এই ডেমোতে, আমরা কিছু ব্যবহার নিয়ন্ত্রণ করতে INI ব্যবহার করি
+-- এটি বাটন ক্যাপশন এবং লেবেল ভিন্নভাবে অনুবাদ করতে ব্যবহার করা যেতে পারে
+-- সোর্স কোড বা প্রোগ্রাম পুনঃসংযোগ স্পর্শ না করেই ভাষা!
+
+-- অন্যান্য ভাষায় দেখতে, <u>eui multx xx</u> চালান, যেখানে xx হল:
+-- en ইংরেজি, ge জার্মান, gk গ্রিক, fr ফরাসি, ru রাশিয়ান, bn বাঙালি, hn হিন্দি
+
+-- গুগল অনুবাদ দ্বারা অনুবাদ
+
+--!MainWindow.title=পরীক্ষা প্রোগ্রাম
+--!MainWindow.border=10
+
++ MainWindow.HelpCaption=সাহায্য
++ MainWindow.HelpTitle=এই প্রোগ্রাম সম্পর্কে
++ MainWindow.HelpText=বলার মতো কিছুই নেই, এটা শুধু একটা প্রোগ্রাম, ঠিক আছে?
+
+--!Button1.tooltip text=প্রস্থান করার জন্য এখানে ক্লিক করুন
+--!Button1.label=_বাহির
+--!Button1.image=gtk-quit
+
+--!Button2.tooltip text=সাহায্যের জন্য এখানে ক্লিক করুন
+--!Button2.label=_সম্পর্কিত
+--!Button2.image=gtk-about
+
+--!Button3.tooltip text=রঙ পরিবর্তন করতে এখানে ক্লিক করুন
+--!Button3.label=_প্রেক্ষাপট
+--!Button3.image=style
+
++MainWindow.background=#97DFEF
+MainWindow.size={369,666}
+MainWindow.position={566,27}

@@ -1,0 +1,599 @@
+
+---------------
+namespace wk -- "Plug-in" for GtkWebKit
+---------------
+
+export constant version = "4.15.0"
+export object wkpath = "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4*"
+
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ */
+
+----------------------------------------------------------------------------
+--                                                                        --
+-- A plug-in appends new widgets to the widget array, adding functions    --    
+-- from an additional library file without changing GtkEngine.e source.   --    
+-- This needed to be implemented as a plug-in because the webkit          --           
+-- library is separate from libgtk3.                                      --                                       
+--                                                                        --                   
+-- Many more functions remain to be added, including style selections,    --     
+-- printing options, etc. Currently, a nice .pdf is printed.              --                                                  
+--                                                                        --
+-- EuGTK 4.14.2 - added search for dll/so, so should find latest version. --
+--                                                                        --
+----------------------------------------------------------------------------
+
+include GtkEngine.e
+include GtkPrinter.e
+include std/sort.e
+
+if not equal(version,gtk:version) then
+    Error(,,"GtkWebKit version mismatch","should be version " & gtk:version)
+end if
+
+object webkits = dir(wkpath) &
+	dir("/usr/lib/x86_64-linux-gnu/libwebkit2gtk-3*") & 
+	dir("/usr/lib/libwebkit2gtk-3*") & 
+	dir("/usr/local/lib/libwebkit2gtk-3*")
+
+if atom(webkits) then
+	Error(,,"No libwebkit2gtk-3 found","Cannot continue",GTK_BUTTONS_CLOSE)
+	crash("\nFATAL ERROR: No libwebkit2gtk-3 found!\n************")
+end if
+
+webkits = sort(vslice(webkits,1))
+
+ifdef WK then display(webkits) end ifdef
+
+export object wkdll = webkits[$]
+
+atom LIBWK = open_dll(wkdll)
+
+ifdef WK then display("WEBKIT:[] []",{wkdll,LIBWK}) end ifdef
+
+if LIBWK = 0 then
+	Error(,,"libwebkit failed to load!",wkdll,GTK_BUTTONS_CLOSE)
+	crash("\nFATAL ERROR: libwebkit failed!\n************")
+end if
+
+LIBS = append(LIBS,LIBWK)
+
+export constant webkit_version = text:format("[].[].[]",
+	{gtk_func("webkit_get_major_version"),
+	 gtk_func("webkit_get_minor_version"),
+	 gtk_func("webkit_get_micro_version")})
+
+widget = append(widget, {"webkit_uri_request",
+{GObject},
+	{"new",{S},P},
+	{"get_http_headers",{P},S},
+	{"get_type",{P},I},
+	{"get_uri",{P},S},
+	{"set_uri",{P,S}},
+"WebkitUriRequest"})
+export constant WebkitUriRequest = length(widget)
+
+widget = append(widget, {"webkit_back_forward_list_item",
+{GObject},
+	{"get_title",{P},S},
+	{"get_uri",{P},S},
+	{"get_original_uri",{P},S},
+"WebkitBackForwardListItem"})
+export constant WebkitBackForwardListItem = length(widget)
+
+widget = append(widget, {"webkit_back_forward_list",
+{GObject},
+	{"get_length",{P},I},
+	{"get_current_item",{P},P,0,WebkitBackForwardListItem},
+	{"get_back_item",{P},P,0,WebkitBackForwardListItem},
+	{"get_forward_item",{P},P,0,WebkitBackForwardListItem},
+	{"get_nth_item",{P,I},P,0,WebkitBackForwardListItem},
+	{"get_back_list",{P},A,0,GList},
+	{"get_back_list_with_limit",{P,I},P,0,GList},
+	{"get_forward_list",{P},A,0,GList},
+	{"get_forward_list_with_limit",{P,I},P,0,GList},
+"WebkitBackForwardList"})
+export constant WebkitBackForwardList = length(widget)
+
+widget = append(widget, {"webkit_uri_response",
+{GObject},
+	{"get_uri",{P},S},
+	{"get_status_code",{P},I},
+	{"get_content_length",{P},I},
+	{"get_mime_type",{P},S},
+	{"get_suggested_filename",{P},S},
+	{"get_http_headers",{P},P},-- soup message headers;
+"WebkitUriResponse"})
+export constant WebkitUriResponse = length(widget)
+
+widget = append(widget, {"webkit_web_page",
+{GObject},
+	{"get_dom_document",{P},P},
+	{"get_id",{P},I},
+	{"get_uri",{P},S},
+	{"get_main_frame",{P},P},
+	{"get_editor",{P},P},
+"WebkitWebPage"})
+export constant WebkitWebPage = length(widget)
+
+widget = append(widget, {"webkit_notification",
+{GObject},
+	{"get_id",{P},I},
+	{"get_title",{P},S},
+	{"get_body",{P},S},
+	{"close",{P}},
+"WebkitNotification"})
+export constant WebkitNotification = length(widget)
+
+widget = append(widget, {"webkit_hit_test_result",
+{GObject},
+	{"get_context",{P},I},
+	{"context_is_link",{P},B},
+	{"context_is_image",{P},B},
+	{"context_is_media",{P},B},
+	{"context_is_editable",{P},B},
+	{"context_is_selection",{P},B},
+	{"get_link_uri",{P},S},
+	{"get_link_title",{P},S},
+	{"get_link_label",{P},S},
+	{"get_image_uri",{P},S},
+	{"get_media_uri",{P},S},
+	{"context_is_scrollbar",{P},B},
+"WebkitHitTest"})
+export constant WebkitHitTest = length(widget)
+
+widget = append(widget, {"webkit_web_inspector",
+{GObject},
+	{"get_web_view",{P},P},
+	{"get_inspected_uri",{P},S},
+	{"get_can_attach",{P},B}, --?
+	{"is_attached",{P},B},
+	{"attach",{P}},
+	{"detach",{P}},
+	{"show",{P}},
+	{"close",{P}},
+	{"get_attached_height",{P},I},
+"WebkitWebInspector"})
+export constant WebkitWebInspector = length(widget)
+
+widget = append(widget, {"webkit_web_context", 
+{GObject},
+	{"new",{},P},
+	{"new_ephemeral",{},P},
+	{"is_ephemeral",{P},B},
+	{"set_automation_allowed",{P,B}},
+	{"is_automation_allowed",{P},B},
+	{"new_with_website_data_manager",{P},P},
+	{"get_website_data_manager",{P},P},
+	{"get_default",{},P},
+	{"clear_cache",{P}},
+	{"get_cache_model",{P},P},
+	{"set_cache_model",{P,P}},
+	{"download_uri",{P,S},P},
+	{"get_cookie_manager",{P},P},
+	{"get_favicon_database",{P},P},
+	{"set_favicon_database_directory",{P,S}},
+	{"get_favicon_database_directory",{P},S},
+	{"get_security_manager",{P},P},
+	{"get_plugins",{P,P,P,P}},
+	{"get_plugins_finish",{P,P,P},P,0,GSList},	
+	{"set_additional_plugins_directory",{P,S}},
+	{"get_spell_checking_enabled",{P},B},
+	{"set_spell_checking_enabled",{P,B}},
+	{"set_spell_checking_languages",{P,A}},
+	{"set_preferred_languages",{P,A}},
+	{"set_tls_errors_policy",{P,I}},
+	{"get_tls_errors_policy",{P},I},
+	{"allow_tls_certificate_for_host",{P,P,S}},
+	{"set_web_extensions_directory",{P,S}},
+	{"set_web_extensions_initialization_user_data",{P,P}},
+	{"prefetch_dns",{P,S}},
+	{"set_process_model",{P,P}},
+	{"get_process_model",{P},P},
+	{"get_web_process_count_limit",{P},I},
+	{"set_web_process_count_limit",{P,I}},
+	{"set_network_proxy_settings",{P,P,P}},
+	{"register_uri_scheme",{P,S,P,P,P}},
+	{"initialize_notification_permissions",{P,P,P}}, -- 2.16
+"WebkitWebContext"})
+export constant WebkitWebContext = length(widget)
+
+widget = append(widget, {"webkit_context_menu_item",
+{GObject},
+	{"new",{P},-routine_id("newContextMenuItem")},
+	{"get_action",{P},P},
+	{"is_separator",{P},B},
+	{"set_submenu",{P,P}},
+	{"get_submenu",{P},P},
+"WebkitContextMenuItem"})
+export constant WebkitContextMenuItem = length(widget)
+
+	function newContextMenuItem(atom act)
+	atom item = gtk_func("webkit_context_menu_item_new_from_stock_action",{I},{act})
+	register(item,WebkitContextMenuItem)
+	return item
+	end function
+	
+widget = append(widget, {"webkit_context_menu",
+{GObject},
+	{"new",{},P},
+	{"append",{P,P}},
+	{"prepend",{P,P}},
+	{"insert",{P,P,I}},
+	{"move_item",{P,P,I}},
+	{"get_items",{P},P,0,GList},
+	{"get_n_items",{P},I},
+	{"first",{P},P,0,WebkitContextMenuItem},
+	{"last",{P},P,0,WebkitContextMenuItem},
+	{"get_item_at_position",{P,I},P,0,WebkitContextMenuItem},
+	{"remove",{P,P}},
+	{"remove_all",{P}},
+	{"set_user_data",{P,P}},
+	{"get_user_data",{P},P},
+"WebkitContextMenu"})
+export constant WebkitContextMenu = length(widget)
+
+widget = append(widget, {"webkit_settings",
+{GObject},
+	{"new",{},P},
+	{"get_auto_load_images",{P},B},
+	{"set_auto_load_images",{P,B}},
+	{"get_enable_frame_flattening",{P},B},
+	{"set_enable_frame_flattening",{P,B}},
+	{"get_enable_html5_database",{P},B},
+	{"set_enable_html5_database",{P,B}},
+	{"get_enable_html5_local_storage",{P},B},
+	{"set_enable_html5_local_storage",{P,B}},
+	{"get_enable_hyperlink_auditing",{P},B},
+	{"set_enable_hyperlink_auditing",{P,B}},
+	{"get_enable_java",{P},B},
+	{"set_enable_java",{P,B}},
+	{"get_enable_javascript",{P},B},
+	{"set_enable_javascript",{P,B}},
+	{"get_enable_offline_web_application_cache",{P},B},
+	{"set_enable_offline_web_application_cache",{P,B}},
+	{"get_enable_plugins",{P},B},
+	{"set_enable_plugins",{P,B}},
+	{"get_enable_xss_auditor",{P},B},
+	{"set_enable_xss_auditor",{P,B}},
+	{"get_javascript_can_open_windows_automatically",{P},B},
+	{"set_javascript_can_open_windows_automatically",{P,B}},
+	{"get_load_icons_ignoring_image_load_setting",{P},B},
+	{"set_load_icons_ignoring_image_load_setting",{P,B}},
+	{"get_default_font_family",{P},S},
+	{"set_default_font_family",{P,S}},
+	{"get_monospace_font_family",{P},S},
+	{"set_monospace_font_family",{P,S}},
+	{"get_serif_font_family",{P},S},
+	{"set_serif_font_family",{P,S}},
+	{"get_sans_serif_font_family",{P},S},
+	{"set_sans_serif_font_family",{P,S}},
+	{"get_cursive_font_family",{P},S},
+	{"set_cursive_font_family",{P,S}},
+	{"get_fantasy_font_family",{P},S},
+	{"set_fantasy_font_family",{P,S}},
+	{"get_pictograph_font_family",{P},S},
+	{"set_pictograph_font_family",{P,S}},
+	{"get_default_font_size",{P},I},
+	{"set_default_font_size",{P,I}},
+	{"get_default_monospace_font_size",{P},I},
+	{"set_default_monospace_font_size",{P,I}},
+	{"get_minimum_font_size",{P},I},
+	{"set_minimum_font_size",{P,I}},
+	{"get_default_charset",{P},S},
+	{"set_default_charset",{P,S}},
+	{"get_enable_page_cache",{P},B},
+	{"set_enable_page_cache",{P,B}},
+	{"get_enable_site_specific_quirks",{P},B},
+	{"set_enable_site_specific_quirks",{P,B}},
+	{"get_draw_compositing_indicators",{P},B},
+	{"set_draw_compositing_indicators",{P,B}},
+	{"get_enable_private_browsing",{P},B},
+	{"set_enable_private_browsing",{P,B}},
+	{"get_enable_developer_extras",{P},B},
+	{"set_enable_developer_extras",{P,B}},
+	{"get_enable_resizable_text_areas",{P},B},
+	{"set_enable_resizable_text_areas",{P,B}},
+	{"get_enable_tabs_to_links",{P},B},
+	{"set_enable_tabs_to_links",{P,B}},
+	{"get_enable_dns_prefetching",{P},B},
+	{"set_enable_dns_prefetching",{P,B}},
+	{"get_enable_caret_browsing",{P},B},
+	{"set_enable_caret_browsing",{P,B}},
+	{"get_enable_fullscreen",{P},B},
+	{"set_enable_fullscreen",{P,B}},
+	{"get_print_backgrounds",{P},B},
+	{"set_print_backgrounds",{P,B}},
+	{"get_enable_webaudio",{P},B},
+	{"set_enable_webaudio",{P,B}},
+	{"get_enable_webgl",{P},B},
+	{"set_enable_webgl",{P,B}},
+	{"get_allow_modal_dialogs",{P},B},
+	{"set_allow_modal_dialogs",{P,B}},
+	{"get_zoom_text_only",{P},B},
+	{"set_zoom_text_only",{P,B}},
+	{"get_user_agent",{P},S},
+	{"set_user_agent",{P,S}},
+	{"get_javascript_can_access_clipboard",{P},B},
+	{"set_javascript_can_access_clipboard",{P,B}},
+	{"set_enable_write_console_messages_to_stdout",{P,B}},
+	{"get_enable_write_console_messages_to_stdout",{P},B},
+	{"set_enable_developer_extras",{P,B}},
+	{"get_enable_smooth_scrolling",{P},B},
+	{"set_enable_smooth_scrolling",{P,B}},
+	{"get_enable_accelerated_2d_canvas",{P},B},
+	{"set_enable_accelerated_2d_canvas",{P,B}},
+	{"get_enable_media_stream",{P},B},
+	{"set_enable_media_stream",{P,B}},
+	{"get_enable_spacial_navigation",{P},B},
+	{"set_enable_spacial_navigation",{P,B}},
+	{"get_enable_mediasource",{P},B},
+	{"set_enable_mediasource",{P,B}},
+	{"get_allow_file_access_from_file_urls",{P},B},
+	{"set_allow_file_access_from_file_urls",{P,B}},
+	{"get_media_playback_allows_inline",{P},B},
+	{"set_media_playback_allows_inline",{P,B}},
+	{"get_media_playback_requires_user_gesture",{P},B},
+	{"set_media_playback_requires_user_gesture",{P,B}},
+"WebkitSettings"})
+export constant WebkitSettings = length(widget)
+
+widget = append(widget, {"webkit_window_properties",
+{GObject},
+	{"get_geometry",{P,P}},
+	{"get_toolbar_visible",{P},B},
+	{"get_statusbar_visible",{P},B},
+	{"get_scrollbars_visible",{P},B},
+	{"get_menubar_visible",{P},B},
+	{"get_locationbar_visible",{P},B},
+	{"get_resizable",{P},B},
+	{"get_fullscreen",{P},B},
+"WebkitWindowProperties"})
+export constant WebkitWindowProperties = length(widget)
+
+widget = append(widget, {"webkit_uri_response",
+{GObject},
+        {"get_uri",{P},S},
+        {"get_status_code",{P},I},
+        {"get_content_length",{P},I},
+        {"get_mime_type",{P},S},
+        {"get_suggested_filename",{P},S},
+        {"get_http_headers",{P},P}, -- SoupMessageHeaders;
+"WebkitURIResponse"})
+export constant WebkitURIResponse = length(widget)
+
+widget = append(widget, {"webkit_web_resource",
+{GObject},
+        {"get_uri",{P},S},
+        {"get_response",{P},P,0,WebkitURIResponse},
+        {"get_data",{P,P,P,P}},
+        {"get_data_finish",{P,P,P,P},S},
+"WebkitWebResource"})
+export constant WebkitWebResource = length(widget)
+
+widget = append(widget, {"webkit_find_controller",
+{GObject},
+	{"search",{P,S,I,I}},
+	{"search_finish",{P}},
+	{"search_next",{P}},
+	{"search_previous",{P}},
+	{"get_search_text",{P},S},
+	{"count_matches",{P,S,P,P},-routine_id("countMatches")},
+	{"get_options",{P},I},
+	{"get_max_match_count",{P},I},
+	{"get_web_view",{P},P},
+"WebkitFindController"})
+export constant WebkitFindController = length(widget)
+
+	function countMatches(atom ctl, object txt, object opts=0, object max=100)
+	atom ct = allocate(16) 
+	atom fn = define_c_proc(LIBWK,"webkit_find_controller_count_matches",{P,P,I,P})
+	c_proc(fn,{ctl,txt,opts,ct})
+	return peek4u(ct)
+	end function
+	
+export constant 
+	WEBKIT_FIND_OPTIONS_NONE = 1,
+	WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE = 2,
+	WEBKIT_FIND_OPTIONS_AT_WORD_STARTS = 4,
+	WEBKIT_FIND_OPTIONS_TREAT_MEDIAL_CAPITAL_AS_WORD_START = 8,
+	WEBKIT_FIND_OPTIONS_BACKWARDS = 16,
+	WEBKIT_FIND_OPTIONS_WRAP_AROUND = 32
+	
+widget = append(widget, {"webkit_web_view",
+{GtkContainer,GtkWidget,GObject},
+	{"new",{},P},
+	{"new_with_context",{P},P},
+	{"new_with_related_view",{P},P},
+	{"new_with_settings",{P},P},
+	{"new_with_user_content_manager",{P},P},
+	{"set_editable",{P,B}},
+	{"is_editable",{P},B},
+	{"is_ephemeral",{P},B},
+	{"is_controlled_by_automation",{P},B},
+	{"get_editor_state",{P},P},
+	{"get_session_state",{P},P},
+	{"restore_session_state",{P,P}},
+	{"load_uri",{P,S}},
+	{"load_html",{P,S,S}},
+	{"load_plain_text",{P,S}}, 
+	{"load_alternate_html",{P,S,S,S}},
+	{"load_request",{P,P}},
+	{"get_context",{P},P,0,WebkitWebContext},
+	{"get_user_content_manager",{P},P},
+	{"get_website_data_manager",{P},P},
+	{"can_go_back",{P},B},
+	{"go_back",{P}},
+	{"can_go_forward",{P},B},
+	{"go_forward",{P}},
+	{"get_title",{P},S},
+	{"get_page_id",{P},I},
+	{"try_close",{P}},
+	{"load_uri",{P,S}},
+	{"load_html",{P,S,S}},
+	{"load_alternate_html",{P,S,S,S}},
+	{"load_plain_text",{P,S}},
+	{"load_bytes",{P,P,S,S,S}},
+	{"load_request",{P,P}},
+	{"reload",{P}},
+	{"reload_bypass_cache",{P}},
+	{"stop_loading",{P}},
+	{"is_loading",{P},B},
+	{"is_playing_audio",{P},B},
+	{"get_estimated_load_progress",{P},D},
+	{"get_custom_charset",{P},S},
+	{"set_custom_charset",{P,S}},
+	{"get_back_forward_list",{P},P,0,WebkitBackForwardList},
+	{"go_to_back_forward_list_item",{P,P}},
+	{"get_uri",{P},S},
+	{"get_favicon",{P},P},
+	{"set_settings",{P,P}},
+	{"get_settings",{P},P,0,WebkitSettings},
+	{"get_window_properties",{P},P,0,WebkitWindowProperties},
+	{"set_zoom_level",{P,D}},
+	{"get_zoom_level",{P},D},
+	{"get_inspector",{P},P,0,WebkitWebInspector},
+	{"can_show_mime_type",{P,S},B},
+	{"save",{P,I,P,P,P}},
+	{"save_finish",{P,P,P},P},
+	{"save_to_file",{P,P,P,P,P,P}},
+	{"save_to_file_finish",{P,P,P},B},
+	{"download_uri",{P,S},P},
+	{"get_tls_info",{P,P,P},B},
+        {"set_background_color",{P,P}}, 
+        {"get_background_color",{P,P}},
+        {"get_main_resource",{P},P,0,WebkitWebResource},
+        {"execute_editing_command",{P,S}},
+        {"get_find_controller",{P},P,0,WebkitFindController},
+        {"get_javascript_global_context",{P},P},
+        {"run_javascript",{P,S,P,P,P}},
+        {"run_javascript_finish",{P,P,P},P},
+        {"can_show_mime_type",{P,S},B},
+        {"get_snapshot",{P,P,P,P,P,P}},
+        {"get_snapshot_finish",{P,P,P},P},
+"WebkitWebView"})
+export constant WebkitWebView = length(widget)
+
+widget = append(widget, {"webkit_download", --?
+{GObject},
+	{"new",{},P},
+	{"get_request",{P},P,0,WebkitUriRequest},
+	{"get_destination",{P},S},
+	{"set_destination",{P,S}},
+	{"get_response",{P},P,0,WebkitUriResponse},
+	{"cancel",{P}},
+	{"get_estimated_progress",{P},D},
+	{"get_elapsed_time",{P},D},
+	{"get_received_data_length",{P},I},
+	{"get_web_view",{P},P,0,WebkitWebView},
+	{"get_allow_overwrite",{P},B},
+	{"set_allow_overwrite",{P,B}},
+"WebkitDownload"})
+export constant WebkitDownload = length(widget)
+
+widget = append(widget, {"webkit_print_operation",
+{GObject},
+	{"new",{P},P},
+	{"get_print_settings",{P},P,0,GtkPrintSettings},
+	{"set_print_settings",{P,P}},
+	{"get_page_setup",{P},P,0,GtkPageSetup},
+	{"set_page_setup",{P,P}},
+	{"run_dialog",{P,P},I},
+	{"print",{P}},
+"WebkitPrintOperation"})
+export constant WebkitPrintOperation = length(widget)
+
+widget = append(widget, {"webkit_file_chooser_request",
+{GObject},
+	{"get_mime_types",{P},A},
+	{"get_mime_types_filter",{P},P,0,GtkFileFilter},
+	{"get_select_multiple",{P},B},
+	{"select_files",{P,A}},
+	{"get_selected_files",{P},A},
+	{"cancel",{P}},
+"WebkitFileChooserRequest"})
+export constant WebkitFileChooserRequest = length(widget)
+
+widget = append(widget, {"webkit_user_content_manager",
+{GObject},
+	{"new",{},P},
+	{"add_style_sheet",{P,P}},
+	{"remove_all_stylesheets",{P}},
+	{"add_script",{P,P}},
+	{"remove_all_scripts",{P}},
+	{"register_script_message_handler",{P,S},B},
+	{"unregister_script_message_handler",{P,S}},
+"WebkitUserContentManager"})
+export constant WebkitUserContentManager = length(widget)
+
+export enum
+WEBKIT_LOAD_STARTED = 0,
+WEBKIT_LOAD_REDIRECTED,
+WEBKIT_LOAD_COMMITTED,
+WEBKIT_LOAD_FINISHED,
+WEBKIT_CONTEXT_MENU_ACTION_NO_ACTION = 0,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_LINK,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_LINK_IN_NEW_WINDOW,
+WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_LINK_TO_DISK,
+WEBKIT_CONTEXT_MENU_ACTION_COPY_LINK_TO_CLIPBOARD,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_IMAGE_IN_NEW_WINDOW,
+WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_IMAGE_TO_DISK,
+WEBKIT_CONTEXT_MENU_ACTION_COPY_IMAGE_TO_CLIPBOARD,
+WEBKIT_CONTEXT_MENU_ACTION_COPY_IMAGE_URL_TO_CLIPBOARD,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_FRAME_IN_NEW_WINDOW,
+WEBKIT_CONTEXT_MENU_ACTION_GO_BACK, --10
+WEBKIT_CONTEXT_MENU_ACTION_GO_FORWARD,
+WEBKIT_CONTEXT_MENU_ACTION_STOP,
+WEBKIT_CONTEXT_MENU_ACTION_RELOAD,
+WEBKIT_CONTEXT_MENU_ACTION_COPY,
+WEBKIT_CONTEXT_MENU_ACTION_CUT,
+WEBKIT_CONTEXT_MENU_ACTION_PASTE,
+WEBKIT_CONTEXT_MENU_ACTION_DELETE,
+WEBKIT_CONTEXT_MENU_ACTION_SELECT_ALL,
+WEBKIT_CONTEXT_MENU_ACTION_INPUT_METHODS,
+WEBKIT_CONTEXT_MENU_ACTION_UNICODE, --20
+WEBKIT_CONTEXT_MENU_ACTION_SPELLING_GUESS,
+WEBKIT_CONTEXT_MENU_ACTION_NO_GUESSES_FOUND,
+WEBKIT_CONTEXT_MENU_ACTION_IGNORE_SPELLING,
+WEBKIT_CONTEXT_MENU_ACTION_LEARN_SPELLING,
+WEBKIT_CONTEXT_MENU_ACTION_IGNORE_GRAMMAR,
+WEBKIT_CONTEXT_MENU_ACTION_FONT_MENU,
+WEBKIT_CONTEXT_MENU_ACTION_BOLD,
+WEBKIT_CONTEXT_MENU_ACTION_ITALIC,
+WEBKIT_CONTEXT_MENU_ACTION_UNDERLINE,
+WEBKIT_CONTEXT_MENU_ACTION_OUTLINE, --30
+WEBKIT_CONTEXT_MENU_ACTION_INSPECT_ELEMENT,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_VIDEO_IN_NEW_WINDOW,
+WEBKIT_CONTEXT_MENU_ACTION_OPEN_AUDIO_IN_NEW_WINDOW,
+WEBKIT_CONTEXT_MENU_ACTION_COPY_VIDEO_LINK_TO_CLIPBOARD,
+WEBKIT_CONTEXT_MENU_ACTION_COPY_AUDIO_LINK_TO_CLIPBOARD,
+WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_CONTROLS,
+WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP,
+WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN,
+WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PLAY,
+WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PAUSE, --40
+WEBKIT_CONTEXT_MENU_ACTION_MEDIA_MUTE,
+WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_VIDEO_TO_DISK,
+WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_AUDIO_TO_DISK,
+WEBKIT_CONTEXT_MENU_ACTION_CUSTOM --44
+
+-------------------------------------
+-- copyright 2005-2019 by Irv Mullins
+-------------------------------------
+
+	

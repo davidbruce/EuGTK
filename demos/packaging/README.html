@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>README</title>	
+  <link rel="stylesheet" href="../documentation/style.css" type="text/css">
+</head>
+
+<body>
+
+<header>
+    <img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK Logo">
+    <img src="../thumbnails/mongoose.png" alt="OpenEuphoria Logo">
+  
+</header>
+
+<hr /><h3 class='blue'>Packaging your EuGTK programs<hr /></h3>
+
+<p><i>Instructions below are specific to Linux; Windows&trade; users are on their own.</i></p>
+
+<p>
+The are several methods by which your program can be launched:
+</p>
+
+<ul>
+<li> from a terminal in your home directory:
+<div class="scrn"><tt>user@user-desktop ~ $ <em class="orange">eui demos/test0</em></tt></div></li>
+<li>from a terminal in your program's directory:
+<div class="scrn"><tt>user@user-desktop ~ $ <em class="orange">cd demos</em><br />user@user-desktop ~/demos $ <em class="orange">eui test0</em></tt></div></li>
+<li>or by clicking a program icon
+from your window manager.</li>
+</ul>
+
+<p> 
+This can make it difficult for your program to find where images
+are located. This in turn makes it difficult to package programs and images
+in such a way that they can be moved anywhere within the file system
+the user desires. 
+</p>
+
+<h3>Images</h3>
+
+<p>
+In order for your program to find associated images, you can package the images
+in the same folder as your program.
+</p>
+
+<p>
+Then, immediately after including GtkEngine.e, add:<pre>  <code><em class="kw">if not equal</em>(prog_dir,curr_dir) <em class="kw">then</em> 
+     <em class="kw">chdir</em>(prog_dir) 
+  <em class="kw">end if</em>
+</code></pre>
+</p>
+
+<p>
+If you're coding manually, this is usually all it takes to make the package 
+moveable.
+</p>
+
+<p>
+Of course, this scheme depends upon changing to the program directory before
+loading the images. After that, you can change to another directory
+if appropriate for your work, as long as you don't need to load any images
+later in the program (such as from a pop-up dialog).
+</p>
+
+<p>
+It may be a good idea to change back to the original directory after loading 
+the images:<pre>  <code><em class="kw">chdir</em>(init_dir)</code></pre>
+</p>
+
+<p>
+Unfortunately, this does not work with Glade. You're pretty much stuck
+with storing the images in the same folder as the source code. It may be
+preferable to convert the images into Euphoria include files.
+</p>
+
+<h3>Buttons</h3>
+
+<p><i>
+Info below applies <i>only</i> to icons used with buttons, not to images
+used as GdkPixbufs or GtkImages.
+</i></p>
+
+<p>
+If you need to supply custom button icons with your program, you do not
+need to 'hard-code' the location of those icons, but can instead 
+append the location of those icons (obtained at run-time) to the icon theme.
+</p>
+
+<p>
+The icons <i>must</i> be .png files, but you do <i>not</i> include the 
+extension when creating buttons from these icon files.
+</p>
+
+<p>
+Use this if icons are located in the same folder as the program:
+
+<p><code><pre>
+<em class="kw">constant</em> theme = <em class="gtk">create</em>(GtkIconTheme) 
+<em class="gtk">set</em>(theme,<em class="str">"append search path"</em>,prog_dir) 
+</pre></code></p>
+</p>
+
+<p>
+If icons are located in a subdirectory of the program (e.g. thumbnails):
+
+<p><code><pre>
+<em class="kw">constant</em> theme = <em class="gtk">create</em>(GtkIconTheme) 
+<em class="gtk">set</em>(theme,<em class="str">"append search path"</em>,prog_dir & <em class="str">"/thumbnails"</em>) 
+</pre></code></p>
+</p>
+
+<p>
+In either of the above, if the program directory is moved, the associated icons you supplied will move with it.
+Also, it's easy to 'zip' up the whole thing for distribution.
+</p>
+
+<p>
+For Linux, it's possible to create a hidden <i>.config/your_program</i> folder, and store
+the button icons as .png files and .ini files there. See <a href="../test231.ex">test231</a>.
+</p>
+
+<p><code><pre>
+<em class="kw">constant</em> theme = <em class="gtk">create</em>(GtkIconTheme)
+<em class="gtk">set</em>(theme,<em class="str">"append search path"</em>,<em class="kw">canonical_path</em>(<em class="str">"~/.config/your_program"</em>))
+</pre></code></p>
+</p>
+
+<p>
+Remember, this only works for icons (buttons, etc) not images, and 
+only looks for .png images, so it's of limited utility.
+Unfortunately, it also requires you to <i><b>not</b></i> use the .png extension
+when coding the button. I can't recommend this, really. It's too much 
+trouble for too little gain.
+</p>
+
+<hr />
+
+<h4>For those who wear both suspenders and a belt...</h4>
+
+<p>
+The best advice I can give to eliminate all problems is to hand-code your 
+program rather than use Glade, and to convert all images to .xpm and then
+include them as *.e files. Use the utility xpm_to_eu_include.ex program.
+Then bind or compile it. That way, your images will always go with the program, 
+and can never get lost, changed, or deleted.
+</p>
+
+<footer>
+ <div class="hint">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019 &copy; 2005-2019 by Irv Mullins
+
+ </div>
+</footer>
+
+</body>
+</html>
+

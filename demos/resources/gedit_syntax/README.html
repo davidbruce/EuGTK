@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+<title>Eu/EuGTK Syntax files</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+
+
+<hr />
+<h3>Euphoria/EuGTK Syntax for text editors</h3>
+<hr />
+
+<img src="cc.png" alt="color coded syntax" border="1" />
+
+<p>
+These files allow you to add syntax highlighting for the Euphoria programming language 
+to several of the most common cross-platform editors, including the GtkSourceView editor used by the BEAR.</p>
+
+<h5>To Install:</h5>
+<p>
+<em class="yb"><b>For programs using GTK2 -- i.e. Pluma, gedit, etc.</b></em><pre>
+sudo cp euphoria.lang /usr/share/gtksourceview-2.0/language-specs/euphoria.lang
+sudo cp gedit_syntax.xml /usr/share/mime/packages/
+</pre>
+
+<em class="yb"><b>For programs using GTK3 -- i.e. Xed, EuGTK Sourceview</b></em><pre>
+sudo cp euphoria.lang /usr/share/gtksourceview-3.0/language-specs/euphoria.lang
+sudo cp gedit_syntax.xml /usr/share/mime/packages/
+</pre>
+
+<p>
+<em class="yb"><b>Next, copy all the styles included here in "one swell foop":</b></em><pre>
+sudo cp *.xml /usr/share/gtksourceview-2.0/styles/
+sudo cp *.xml /usr/share/gtksourceview-3.0/styles/
+</pre>
+
+<h5>You may have to change permissions on the following files:</h5><pre>
+sudo chmod 777 /usr/share/gtksourceview-2.0/language-specs/euphoria.lang
+sudo chmod 777 /usr/share/gtksourceview-3.0/language-specs/euphoria.lang
+</pre>
+</p>
+
+<p>For more themes, go to <a href="https://github.com/mig/gedit-themes">gedit-themes</a> on github.</p>
+
+<footer>
+ <div class="hint">
+  <img class="hint" src="../mongoose.png" alt="hint" align="left" float="right" width="60px" />
+	<p>
+	This page edited by The Bear, a web-page and programming editor 
+	written in <a href="http://OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019 &copy; 2005-2019 by Irv Mullins
+	</P>
+ </div>
+</footer>
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,772 @@
+
+---------------
+namespace sv -- "Plug-in" for GtkSourceView 
+---------------
+
+export constant version = "4.15.0" 
+export object svpath = "/usr/lib/x86_64-linux-gnu/libgtksourceview*"
+
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ */
+ 
+---------------------------------------------------------------------------
+--                                                                       --
+-- A plug-in appends new widgets to the widget array, adding functions   --
+-- and an additional library file without changing GtkEngine.e source.   --
+-- This needed to be implemented as a plug-in because the SourceView     --
+-- library is shipped separately from libgtk3.                           -- 
+--                                                                       -- 
+-- Many more functions remain to be added, including style selections,   --
+-- printing options, etc.                                                --     
+--                                                                       --
+-- EuGTK 4.14.2 - added search for dll/so, so should find latest version.--
+--                                                                       --
+---------------------------------------------------------------------------
+
+include GtkEngine.e
+include std/sort.e
+
+
+if not equal(version,gtk:version) then
+    Error(,,"GtkSourceView.plugin version mismatch",
+        "should be version " & gtk:version)
+end if
+
+object sourceviews = dir(svpath) &
+    dir("/usr/lib/libgtksourceview*") &
+    dir("/usr/local/lib/libgtksourceview*") &
+    dir("C:\\Program Files\\GTK3-Runtime Win64\\bin\\libgtksourceview*")
+
+if atom(sourceviews) then
+	Error(,,"No libgtksourceview found","Cannot continue",GTK_BUTTONS_CLOSE)
+	crash("\nFATAL ERROR: No libgtksourceview found!\n************")
+end if
+
+sourceviews = sort(vslice(sourceviews,1))
+
+ifdef SV then display(sourceviews) end ifdef
+
+export object svdll = sourceviews[$]
+
+export atom LIBSV = open_dll(svdll)
+
+ifdef SV then display("SOURCEVIEW:[] []",{svdll,LIBSV}) end ifdef
+
+if LIBSV = 0 then 
+    Error(,,"Sourceview dll/so failed",svdll,GTK_BUTTONS_CLOSE)
+    crash("\nFATAL ERROR: Sourceview dll/so failed!\n************")
+end if
+
+LIBS = append(LIBS,LIBSV)
+
+widget = append(widget, {"gtk_source_mark",
+{GtkTextMark,GObject},
+    {"new",{S,S},P},
+    {"get_category",{P},S},
+    {"next",{P,S},P,0,length(widget)},
+    {"prev",{P,S},P,0,length(widget)},
+"GtkSourceMark"})
+export constant GtkSourceMark = length(widget)
+
+widget = append(widget, {"gtk_source_undo_manager",
+{},
+    {"can_undo",{P},B},
+    {"can_redo",{P},B},
+    {"undo",{P}},
+    {"redo",{P}},
+    {"begin_not_undoable_action",{P}},
+    {"end_not_undoable_action",{P}},
+    {"can_undo_changed",{P}},
+    {"can_redo_changed",{P}},
+"GtkSourceUndoManager"})
+export constant GtkSourceUndoManager = length(widget)
+
+widget = append(widget, {"gtk_source_tag_style",
+{GObject},
+    {"new",{},P},
+    {"copy",{P},P},
+    {"free",{P}},
+"GtkSourceTagStyle"})
+export constant GtkSourceTagStyle = length(widget)
+
+widget = append(widget, {"gtk_source_style_scheme",
+{GObject},      
+    {"get_id",{P},S},
+    {"get_name",{P},S},
+    {"get_description",{P},S},
+    {"get_authors",{P},A},
+    {"get_filename",{P},S},
+    {"get_style",{P,S},P},
+"GtkSourceStyleScheme"})
+export constant GtkSourceStyleScheme = length(widget)
+
+widget = append(widget, {"gtk_source_language",
+{GObject},
+    {"get_id",{P},S}, 
+    {"get_name",{P},S},
+    {"get_section",{P},S},
+    {"get_hidden",{P},B},
+    {"get_tags",{P},P},
+    {"get_tag_style",{P,S},P,0,GtkSourceTagStyle},
+    {"set_tag_style",{P,S,P}},
+    {"get_tag_default_style",{P,S},P,0,GtkSourceTagStyle},
+    {"get_escape_char",{P},S},
+    {"get_metadata",{P,S},S},
+    {"get_mime_types",{P},-routine_id("get_mime_types")},
+    {"set_mime_types",{P,A}},
+    {"get_globs",{P},P},
+    {"get_style_name",{P,S},S},
+    {"get_style_scheme",{P},P,0,GtkSourceStyleScheme},
+    {"set_style_scheme",{P,P}},
+    {"get_style_ids",{P},A},
+    {"get_style_name",{P,S},S},
+    {"get_style_fallback",{P,S},S},
+"GtkSourceLanguage"})
+export constant GtkSourceLanguage = length(widget)
+
+    function get_mime_types(atom sl)
+    object mimetypes = {}
+    atom x = gtk_func("gtk_source_language_get_mime_types",{P},{sl})
+    while peek4u(x) > 0 do
+        mimetypes &= peek_string(peek4u(x)) & " "
+        x += 4
+    end while
+    return mimetypes
+    end function
+
+export constant GtkSourceMarker = length(widget)+1
+widget = append(widget, {"gtk_source_marker",
+{GObject},
+    {"set_marker_type",{P,S}},
+    {"get_marker_type",{P},S},
+    {"get_line",{P},I},
+    {"get_name",{P},S},
+    {"get_buffer",{P},P},
+    {"next",{P},P,0,GtkSourceMarker},
+    {"prev",{P},P,0,GtkSourceMarker},
+"GtkSourceMarker"})
+
+widget = append(widget, {"gtk_source_buffer",
+{GtkTextBuffer,GObject},
+    {"new",{P},P},
+    {"new_with_language",{P},P},
+    {"get_check_brackets",{P},B},
+    {"set_check_brackets",{P,B}},
+    {"set_bracket_match_style",{P,P}},
+    {"get_highlight",{P},B},
+    {"set_highlight",{P,B}},
+    {"set_highlight_syntax",{P,B}},
+    {"get_highlight_syntax",{P},B},
+    {"set_language",{P,P}},
+    {"get_language",{P},P,0,GtkSourceLanguage},
+    {"get_escape_char",{P},S},
+    {"set_escape_char",{P,S}},
+    {"set_highlight_matching_brackets",{P,B}},
+    {"get_highlight_matching_brackets",{P},B},
+    {"set_style_scheme",{P,P}},
+    {"get_style_scheme",{P},P,0,GtkSourceStyleScheme},
+    {"ensure_highlight",{P,P,P}},
+    {"undo",{P}},
+    {"redo",{P}},
+    {"can_undo",{P},B},
+    {"can_redo",{P},B},
+    {"begin_not_undoable_action",{P}},
+    {"end_not_undoable_action",{P}},
+    {"get_max_undo_levels",{P},I},
+    {"set_max_undo_levels",{P,I}},
+    {"get_undo_manager",{P},P,0,GtkSourceUndoManager},
+    {"set_undo_manager",{P,P}},
+    {"iter_has_context_class",{P,P,S},B},
+    {"get_context_classes_at_iter",{P,P,P},P},
+    {"iter_forward_to_context_class_toggle",{P,P,S},B},
+    {"iter_backward_to_context_class_toggle",{P,P,S},B},
+    {"create_marker",{P,S,S,P},P,0,GtkSourceMarker},
+    {"create_source_mark",{P,S,S,P},P,0,GtkSourceMark},
+    {"move_marker",{P,P,P}},
+    {"delete_marker",{P,P}},
+    {"get_marker",{P,S},P,0,GtkSourceMarker},
+    {"get_markers_in_region",{P,P,P},A},
+    {"get_first_marker",{P},P,0,GtkSourceMarker},
+    {"get_last_marker",{P},P,0,GtkSourceMarker},
+    {"get_iter_at_marker",{P,P,P}},
+    {"get_next_marker",{P,P},P,0,GtkSourceMarker},
+    {"get_prev_marker",{P,P},P,0,GtkSourceMarker},
+    {"forward_iter_to_source_mark",{P,P,S},B},
+    {"backward_iter_to_source_mark",{P,P,S},B},
+    {"get_source_marks_at_line",{P,I,S},P,0,GSList},
+    {"get_source_marks_at_iter",{P,P,S},P,0,GSList},
+    {"remove_source_marks",{P,P,P,S}},
+    {"change_case",{P,I,P,P}},
+    {"join_lines",{P,P,P}},
+    {"sort_lines",{P,P,P,I,I}},
+    {"set_implicit_trailing_newline",{P,B}},
+    {"get_implicit_trailing_newline",{P},B},
+"GtkSourceBuffer"})
+export constant GtkSourceBuffer = length(widget)
+
+widget = append(widget, {"gtk_source_gutter_renderer",
+{GObject},
+    {"begin",{P,P,P,P,P,P}},
+    {"draw",{P,P,P,P,P,P,I}},
+    {"end",{P}},
+    {"get_size",{P},I},
+    {"set_size",{P,I}},
+    {"set_visible",{P,B}},
+    {"get_visible",{P},B},
+    {"get_padding",{P,I,I}},
+    {"set_padding",{P,I,I}},
+    {"get_alignment",{P,F,F}},
+    {"set_alignment",{P,F,F}},
+    {"set_alignment_mode",{P,I}},
+    {"get_window_type",{P},I},
+    {"get_view",{P},P,0,GtkTextView},
+    {"get_alignment_mode",{P},I},
+    {"get_background",{P,P},B},
+    {"set_background",{P,P}},
+    {"activate",{P,P,P,P}},
+    {"query_activatable",{P,P,P,P},B},
+    {"queue_draw",{P}},
+    {"query_tooltip",{P,P,P,I,I,P},B},
+    {"query_data",{P,I,I,I}},
+"GtkSourceGutterRenderer"})
+export constant GtkSourceGutterRenderer = length(widget)
+
+widget = append(widget, {"gtk_source_view",
+{GtkTextView,GtkContainer,GtkWidget,GtkBuildable,GtkScrollable,GObject},
+    {"new",{},P},
+    {"set_show_line_numbers",{P,B}},
+    {"get_show_line_numbers",{P},B},
+    {"set_show_right_margin",{P,B}},
+    {"get_show_right_margin",{P},B},
+    {"set_right_margin_position",{P,I}},
+    {"get_right_margin_position",{P},I},
+    {"set_highlight_current_line",{P,B}},
+    {"get_highlight_current_line",{P},B},
+    {"set_auto_indent",{P,B}},
+    {"get_auto_indent",{P},B},
+    {"set_indent_on_tab",{P,B}},
+    {"get_indent_on_tab",{P},B},
+    {"set_tab_width",{P,I}},
+    {"get_tab_width",{P},I},
+    {"set_indent_width",{P,I}},
+    {"get_indent_width",{P},I},
+    {"set_insert_spaces_instead_of_tabs",{P,B}},
+    {"get_insert_spaces_instead_of_tabs",{P},B},
+    {"indent_lines",{P,P,P}},
+    {"unindent_lines",{P,P,P}},
+    {"get_visual_column",{P,P},I},
+    {"set_smart_home_end",{P,I}},
+    {"get_smart_home_end",{P},I},
+    {"set_mark_attributes",{P,S,P,I}},
+    {"get_mark_attributes",{P,S,I},P},
+    {"set_show_line_marks",{P,B}},
+    {"get_show_line_marks",{P},B},
+    {"set_draw_spaces",{P,I}},
+    {"get_draw_spaces",{P},I},
+    {"get_completion",{P},P},
+    {"get_gutter",{P,I},P},
+    {"set_background_pattern",{P,I}}, -- 3.16
+    {"get_background_pattern",{P},I}, -- 3.16
+    {"set_smart_backspace",{P,B}}, -- 3.18
+    {"get_smart_backspace",{P},B}, -- 3.18
+    {"get_space_drawer",{P},P}, --3.24
+"GtkSourceView"})
+export constant GtkSourceView = length(widget)
+
+widget = append(widget, {"gtk_source_space_drawer",
+{GtkSourceView},
+    {"new",{},P},
+    {"set_types_for_locations",{P,I,I}},
+    {"get_types_for_locations",{P,I},I},
+    {"set_matrix",{P,P}},
+    {"get_matrix",{P},P},
+    {"set_enable_matrix",{P,B}},
+    {"get_enable_matrix",{P},B},
+    {"bind_matrix_setting",{P,P,P,I}},
+"GtkSourceSpaceDrawer"})
+export constant GtkSourceSpaceDrawer = length(widget)
+
+widget = append(widget, {"gtk_source_map", -- 3.18
+{GtkSourceView,GtkTextView,GtkContainer,GtkWidget,GObject},
+    {"new",{},P},
+    {"set_view",{P,P}},
+    {"get_view",{P},P,0,GtkSourceView},
+"GtkSourceMap"})
+export constant GtkSourceMap = length(widget)
+
+widget = append(widget, {"gtk_source_language_manager",
+{GObject},
+    {"new",{},P},
+    {"get_default",{},P},
+    {"set_search_path",{P,P}},
+    {"get_search_path",{P},P},
+    {"get_language_ids",{P},V},
+    {"get_language",{P,P},P,0,GtkSourceLanguage},
+    {"guess_language",{P,P,P},P,0,GtkSourceLanguage},
+"GtkSourceLanguageManager"})
+export constant GtkSourceLanguageManager = length(widget)
+
+widget = append(widget, {"gtk_source_languages_manager",
+{GObject},
+    {"new",{},P},
+    {"get_available_languages",{P},A},
+    {"get_language_from_mime_type",{P,S},P,0,GtkSourceLanguage},
+    {"get_lang_files_dirs",{P},A},
+"GtkSourceLanguagesManager"})
+export constant GtkSourceLanguagesManager = length(widget)
+
+widget = append(widget, {"gtk_source_print_job", -- doesn't currently work!
+{GObject},
+    {"new",{P},P},
+    {"set_buffer",{P,P}},
+    {"get_buffer",{P},P,0,GtkSourceBuffer},
+    {"set_config",{P,P}},
+    {"get_config",{P},P},
+    {"setup_from_view",{P,P}},
+    {"set_tabs_width",{P,I}},
+    {"get_tabs_width",{P},I},
+    {"set_wrap_mode",{P,I}},
+    {"get_wrap_mode",{P},I},
+    {"set_highlight",{P,B}},
+    {"get_highlight",{P},B},
+    {"set_font_desc",{P,P}},
+    {"set_font",{P,S}},
+    {"get_font_desc",{P},P,0,PangoFontDescription},
+    {"get_font",{P},S},
+    {"set_numbers_font_desc",{P,P}},
+    {"set_numbers_font",{P,S}},
+    {"get_numbers_font_desc",{P},P,0,PangoFontDescription},
+    {"get_numbers_font",{P},S},
+    {"set_print_numbers",{P,I}},
+    {"get_print_numbers",{P},I},
+    {"set_text_margins",{P,D,D,D,D}},
+    {"get_text_margins",{P,D,D,D,D}},
+    {"print",{P},P},
+    {"print_range",{P,P,P},P},
+    {"print_range_async",{P,P,P},B},
+    {"cancel",{P}},
+    {"get_print_job",{P},P},
+    {"get_page",{P},I},
+    {"get_page_count",{P},I},
+    {"get_print_context",{P},P},
+    {"set_print_header",{P,B}},
+    {"get_print_header",{P},B},
+    {"set_print_footer",{P,B}},
+    {"get_print_footer",{P},B},
+    {"set_header_footer_font_desc",{P,P}},
+    {"set_header_footer_font",{P,S}},
+    {"get_header_footer_font_desc",{P},P,0,PangoFontDescription},
+    {"get_header_footer_font",{P},S},
+    {"set_header_format",{P,S,S,S,B}},
+    {"set_footer_format",{P,S,S,S,B}},
+"GtkSourcePrintJob"})
+export constant GtkSourcePrintJob = length(widget)
+
+widget = append(widget, {"gtk_source_style",
+{GObject},
+    {"new",{},P},
+    {"copy",{P},P},
+"GtkSourceStyle"})
+export constant GtkSourceStyle = length(widget)
+
+widget = append(widget, {"gtk_source_tag_table",
+{GObject},
+    {"new",{},P},
+    {"add_tags",{P,P}},
+    {"remove_source_tags",{P}},
+"GtkSourceTagTable"})
+export constant GtkSourceTagTable = length(widget)
+
+widget = append(widget,{"gtk_source_completion_item",
+{GObject},
+    {"new",{S,S,P,S},P},
+    {"new_with_markup",{S,S,P,S},P},
+"GtkSourceCompletionItem"})
+export constant GtkSourceCompletionItem = length(widget)
+
+widget = append(widget, {"gtk_source_completion_context",
+{GObject},
+    {"add_proposals",{P,P,P,B}},
+    {"get_iter",{P,P},B},
+    {"get_activation",{P},I},
+"GtkSourceCompletionContext"})
+export constant GtkSourceCompletionContext = length(widget)
+
+widget = append(widget, {"gtk_source_completion_info",
+{GtkWindow,GtkBin,GtkContainer,GtkWidget,GObject},
+    {"new",{},P},
+    {"move_to_iter",{P,P,P}},
+    {"set_widget",{P,P}},
+    {"get_widget",{P},P,0,GtkWidget},
+"GtkSourceCompletionInfo"})
+export constant GtkSourceCompletionInfo = length(widget)
+
+widget = append(widget, {"gtk_source_completion_proposal",
+{},
+    {"get_label",{P},S},
+    {"get_markup",{P},S},
+    {"get_text",{P},S},
+    {"get_icon",{P},P,0,GdkPixbuf},
+    {"get_icon_name",{P},S},
+    {"get_gicon",{P},P,0,GIcon},
+    {"get_info",{P},S},
+    {"changed",{P}},
+    {"hash",{P},I},
+    {"equal",{P,P},B},
+"GtkSourceCompletionProposal"})
+export constant GtkSourceCompletionProposal = length(widget)
+
+widget = append(widget, {"gtk_source_completion_provider",
+{},
+    {"get_name",{P},S},
+    {"get_icon",{P},P,0,GdkPixbuf},
+    {"get_icon_name",{P},S},
+    {"get_gicon",{P},P,0,GIcon},
+    {"populate",{P,P}},
+    {"get_activation",{P},I},
+    {"match",{P,P},B},
+    {"get_info_widget",{P,P},P,0,GtkWidget},
+    {"update_info",{P,P,P}},
+    {"get_start_iter",{P,P,P,P},B},
+    {"activate_proposal",{P,P,P},B},
+    {"get_interactive_delay",{P},I},
+    {"get_priority",{P},I},
+"GtkSourceCompletionProvider"})
+export constant GtkSourceCompletionProvider = length(widget)
+
+widget = append(widget, {"gtk_source_completion_words",
+{GObject},
+    {"new",{S,P},P}, -- params are "name" and Pixbuf icon;
+    {"register",{P,P}},
+    {"unregister",{P,P}},
+"GtkSourceCompletionWords"})
+export constant GtkSourceCompletionWords = length(widget)
+
+widget = append(widget, {"gtk_source_completion",
+{GObject},
+    {"add_provider",{P,P,X},B},
+    {"remove_provider",{P,P,X},B},
+    {"get_providers",{P},P,0,GList},
+    {"show",{P,P,P},B},
+    {"hide",{P}},
+    {"get_info_window",{P},P,0,GtkSourceCompletionInfo},
+    {"get_view",{P},P,0,GtkSourceView},
+    {"create_context",{P,P},P,0,GtkSourceCompletionContext},
+    {"move_window",{P,P}},
+    {"block_interactive",{P}},
+    {"unblock_interactive",{P}},
+"GtkSourceCompletion"})
+export constant GtkSourceCompletion = length(widget)
+
+export constant GtkSourceEncoding = length(widget)+1
+widget = append(widget, {"gtk_source_encoding",
+{},
+    {"get_utf8",{},P},
+    {"get_current",{},P,0,GtkSourceEncoding},
+    {"get_from_charset",{S},P,0,GtkSourceEncoding},
+    {"to_string",{P},S},
+    {"get_name",{P},S},
+    {"get_charset",{P,S}},
+    {"get_all",{},P,0,GSList},
+    {"get_default_candidates",{},P,0,GSList},
+    {"copy",{P},P,0,GtkSourceEncoding},
+    {"free",{P}},
+"GtkSourceEncoding"})
+
+widget = append(widget, {"gtk_source_file",
+{GObject},
+    {"new",{},P},
+    {"get_location",{P},P,0,GFile},
+    {"set_location",{P,P}},
+    {"get_encoding",{P},P,0,GtkSourceEncoding},
+    {"get_newline_type",{P},I},
+    {"get_compression_type",{P},I},
+    {"check_file_on_disk",{P}},
+    {"is_local",{P},B},
+    {"is_externally_modified",{P},B},
+    {"is_deleted",{P},B},
+    {"is_readonly",{P},B},
+    {"set_mount_operation_factory",{P,P,P,P}},
+"GtkSourceFile"})
+export constant GtkSourceFile = length(widget)
+
+widget = append(widget, {"gtk_source_file_loader",
+{GObject},
+    {"new",{P,P},P},
+    {"set_candidate_encodings",{P,P}},
+    {"get_buffer",{P},P,0,GtkSourceBuffer},
+    {"get_file",{P},P,0,GtkSourceFile},
+    {"get_location",{P},P,0,GFile},
+    {"get_input_stream",{P},P,0,GInputStream},
+    {"load_async",{P,I,P,P,P,P,P,P}},
+    {"load_finish",{P,P,X},B},
+    {"get_encoding",{P},P,0,GtkSourceEncoding},
+    {"get_newline_type",{P},I},
+    {"get_compression_type",{P},I},
+"GtkSourceFileLoader"})
+export constant GtkSourceFileLoader = length(widget)
+
+widget = append(widget, {"gtk_source_file_saver",
+{GObject},      
+    {"new",{P,P},P},
+    {"get_buffer",{P},P,0,GtkSourceBuffer},
+    {"get_file",{P},P,0,GtkSourceFile},
+    {"get_location",{P},P,0,GFile},
+    {"set_encoding",{P,P}},
+    {"get_encoding",{P},P,0,GtkSourceEncoding},
+    {"set_newline_type",{P,I}},
+    {"get_newline_type",{P},I},
+    {"set_compression_type",{P,I}},
+    {"get_compression_type",{P},I},
+    {"set_flags",{P,I}},
+    {"get_flags",{P},I},
+    {"save_async",{P,I,P,P,P,P,P,P}},
+    {"save_finish",{P,P,X},B},
+"GtkSourceFileSaver"})
+export constant GtkSourceFileSaver = length(widget)
+
+widget = append(widget, {"gtk_source_gutter_renderer_pixbuf",
+{GtkSourceGutterRenderer,GObject},
+    {"new",{},P},
+    {"set_pixbuf",{P,P}},
+    {"get_pixbuf",{P},P,0,GdkPixbuf},
+    {"set_stock_id",{P,S}},
+    {"get_stock_id",{P},S},
+    {"set_gicon",{P,P}},
+    {"get_gicon",{P},P,0,GIcon},
+    {"set_icon_name",{P,S}},
+    {"get_icon_name",{P},S},
+"GtkSourceGutterRendererPixbuf"})
+export constant GtkSourceGutterRendererPixbuf = length(widget)
+
+widget = append(widget, {"gtk_source_gutter_renderer_text",
+{GtkSourceGutterRenderer,GObject},
+    {"new",{},P},
+    {"set_markup",{P,S,I}},
+    {"set_text",{P,S,I}},
+    {"measure",{P,S,I,I}},
+    {"measure_markup",{P,S,I,I}},
+"GtkSourceGutterRendererText"})
+export constant GtkSourceGutterRendererText = length(widget)
+
+widget = append(widget, {"gtk_source_mark_attributes",
+{GObject},
+    {"new",{},P},
+    {"set_background",{P,P}},
+    {"get_background",{P,P},B},
+    {"set_stock_id",{P,S}},
+    {"get_stock_id",{P},S},
+    {"set_icon_name",{P,S}},
+    {"get_icon_name",{P},S},
+    {"set_gicon",{P,P}},
+    {"get_gicon",{P},0,P,GIcon},
+    {"set_pixbuf",{P,P}},
+    {"get_pixbuf",{P},P,0,GdkPixbuf},
+    {"render_icon",{P,P,I},P,0,GdkPixbuf},
+    {"get_tooltip_text",{P,P},S},
+    {"get_tooltip_markup",{P,P},S},
+"GtkSourceMarkAttributes"})
+export constant GtkSourceMarkAttributes = length(widget)
+
+widget = append(widget, {"gtk_source_print_compositor",
+{GObject},
+    {"new",{},P},
+    {"new_from_view",{P},P},
+    {"get_buffer",{P},P,0,GtkSourceBuffer},
+    {"set_tab_width",{P,I}},
+    {"get_tab_width",{P},I},
+    {"set_wrap_mode",{P,I}},
+    {"get_wrap_mode",{P},I},
+    {"set_highlight_syntax",{P,B}},
+    {"get_highlight_syntax",{P},B},
+    {"set_print_line_numbers",{P,B}},       
+    {"get_print_line_numbers",{P},B},
+    {"set_body_font_name",{P,S}},
+    {"get_body_font_name",{P},S},
+    {"set_line_numbers_font_name",{P,S}},
+    {"get_line_numbers_font_name",{P},S},
+    {"set_header_font_name",{P,S}},
+    {"get_header_font_name",{P},S},
+    {"set_footer_font_name",{P,S}},
+    {"get_footer_font_name",{P},S},
+    {"get_top_margin",{P,I},D},
+    {"set_top_margin",{P,D,I}},
+    {"get_bottom_margin",{P,I},D},
+    {"set_bottom_margin",{P,D,I}},
+    {"get_left_margin",{P,I},D},
+    {"set_left_margin",{P,D,I}},
+    {"get_right_margin",{P,I},D},
+    {"set_right_margin",{P,D,I}},
+    {"set_print_header",{P,B}},
+    {"get_print_header",{P},B},
+    {"set_print_footer",{P,B}},
+    {"get_print_footer",{P},B},
+    {"set_header_format",{P,B,S,S,S}},
+    {"set_footer_format",{P,B,S,S,S}},
+    {"get_n_pages",{P},I},
+    {"paginate",{P,P},B},
+    {"get_pagination_progress",{P},D},
+    {"draw_page",{P,P,I}},
+"GtkSourcePrintCompositor"})
+export constant GtkSourcePrintCompositor = length(widget)
+
+widget = append(widget, {"gtk_source_search_settings",
+{GObject},
+    {"new",{},P},
+    {"get_search_text",{P},S},
+    {"set_search_text",{P,S}},
+    {"get_case_sensitive",{P},B},
+    {"set_case_sensitive",{P,B}},
+    {"get_at_word_boundaries",{P},B},
+    {"set_at_word_boundaries",{P,B}},
+    {"get_wrap_around",{P},B},
+    {"set_wrap_around",{P,B}},
+    {"get_regex_enabled",{P},B},
+    {"set_regex_enabled",{P,B}},
+"GtkSourceSearchSettings"})
+export constant GtkSourceSearchSettings = length(widget)
+
+widget = append(widget, {"gtk_source_search_context",
+{GObject},
+    {"new",{P,P},P},
+    {"get_buffer",{P},P,0,GtkSourceBuffer},
+    {"get_settings",{P},P,0,GtkSourceSearchSettings},
+    {"set_settings",{P,P}},
+    {"get_highlight",{P},B},
+    {"set_highlight",{P,B}},
+    {"get_match_style",{P},P,0,GtkSourceStyle},
+    {"set_match_style",{P,P}},
+    {"get_occurrences_count",{P},I},
+    {"forward",{P,P,P,P},B},
+    {"forward_async",{P,P,P,P,P}},
+    {"forward_finish",{P,P,P,P,X},B},
+    {"backward",{P,P,P,P},B},
+    {"backward_async",{P,P,P,P,P}},
+    {"backward_finish",{P,P,P,P,X},B},
+    {"replace",{P,P,P,P,I,X},B},
+    {"replace_all",{P,P,I,X},I},
+    {"get_regex_error",{P},P},
+"GtkSourceSearchContext"})
+export constant GtkSourceSearchContext = length(widget)
+
+export constant fnGetSCPos = define_c_func(LIBSV,
+    "gtk_source_search_context_get_occurrence_position",{P,P,P},I)
+
+export function unescape_search_text(object txt)
+return gtk_str_func("gtk_source_utils_unescape_search_text",{P},
+	{allocate_string(txt,1)})
+end function
+
+export function escape_search_text(object txt)
+return gtk_str_func("gtk_source_utils_escape_search_text",{P},
+	{allocate_string(txt,1)})
+end function
+
+widget = append(widget, {"gtk_source_style_scheme_chooser_button",
+{GtkButton,GtkBin,GtkContainer,GtkWidget,GObject},
+    {"new",{},P,0,GtkWidget},
+"GtkSourceStyleSchemeChooserButton"})
+export constant GtkSourceStyleSchemeChooserButton = length(widget)
+
+widget = append(widget, {"gtk_source_style_scheme_chooser_widget",
+{GtkBin,GtkContainer,GtkWidget,GObject},
+    {"new",{},P,0,GtkWidget},
+"GtkStyleSchemeChooserWidget"})
+export constant GtkSourceStyleSchemeChooserWidget = length(widget)
+
+widget = append(widget, {"gtk_style_scheme_chooser",
+{GtkWidget},
+    {"get_style_scheme",{P},P,0,GtkSourceStyleScheme},
+    {"set_style_scheme",{P,P}},
+"GtkStyleSchemeChooser"})
+export constant GtkStyleSchemeChooser = length(widget)
+
+widget = append(widget, {"gtk_style_scheme",
+{GObject},
+    {"get_id",{P},S},
+    {"get_name",{P},S},
+    {"get_description",{P},S},
+    {"get_authors",{P},A},
+    {"get_filename",{P},S},
+    {"get_style",{P,S},P,0,GtkSourceStyle},
+"GtkStyleScheme"})
+export constant tkStyleScheme = length(widget)
+
+widget = append(widget, {"gtk_source_style_scheme_manager",
+{GObject},
+    {"new",{},P},
+    {"get_default",{},P},
+    {"set_search_path",{P,P}},
+    {"append_search_path",{P,S}},
+    {"prepend_search_path",{P,S}},
+    {"get_search_path",{P},A},
+    {"get_scheme_ids",{P},V},
+    {"get_scheme",{P,P},P,0,GtkSourceStyleScheme},
+    {"force_rescan",{P}},
+"GtkSourceStyleSchemeManager"})
+export constant GtkSourceStyleSchemeManager = length(widget)
+
+---------------------------------------------------------------------
+
+export enum 
+
+    GTK_TEXT_WINDOW_PRIVATE =0,
+    GTK_TEXT_WINDOW_WIDGET,
+    GTK_TEXT_WINDOW_TEXT,
+    GTK_TEXT_WINDOW_LEFT,
+    GTK_TEXT_WINDOW_RIGHT,
+    GTK_TEXT_WINDOW_TOP,
+    GTK_TEXT_WINDOW_BOTTOM,
+    
+    GTK_TEXT_EXTEND_SELECTION_WORD = 0,
+    GTK_TEXT_EXTEND_SELECTION_LINE,
+    
+    GTK_SOURCE_DRAW_SPACES_SPACE = 1,
+    GTK_SOURCE_DRAW_SPACES_TAB=2,
+    GTK_SOURCE_DRAW_SPACES_NEWLINE=4,
+    GTK_SOURCE_DRAW_SPACES_NBSP = 8,
+    GTK_SOURCE_DRAW_SPACES_LEADING = 16,
+    GTK_SOURCE_DRAW_SPACES_TEXT = 32,
+    GTK_SOURCE_DRAW_SPACES_TRAILING = 64,
+    GTK_SOURCE_DRAW_SPACES_ALL=127,
+
+    GTK_SOURCE_SMART_HOME_END_DISABLED = 0,
+    GTK_SOURCE_SMART_HOME_END_BEFORE,
+    GTK_SOURCE_SMART_HOME_END_AFTER,
+    GTK_SOURCE_SMART_HOME_END_ALWAYS,
+
+    GTK_SOURCE_VIEW_GUTTER_POSITION_LINES = 0,
+    GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS,
+    
+    GTK_SOURCE_BACKGROUND_PATTERN_TYPE_NONE=0,
+    GTK_SOURCE_BACKGROUND_PATTERN_TYPE_GRID,
+
+    GTK_SOURCE_CHANGE_CASE_LOWER = 0,
+    GTK_SOURCE_CHANGE_CASE_UPPER, 
+    GTK_SOURCE_CHANGE_CASE_TOGGLE,
+    GTK_SOURCE_CHANGE_CASE_TITLE,
+    
+    GTK_SOURCE_SORT_FLAGS_NONE = 0,
+    GTK_SOURCE_SORT_FLAGS_CASE_SENSITIVE,
+    GTK_SOURCE_SORT_FLAGS_REVERSE_ORDER,
+    GTK_SOURCE_SORT_FLAGS_REMOVE_DUPLICATES
+    
+-------------------------------------
+-- copyright 2005-2019 by Irv Mullins
+-------------------------------------
+    

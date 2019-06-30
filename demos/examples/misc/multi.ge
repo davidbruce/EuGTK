@@ -1,0 +1,27 @@
+
+-- Übersetzung von Google Translate
+
+--! MainWindow.title = Testprogrammnummer 2
+--! MainWindow.border = 10
+--!Image1.icon-name=face-glasses
+--!Image1.pixel-size=128
+
++ MainWindow.HelpCaption = Hilfe
++ MainWindow.HelpTitle = Über dieses Programm
++ MainWindow.HelpText = Es gibt nicht viel zu sagen,|it ist nur ein Programm, ok?
+
+--! Button1.tooltip text = Klicken Sie hier, um zu beenden
+--! Button1.label = _Exit
+--! Button1.image = gtk-quit
+
+--! Button2.tooltip text = Klicken Sie hier für Hilfe
+--! Button2.label = _Über
+--! Button2.image = gtk-about
+
+--! Button3.tooltip text = Klicken Sie hier, um die Farbe zu ändern
+--! Button3.label = _Hintergrund
+--! Button3.image = style
+
++MainWindow.background=#C6BFC8
+MainWindow.size={439,650}
+MainWindow.position={422,0}

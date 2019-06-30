@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>EuGTK Platforms</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<header>
+	<img src="../thumbnails/gtk-logo-rgb.gif" alt="GTK LOGO" />
+	<img src="../thumbnails/mongoose.png" alt="mongoose" />
+	<a href="../screenshots/Windows.png">
+	<figure style="float:right; border:thin solid black;">
+	<img src="../screenshots/Windows.png" alt="Windows 7" width="250px" />
+	<figcaption><small><i>&nbsp;EuGTK running on Windows 7</i></small></figcaption>
+	</figure>
+	</a>
+
+<hr />
+<h3>EuGTK Platforms</h3>
+<hr />
+
+</header>
+
+<nav>
+	<div class="hdr">Other Files:</div>
+	<a href="README.html"><button>README</button></a>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+	<a href="guide_a.html"><button>Alphabetical Guide</button></a>
+	<a href="dialogs.html"><button>Built-in EuGTK Dialogs</button></a>
+	<a href="treeviews.html"><button>ListView/TreeView widgets</button></a>
+	<a href="pango_markup.html"><button>Markup</button></a>
+	<a href="printing.html"><button>Printing</button></a>
+	<a href="ServerHelp.html"><button>Web Server</button></a>
+	<a href="functions.html"><button>Quick Function List</button></a>
+	<a href="Glade.html"><button>Glade GUI Builder</button></a>
+	    <a href="../packaging/README.html"><button>Packaging</button></a>
+	<br />
+</nav>
+
+<hr />
+
+<p>
+<b>EuGTK is native for Linux</b><br />
+Most modern Linux distros come with GTK3 already installed. If not, you can usually 
+install the GTK3 libraries easily with your package manager (apt-get or similar).
+No special setup or configuration steps are involved.
+</p>
+
+<p>
+<b>EuGTK is also reported to work with OS X&trade;</b>. First, install MacPorts, and 
+then the GTK3 library with this command: 
+<code>sudo port install gtk3</code>
+That should eventually install the library to /opt/local/lib/libgtk-3.dylib.
+ I cannot test this, since I have no computer running OSX, but Pete Eberlein's
+ cross-platform Euphoria editor WEE runs on OS X using EuGTK for the user interface. 
+ That's a pretty good test.
+</p>
+
+<p>
+<b>EuGTK also now works well with Windows&trade;</b>, but only for 64-bit systems. 32-bit 
+Windows libraries are no longer being updated.
+</p>
+
+<p>
+<b>Raspberry Pi 3</b> - the Raspbian OS comes with GTK3 and EuGTK programs run
+even on such limited hardware. Binding your programs makes them run quickly, startup  
+is slow unless bound, shrouded, or compiled.
+</p>
+ 
+<a name="broadway" />
+<p><b>EuGTK programs can be run on <i>any</i> platform.</b><br /><br />
+You can even run EuGTK programs on a remote client (anything that has an HTML5 web 
+browser, including tablets, phones, etc.), by using broadway on the server. 
+<u>Clients do not need EuGTK, Euphoria, or GTK to be installed.</u>
+</p>
+
+<p>
+The Broadway server can be downloaded using apt-get, or your package manager, 
+and it also comes stock with the latest Mint 18, and perhaps some other distros as well.
+</p>
+
+<p>
+This is still experimental, but most of the demos in this package work ok 
+with a web browser. (Even the complex <a href="../BEAR.ex">BEAR</a>).
+Many work when browsing with a tablet or phone. Probably my 
+demo programs need to listen for 'motion' events (swipes, etc) to get these 
+working fully, or perhaps the browsers on my tablet aren't up-to-date with HTML5?
+</p>
+
+<p>
+The <a href="../on_broadway.ex">on_broadway.ex</a> utility can be used to launch 
+a Euphoria program and open your default web browser to localhost:8080. You can also
+specify a different port on the command line.
+</p>
+
+<p>
+Multiple users are not currently supported, but you can run several instances of the broadwayd server, 
+assigning a different port for each.
+</p>
+
+<a href="../screenshots/broadway.png">
+<img src="../screenshots/broadway.png" alt="Broadway" width="60%"  />
+
+<p><small>Several EuGTK demos running in a Firefox&trade; window</small></p>
+</a>
+
+<a href="../screenshots/pi.png">
+<img src="../screenshots/pi.png" alt="pi" width="40%"   />
+
+<p><small>EuGTK running on a Raspberry PI&trade;</small></p>
+</a>
+
+<br clear="all" />
+<br />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+</html>

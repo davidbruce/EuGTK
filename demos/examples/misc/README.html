@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>README</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<img src="../../thumbnails/gtk-logo-rgb.gif" alt="GTK Logo" />
+	<img src="../../thumbnails/mongoose.png" alt="OpenEuphoria Logo" />
+
+	<h2>EuGTK Translation Service</h2>
+</head>
+
+<body>
+
+<a href="../../screenshots/greek.png">
+<img src="../../screenshots/greek.png" alt="multi" width="500px" />
+</a>
+
+<p>
+This example shows an easy way to make your EuGTK programs 
+'multi-lingual', by allowing your users to change the 
+labels and certain texts into their own language!
+</p>
+
+<p>
+All of these changes can be made to a simple text *.ini file,
+edited either manually with any available text editor, or by 
+a setup dialog you code within your program. <br />
+Loss (erasure) of this ini file will not cause your program to no longer work,
+it will just revert to your original language.
+</p>
+
+<p>
+Your program can even be bound, shrouded, or compiled, and the 
+user's changes will still be effective, while the user cannot
+alter your program's operation or see the code!
+</p>
+
+<p>
+To use this, each of the items which are to be changeable must 
+be named, and an ini file provided as an example of
+which changes the user can make. 
+</p>
+
+<a href="../../screensots/espanol.png">
+<img src="../../screenshots/espanol.png" />
+</a>
+
+<p>
+An example ini to provide:
+</p>
+
+<pre>
+<em>-- Items below are changeable captions and settings:</em>
+<em>-- Portions the user can change are highlighted.</em>
+
+--!MainWindow.title=<em class="hi">Test program</em>
+--!MainWindow.border=<em class="hi">10</em>
+
+--!Button1.tooltip text=<em class="hi">Click here to exit</em>
+--!Button1.label=<em class="hi">_Exit</em>
+--!Button1.image=<em class="hi">gtk-quit</em>
+
+--!Button2.tooltip text=<em class="hi">Click here for help</em>
+--!Button2.label=<em class="hi">_About</em>
+--!Button2.image=<em class="hi">gtk-about</em>
+
+--!Button3.tooltip text=<em class="hi">Click here to change the color</em>
+--!Button3.label=<em class="hi">_Background</em>
+--!Button3.image=<em class="hi">style</em>
+
+<em>-- Items below are text for the help popup screen:</em>
+ 
++ MainWindow.HelpCaption=<em class="hi">Help</em>
++ MainWindow.HelpTitle=<em class="hi">About this program</em>
++ MainWindow.HelpText=<em class="hi">There is not much to tell,\nit's just a program\nok?</em>
+
+</pre>
+ 
+<br clear="all" />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+
+</html>
+

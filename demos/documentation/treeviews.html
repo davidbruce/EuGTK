@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>TreeView/ListView</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<header>
+	<img src="../thumbnails/gtk-logo-rgb.gif"><alt="GTK LOGO"></img>
+	<img src="../thumbnails/mongoose.png"><alt="mongoose"></img>
+	<a href="../test33.ex">
+	<img src="../screenshots/test33.jpg" alt="test33.jpg" title="test33" align="right" width="50%"/>
+	</a>
+	<hr />
+	<h2>EuGTK</h2>
+	<h3>ListView/TreeView</h3>
+
+	<p>
+	Gtk TreeViews and Listviews are used to display one or more columns of data in 
+	a scrollable, sortable, reorderable table format.
+	</p>
+	<hr />
+
+</header>
+
+<nav>
+	<div class="hdr">Quick Links:</div>
+	<a href="#model"><button>Models</button></a>
+	<a href="#columns"><button>Columns</button></a>
+	<a href="#renderers"><button>Cell Renderers</button></a>
+	<a href="#signals"><button>Signals</button></a>
+	<a href="#retrieving"><button>Retrieving Data</button></a>
+	<a href="#functions"><button>Functions</button></a>
+	<a href="#ezsyntax"><button>Easy Syntax</button></a>
+	<a href="#formatting"><button>New Formatting</button></a>
+	<a href="#custom"><button>Custom Formatting</button></a>
+	<br />
+</nav>
+
+<nav>
+	<div class="hdr">Other Files:</div>
+	<a href="README.html"><button>README</button></a>
+	<a href="HowItWorks.html"><button>How EuGTK Works</button></a>
+	<a href="guide_a.html"><button>Alphabetical guide to GTK widgets</button></a>
+	<a href="dialogs.html"><button>Built-in EuGTK Dialogs</button></a>
+	<a href="pango_markup.html"><button>Markup</button></a>
+	<a href="printing.html"><button>Printing Engine</button></a>
+	<a href="ServerHelp.html"><button>Web Server</button></a>
+	<a href="functions.html"><button>Quick Function List</button></a>
+	<a href="Glade.html"><button>Glade GUI Builder</button></a>
+	<a href="platforms.html"><button>Platforms</button></a>
+	<br />
+</nav>
+
+<a name="overview" />
+
+<h3><hr />Overview<hr /></h3>
+
+<p>GTK3 uses the Model/View/Controller scheme for organizing and
+displaying data.
+<ul>
+    <li><i>In theory,</i> this is more versatile, allowing you to display 
+the same data in various forms simultaneously.</li>
+    <li><i>In reality,</i> you rarely need to do this sort of thing, and if you do, you probably know an easier way.</li>
+    <li><i>In practice,</i> this MVC design makes even simple lists mind-bogglingly difficult to 
+understand and use.</li>
+</ul>
+</p>
+
+<p>
+Please don't bother trying to figure out the GTK docs when it comes to using a list or tree view.
+</p>
+
+<p>
+You'll find yourself <i>... lost in an endless maze of twisty 
+passages ... </i>
+</p>
+
+<p>
+The stock GtkListView/GtkTreeView scheme is convoluted, complex, and nearly impossible to understand.
+</p>
+
+<p>
+Don't let this deter you, however, because EuGTK takes care of all the twiddling with iterators 
+and paths, etc. that make using the List/TreeViews so difficult. You can accomplish almost anything you need to do
+by cutting and pasting from example code, thereby getting some programming done instead of 
+sitting there wondering <i>"what <u>were</u> they thinking?"</i>
+</p>
+
+<a name="model" />
+
+<h3><hr />Getting Started<hr /></h3>
+<p>
+The first step will be to create a model in which to store your data.
+The model can be thought of as a table with one or more rows of data, 
+arranged in one or more columns,
+where each column contains one specific <i>type</i> of data.</p>
+<p>
+A model is similar to a Euphoria sequence. Take, for example, the
+following:
+<code><pre><em class="kw">sequence</em> students { <em>-- name, age, amt due</em>
+	{<em class="str">"Sam Smith"</em>,<em class="brown"> 15, 19.95</em>},
+	{<em class="str">"Sue Jones"</em>, <em class="brown">14, 12.99</em>},
+	$<em> -- etc...</em>
+	}</pre>
+</code>
+In the above, col 1 contains strings, col 2 contains integer values, col 3 contains floating point numbers.
+Unlike Euphoria sequences, for GTK these columns must be type-consistent - IOW, if column 1 is expected to
+contain strings, then <i>all</i> entries in the first column must be strings. Likewise, <i>all</i> entries 
+in column 2 or column 3 must be numbers. 
+</p>
+
+<h3><hr />Models<hr /></h3>
+<p>
+There are two kinds of model which come 
+pre-built with GTK, plus others you can supposedly devise, if you believe the GTK docs!
+ - Let's stick with the two easy ones:<br />
+<ul>
+	<li>GtkListStore</li>
+	<li>GtkTreeStore</li>
+</ul>
+You'll have noted that, just to make things even more confusing, GTK decided to call the
+list model a ListStore, and the tree model a TreeStore. So we might as well give our Euphoria
+object the name <i>store</i>.
+</p>
+
+<p>
+Creating your model a.k.a. store is easy, you just need to specify a data type
+for each of the columns to match the type of data to be stored there.
+</p>
+
+<p>
+For the example Euphoria sequence shown above, (students) we do this:
+<code><pre>
+  <em class="kw">constant</em> store = <em class="gtk">create</em>(GtkListStore,{gSTR,gINT,gFLT}) <em>-- name, age, amt due</em>
+</pre></code>
+</p>
+
+<p><small>
+Note: by specifying a data type for each column, you are not only indicating what type of data 
+is to be stored there, but also describing the way you want the data to look. IOW, you might 
+define the "name" column as gINT, but that  would result in the name column displaying 
+the pointers to the students name strings, rather than the names in readable form. 
+Likewise, gINT, gFLT, and gDBL result in different ways of displaying the same numeric 
+contents. 
+</small></p>
+
+<p>
+Next, you need to load the model with your data:
+
+This can be done in <i>one swell foop</i> by simply typing:
+<pre><code> <em class="gtk">set</em>(store,<em class="str">"data"</em>,students)</code></pre>
+
+<a name="columns" /><h3><hr />Columns<hr /></h3>
+<p>
+TreeView columns are created as you might expect.<br /><small>
+Note: there are no ListView columns, everything uses a TreeViewColumn.</small><br />
+<pre><code> <em class="kw">constant</em> col1 = <em class="gtk">create</em>(GtkTreeViewColumn) <em>-- no params needed</em></code></pre>
+Each column will display a "vertical slice" of your Eu sequence.</p>
+<p>
+You do <i>not</i> need to define a column for each column of data in your original Eu sequence.
+Only create a column for each item you want to <i>see</i> in the listview.
+In addition, the columns do <i>not</i> have to be in the same order as the original
+Eu sequence. You can specify which column in the store is to provide the values to 
+be displayed in each column of the view. See <a href="#connecting"> connecting</a> below.
+</p>
+
+<a name="renderers" /><h3><hr />Cell Renderers<hr /></h3>
+<p>
+In order to be able to display the data, each column must have a cell renderer associated with it.
+Every cell in a given column displays the same <i>type</i> of data: string, integer, or float,
+ but using individual <i>values</i> which are gotten from the model attached to the view.
+<p>
+Cell renderers are created by:
+<pre><code> <em class="kw">constant</em> rend1 = <em class="gtk">create</em>(GtkCellRendererText) <em>-- no params needed</em></code></pre>
+Where the renderer can be one of several types.<br />
+<ul class="small">
+	<li>GtkCellRendererText</li>
+	<li>GtkCellRendererPixbuf</li>
+	<li>GtkCellRendererProgress</li>
+	<li>GtkCellRendererSpin</li>
+	<li>GtkCellRendererToggle</li>
+	<li>GtkCellRendererCombo</li>
+
+</ul>
+As you can see, the names indicate different ways to display the data from the model.
+</p>
+
+<p>
+For example, the CellRendererText will display strings, integers, or floats in human-readable form,
+i.e. alpha-numeric characters, while the CellRendererProgress will display percentages as a variable-length bar.</p>
+A CellRendererToggle displays boolean values as a check-box, CellRendererSpin displays a potentially 
+changeable numeric value, and a CellRendererPixbuf displays an image when given the handle to a GdkPixbuf. 
+</p>
+
+<div class="hint boxshadow">
+<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+<p>
+Some cell renderers, such as text, toggle, and spin, can be made 'editable', so that the 
+user can edit strings or modify values. Be aware however: edits are <i><b>NOT</b></i> automatically 
+saved to the underlying model. You have to write routines to do this when necessary.
+Refer to <a href="../test33.ex"> test33</a> and <a href="../test35.ex"> test35</a> for examples of
+how to make a renderer editable, and how to update the model to reflect the edited data.
+</p>
+</div>
+
+<p>
+You will always create a column and a renderer together, and pack the renderer into the  
+column. (It is possible to pack more than one renderer into a single column.)
+<pre><code> <em class="kw">constant</em>&nbsp;col1 = <em class="gtk">create</em>(GtkTreeViewColumn)
+	<em class="gtk">set</em>(col1,<em class="str">"title","Name"</em>) <em>-- you may set some properties of the column</em>
+
+ <em class="kw">constant</em>&nbsp;rend1 = <em class="gtk">create</em>(GtkCellRendererText)
+	<em class="gtk">set</em>(rend1,<em class="str">"font","Courier 8"</em>) <em>-- you may set some properties of the renderer, 
+				      -- these affect the entire column</em>
+	<em class="gtk">set</em>(col1,<em class="str">"pack start"</em>,rend1)  <em>-- and finally, add the renderer to the column!</em>
+
+</code></pre>
+</p>
+ 
+<a name="connecting" />
+
+<h3><hr />Connecting data to column renderers<hr /></h3>
+<p>
+Next, you need to associate each column in the view with the column in the model where it 
+will find its data.
+Of course, it can't be this easy. Instead, you have to tell the column to tell its 
+cell renderer where to find the data:<br />
+<pre><code> <em class="gtk">set</em>(col1,<em class="str">"add attribute"</em>,rend1,<em class="str">"text"</em>,1)</code></pre>
+Which means: col1 should get the text to be displayed by its cell renderer (rend1) from column #1 of the model.
+In the example, this would be the name of the student.
+</p>
+
+<p>
+Often you may have more data in your Eu sequence - and hence, in your model - than you wish to display,
+and/or you may want to display the columns in a different order than they appear in the original sequence.
+This "add attribute" call allows you to control that.
+</p>
+
+<p>
+'Text' is only one attribute that the GtkCellRendererText has to offer; some of the others are 
+'markup', 'background', 'foreground', 'language', 'font', etc. By now, you won't be surprised to find that these 
+aren't called attributes by the GTK docs, instead you'll find them listed under Properties for
+the various GtkCellRenderers.
+</p>
+
+<i><b>But wait, there's more!</b></i>
+<p>
+Just to keep things from getting boring, there are two ways to set an attribute a.k.a. property for a cell renderer.
+The first, as shown below, is to tell the column to tell the renderer where to get its background for this particular
+cell. 
+Let's assume col# 2 of the model contains color names, perhaps a different color for 
+each row in the list:<br />
+<pre><code>    <em class="gtk">set</em>(col1,<em class="str">"add attribute"</em>,rend1,<em class="str">"background"</em>,2)</code></pre>
+</p>
+
+<p>
+On the other hand, suppose you tell the cell renderer <i>directly</i> to set a property.
+This will affect <i>all</i> cells in the column which contains that renderer. This is done
+as follows:
+<pre><code>    <em class="gtk">set</em>(rend1,<em class="str">"background","skyblue"</em>) <em>-- entire column will have a sky blue background</em>
+    <em class="gtk">set</em>(rend1,<em class="str">"size-points"</em>,36) <em>-- and all text in that column will be 36 points</em>
+</code></pre>
+</p>
+
+<a name="#finish" /><h3><hr />Finally<i>!</i><hr /></h3>
+<p>
+Now you only have to create a GtkTreeView to hold the columns.<br /><small>
+(Here again, there is no GtkListView, everything uses a GtkTreeView)</small><br />
+<pre><code>    <em class="kw">constant</em> tv = <em class="gtk">create</em>(GtkTreeView)
+	<em class="gtk">set</em>(tv,<em class="str">"rules hint"</em>,<em class="kw">TRUE</em>) <em>-- set some appearance options for the tree view:</em>
+</code></pre>
+
+Then tell it which model it should use to obtain its data; and append the column(s):
+<pre><code>	<em class="gtk">set</em>(tv,<em class="str">"model"</em>,store)
+	<em class="gtk">set</em>(tv,<em class="str">"append columns"</em>,{col1...})
+</code></pre>
+</p>
+
+<p>
+And, more often than not, you'll add the view to a scrolled window and viewport, which keeps long 
+lists from extending past the bottom of the screen. 
+</p>
+
+<p>
+See <a href="../test3.ex">test3.ex</a> for a simple, easy to understand example.
+</p>
+
+<a name="signals" /><h3><hr />Signals<hr /></h3>
+<p>
+The normal signal to connect to is "row-activated", which will select 
+a row when it is double-clicked or a row is highlighted and the &lt;enter&gt; key is pressed:
+<pre><code>    <em class="gtk">connect</em>(tv,<em class="str">"row-activated"</em>,<em class="kw">call_back</em>(<em class="kw">routine_id</em>(<em class="str">"Foo"</em>)))
+</code></pre>
+If you are using GTK version 3.8 or above, you can choose to activate on a 
+single click:
+<pre><code>    <em class="gtk">set</em>(tv,<em class="str">"activate on single click"</em>,<em class="kw">TRUE</em>)
+</code></pre>
+</p>
+
+<a name="ezsyntax" /><h3><hr />Easy Syntax! <small>~ new in EuGTK 4.11.2</small><hr /></h3>
+<p>
+Below is the code needed to produce a listview; it isn't such a big deal, as you can see. 
+Refer to the simple <a href="../test3.ex">test3.ex</a> demo,
+and the overly-fancy <a href="../test33.ex">test33.ex</a> demo. 
+</p>
+
+<p><code><pre><em> -- describe type of data to be stored in each column;</em>
+<em class="kw">constant</em>  store = <em class="gtk">create</em>(GtkListStore,{gSTR,gSTR,gSTR}) 
+
+<em class="gtk">set</em>(store,<em class="str">"data"</em>,{ <em> -- here's the data;</em>
+    {<em class="str">"Apple", "doz"</em>,5.00}, 
+    {<em class="str">"Cherry","lb"</em>, 3.69}, <em>-- note: 3rd column is numeric,</em>
+    {<em class="str">"Lime",  "ea"</em>,  .99}, <em>-- but will automatically be converted</em> 
+    {<em class="str">"Orange","ea"</em>, 0.79}, <em>-- to a string by the store,</em>
+    {<em class="str">"Banana","lb"</em>, 1.89}  <em>-- if we use gSTR when creating the store</em>
+    })
+
+<em class="kw">constant</em> scroller = <em class="gtk">create</em>(GtkScrolledWindow)
+  <em class="gtk">pack</em>(panel,scroller,<em class="kw">TRUE,TRUE</em>) <em>-- expand to fill the space</em>
+
+<em class="kw">constant</em>  tv = <em class="gtk">create</em>(GtkTreeView,{
+  {<em class="str">"model"</em>,store},   
+  {<em class="str">"connect","row-activated"</em>,_(<em class="str">"ShowChoice"</em>)}}) <em>-- see  function below</em>
+  <em class="gtk">add</em>(scroller,tv)
+  
+<em class="kw">constant</em> <em>-- 'shorthand' way to create columns:</em>
+ col1 = <em class="gtk">create</em>(GtkColumn,<em class="str">"title=Name,type=text,text=1,sort_column_id=1"</em>),
+ col2 = <em class="gtk">create</em>(GtkColumn,<em class="str">"title=Quantity,type=text,text=2"</em>),
+ col3 = <em class="gtk">create</em>(GtkColumn,<em class="str">"title=Price,type=text,text=3,sort_column_id=3"</em>) 
+
+<em class="gtk">set</em>(tv,<em class="str">"append columns"</em>,{col1,col2,col3})
+  
+<em class="kw">constant</em> selection = get(tv,<em class="str">"selection"</em>) <em>-- this tracks current selected row</em>
+
+<em>------------------------</em>
+<em class="kw">function</em> ShowChoice() <em>-- our function to handle selections</em>
+<em>------------------------</em>
+<em class="kw">object</em> choice = <em class="gtk">get</em>(selection,<em class="str">"selected row data"</em>)
+<em class="gtk">Info</em>(,,choice[1],<em class="kw">format</em>(<em class="str">"Price: $[3] per [2]"</em>,choice))
+<em class="kw">return</em> 1
+<em class="kw">end function</em>
+</pre></code>
+</p>
+
+<a name="functions" /><h3><hr />Functions<hr /></h3>
+
+<p>
+After you create a ListView model, you can load it with a Euphoria sequence
+and manipulate it using familiar calls. Note that there is no direct connection between the Eu 
+data sequence and the list view store, so changing the Eu sequence does not change the list view, 
+or vice-versa. To keep the two in sync, you must update as appropriate. See the <a href="#hint2">hint</a> below.
+</p>
+
+<p><code><pre>
+   <em class="kw">constant</em> store = <em class="gtk">create</em>(GtkListStore,{gSTR,gSTR,gFLT})
+
+   <em class="kw">sequence</em> customers = {<em>-- first, last, balance due</em>
+	{<em class="str">"Sue","Jones"</em>,40.95},
+	{<em class="str">"Ralph","Wiggums"</em>,29.44}} 
+
+   <em class="kw">sequence</em> new_cust = {<em class="str">"Fred","Merkle"</em>,12.50}</pre>
+<ul>
+	<li>Working with entire contents as Eu Sequence</li>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"data"</em>,<i>customers</i>) <em>-- store Eu sequence to listview</em></dd>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"data"</em>) <em>-- retrieve listview data as Eu sequence</em></dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"clear"</em>) <em>-- clear listview, does not affect original Eu sequence</em></dd>
+	
+	<br />
+
+	<li>Working with individual rows</li>
+	<dd><em class="gtk">get</em>(<i>selection</i>,<em class="str">"selected row"</em>) <em>-- returns integer row number</em></dd>
+	 <dd><em class="gtk">get</em>(<i>selection</i>,<em class="str">"selected rows"</em>) -- <em> returns sequence of row numbers: {2,6,23}</em></dd>
+
+<a name="hint2"></a>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"append row"</em>,<i>new_cust</i>) <em>-- add to bottom of list, invalid if view is sorted</em></dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"prepend row"</em>,<i>new_cust</i> <em>-- add to top of list, invalid if view is sorted</em></dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"insert row"</em>,<i>new_cust</i>,pos#) <em>-- add at pos, invalid if view is sorted</em></li>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"remove row"</em>,row#)</dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"replace row"</em>,row#,new_cust) <em>-- replace row or list of selected rows with new data</em></dd>
+</ul>
+
+<div class="hint boxshadow">
+<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+	<p>The above <em class="gtk">set</em>() calls actually <u>return</u> 
+	the modified data, which you can ignore, 
+	or use to sync the modified data or save to disk, if you wish, whenever data is changed.</p>
+</div>
+
+<ul>
+	<li>Working with a single row/column</li>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"col data"</em>,row#,col#,data)</dd>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"col data"</em>,row#,col#)</dd>
+	<br />
+    <li>Other functions</li>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"swap"</em>,row_a,row_b) <em>-- trade places. row_a and row_b are integer row numbers</em></dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"move before"</em>,row_a,row_b) <em> -- only valid if view is unsorted</em></dd>
+	<dd><em class="gtk">set</em>(<i>store</i>,<em class="str">"move after"</em>,row_a,row_b) <em>-- only valid if view is unsorted</em></dd>
+	<dd><em class="blue">NOTE: the above return the modified sequence, could be used to save updates to disk, etc.</em></dd>
+	
+	<br />
+	
+    <li>Information functions</li>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"n rows"</em>) <em>-- returns current number of rows in model</em></dd> 
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"n cols"</em>) <em>-- returns number of columns in model</em></dd>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"is sorted"</em>)</dd>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"sort column id"</em>) <em>-- 1..n</em></dd>
+	<dd><em class="gtk">get</em>(<i>store</i>,<em class="str">"sort order"</em>) <em>-- 0 = ascending, 1 = descending</em></dd>
+	<dd><em class="blue">NOTE: sort order is only valid if "is sorted" = TRUE</em></dd>
+</ul>
+</code>
+</p>
+
+<p>
+Each column of the view can have an optional sort column id assigned - this tells the view column which column in the model (store) contains the value to use in the sort.
+In practical terms, this means that you could tell column #1 (names) that it should be sorted based on the value in #3 (amt_due).
+You may also want to make the TreeView's headers clickable, so the user can  sort each column when desired.
+You can also, thru code, tell the model to sort itself by column and direction:
+<pre><code> <em class="gtk">set</em>(store,<em class="str">"sort column id"</em>,3,GTK_SORT_ASCENDING) 
+        <em>-- instead of an integer column #, you can use:</em>
+        <em>-- GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID (-2) = no sorting</em> 
+        <em>-- sort directions are, as you would expect: GTK_SORT_ASCENDING | GTK_SORT_DESCENDING </em>
+</code></pre>
+</p>
+
+<p>
+You can also write your own custom sorting function, and tell the TreeView to use that function.
+See the GTK docs on GtkTreeSortable for a prototype (GtkTreeIterCompareFunc) you can use when writing your 
+Euphoria function.
+</p>
+
+<a name="retrieving" /><h3><hr />Retrieving data<hr /></h3>
+To get the full data set back as a Euphoria sequence, just use:
+<pre><code>    <em class="gtk">get</em>(store,<em class="str">"data"</em>)</code></pre>
+</p>
+
+<p>
+To get the <i>selected</i> data back from a ListView/TreeView, you must first obtain a GtkSelection object 
+from the view. Normally, this can be done at the time the view is created:
+<pre><code>    <em class="kw">constant</em> selection = <em class="gtk">get</em>(tv,<em class="str">"selection"</em>) <em>-- this tracks the changing selection(s)</em>
+    <em class="gtk">set</em>(selection,<em class="str">"mode"</em>,GTK_SELECTION_SINGLE)</code></pre>
+</p>
+
+<p>
+Then, you can get the data contained in the selected row if selection mode is 
+    GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE;
+or rows, if selection mode is GTK_SELECTION_MULTIPLE.  
+</p>
+
+<pre><code> <em class="kw">object</em> rowlist = <em class="gtk">get</em>(selection,<em class="str">"selected rows"</em>) <em>-- this returns a Eu sequence of one or more integers, e.g. {3} or {1,3,5,6}</em>
+ <em class="kw">object</em> data
+        <em class="kw">for</em> i = 1 <em class="kw">to length</em>(rowlist) <em class="kw">do</em>
+            data = <em class="gtk">get</em>(store,<em class="str">"row data"</em>,rowlist[i]) <em>-- use each row # to get the row's data</em>
+            <em>-- here, you do something with that data...</em></code></pre>
+</p>
+
+<p>
+Sometimes, it's convenient get the contents of a single cell in a row by calling:
+<pre><code>   data = <em class="gtk">get</em>(store,<em class="str">"col data"</em>,row,2) <em>-- where 2 is the column# </em></code></pre>
+</p>
+
+<a name="floats" /><h3><hr />Formatting Floats<hr /></h3>
+<a href="../test194.ex">
+<img src="../screenshots/test194.jpg" alt="test194" align="left" float="left" />
+</a>
+
+<p>
+The default display format for floating point numbers (gFLT) used in ListViews will probably not
+be what you want - there will be too many digits following the decimal point.
+</p>
+
+<p>
+The simplest way to handle common values with 2 decimal points
+is to declare the column as gSTR, but to pass atoms or integers.
+No cell data formatting function is needed for this special case.
+</p>
+
+<p>
+For more complex formatting needs, you can connect your own cell data function formatting routine. 
+See <a href="../test66.ex"> test66</a> for an example of one way to do this.
+</p>
+
+
+<a name="formatting" /><h3><hr />Built-in Formatting Routine <em>~ Linux Only!</em> <small><small>(for now)</small></small><hr /></h3>
+
+<p>
+New in EuGTK 4.14.0 are simpler, more versatile listview formatting options. With them you can use the 
+familiar text:format() patterns, as well as writing your own specialized 
+formatting routines with only a few lines of code!
+</p>
+
+<p>
+First of all, for this to work, remember that you <b><i>must</i></b> name
+your column. In the example shown in the screenshot above, col4 would be created as follows:
+</p>
+
+<p>
+<em class="kw">constant</em> col4 = <em class="gtk">create</em>(GtkColumn,<em class="str">"title=Balance,<u>name=Col4</u>,type=text...etc.</em><br />
+</p>
+
+<p>
+(The name can be the same as the title, or anything you wish.)
+</p>
+
+<p>
+Secondly, you connect to a built-in formatting function:
+</p>
+
+<p>
+<em class="gtk">set</em>(col4,<em class="str">"format func","cell_fmt"</em>,<em class="orange">4</em>,<em class="str">"$[b,,.2]"</em>) 
+</p>
+
+<p>
+The format string is the same as used by text:format(), so you can set digits before
+and after decimal points, start with <em class="str">[b</em> to cause the value to be hidden when it is 
+zero, change case, display values as hex numbers, binary, etc...
+</p>
+
+<p>
+The number <em class="orange">4</em> is the list store column from which to get the
+data to be formatted. It is usually the same as the column number, but can
+be different. For example, you might display the same set of numbers in different formats:
+decimal in one column, hex in another.
+</p>
+
+<p>
+See <a href="../examples/diet/DIET.ex">DIET.ex</a> for examples of use.
+</p>
+
+<a name="custom" />
+
+<h3><hr />Custom Formatting Routines <em>~ Linux Only!</em> <small><small>(for now)</small></small><hr /></h3>
+
+<p>
+In addition, you can connect to your own formatting routine, which can be more specialized than the built-in one. Your function might examine the 
+value of the cell, and format it with different type style or color based
+upon the value, or even display some warning text in the cell, rather than
+the normal contents - whatever is appropriate.
+</p>
+
+<p>    
+<em class="gtk">set</em>(col4,<em class="str">"cell data func"</em>,pointer(<em class="str">"Col4.renderer"</em>),_(<em class="str">"MyRoutine"</em>))<br /> 
+</p>
+
+<p> 
+No format string is used here, the formatting is done by your function.</em><br />
+Note, also, that the column name is required in order to obtain the column renderer.</em>
+</p>
+
+<p>
+Setting the <i>cell data func</i> causes GTK to send each cell's data <i>through</i>
+your formatting function before the data gets to the display. Your function
+therefore has an opportunity to inspect and/or modify the data before passing
+it on.
+</p>
+
+<p>
+Your formatting function can be named anything you wish, but <i><b>must</b></i> have these exact parameters:<br />
+<pre>
+<em>----------------------------------------------------------------------</em>
+<em class="kw">function</em> MyRoutine(<em class="kw">atom</em> layout, <em class="kw">atom</em> renderer, <em class="kw">atom</em> model, <em class="kw">atom</em> iter) 
+<em>----------------------------------------------------------------------</em>
+<em class="kw">object</em> fmt = <em class="str">"[b,,.2]"</em> <em>-- whatever sprintf or text:format you need</em>
+<em class="kw">object</em> val = <em class="gtk">get</em>(model,<em class="str">"col data from iter"</em>,iter,<em class="orange">4</em>)  
+<em>-- 4 is the column that the value comes from in this example</em>
+
+<em>-- Do whatever you need to do with the value, then:</em>
+  <em class="gtk">set</em>(renderer,<em class="str">"property","markup"</em>,text:format(fmt,{val}))  
+ <em>-- or</em>
+  <em class="gtk">set</em>(renderer,<em class="str">"property","markup"</em>,<em class="kw">sprintf</em>(fmt,{val}))    
+<em>-- note: you must specify both "property" and "markup" in these calls,
+-- not just "markup"</em>
+
+<em class="kw">return</em> 1
+<em class="kw">end function</em>
+</pre>
+</p>
+
+<p>
+Also note that you don't ever <i>call</i> this formatting routine, you are only
+'registering' it so that GTK can call it for you automatically at the appropriate time.
+</p>
+
+<hr />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+</html>

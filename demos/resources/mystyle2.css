@@ -1,0 +1,27 @@
+
+/* 
+mystyle2.css used by test157.ex 
+*/
+
+@define-color yellow #ffff00;
+@define-color green #00ffff;
+
+#mainwin {
+    background-image:
+    -gtk-gradient (radial, 
+        0.2 0.2, 0.1,
+        0.6 0.6, 0.7, 
+        color-stop(0,#f00), 
+        color-stop(0.1,#a0f), 
+        color-stop(0.2,@yellow),
+        color-stop(1,@green));
+    }
+
+GtkButton {
+    background-color: @green;
+    }
+
+/* 
+note: button background colors aren't 
+supported in many windowing themes 
+*/

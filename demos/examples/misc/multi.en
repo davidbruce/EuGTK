@@ -1,0 +1,25 @@
+
+--!MainWindow.title=Test program 1
+--!MainWindow.border=10
+
++ MainWindow.HelpCaption=Help
++ MainWindow.HelpTitle=About this program
++ MainWindow.HelpText=Default is english, for other languages:|run eui multi xx, where xx is es, gk, fr, ru, bn, hn
+
+--!Image1.icon-name=face-cool
+--!Image1.pixel-size=128
+--!Button1.tooltip text=Click here to exit
+--!Button1.label=_Exit
+--!Button1.image=gtk-quit
+
+--!Button2.tooltip text=Click here for help
+--!Button2.label=_About
+--!Button2.image=gtk-about
+
+--!Button3.tooltip text=Click here to change the color
+--!Button3.label=_Background
+--!Button3.image=style
+
++MainWindow.background=#97DFEF
+MainWindow.size={606,540}
+MainWindow.position={372,0}

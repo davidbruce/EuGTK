@@ -1,0 +1,28 @@
+
+-- Traduction par Google Translate
+
+--! MainWindow.title = Test programme 4
+--! MainWindow.border = 10
+
+--!Image1.icon-name=face-kiss
+--!Image1.pixel-size=64
+
++ MainWindow.HelpCaption = Aide
++ MainWindow.HelpTitle = À propos de ce programme
++ MainWindow.HelpText = Il n'y a pas grand chose à dire, | est juste un programme, ok?
+
+--! Button1.tooltip text = Cliquez ici pour quitter
+--! Button1.label = _Exit
+--! Button1.image = gtk-quit
+
+--! Button2.tooltip text = Cliquez ici pour obtenir de l'aide
+--! Button2.label = _Aide
+--! Button2.image = gtk-about
+
+--! Button3.tooltip text = Cliquez ici pour changer la couleur
+--! Button3.label = _Couleur de fond
+--! Button3.image = style
+
++MainWindow.background=#F4A3AA
+MainWindow.size={469,602}
+MainWindow.position={592,2}

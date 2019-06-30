@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>   
+	<title>Starting Glade - Chap. 2</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<h2>Using Glade</h2>
+
+<img src="../screenshots/x3.png" alt="glade" align="right" width="400" />
+
+<h3>Linking more functions</h3>
+<h4>Opening a file</h4>
+
+<p>
+Use Glade to select the File-&gt;Open menu item, which will be named <i>imagemenuitem2</i>, unless you've changed it.<br /><br />
+<i><small><em>(Note that you are free to change the name of any item by typing a new name 
+into the ID: entry on the General tab for that item.)</small></i>
+</em></p>
+
+<p>
+Let's do so, and change <i>imagemenuitem2</i> to a more meaningful name: <i>file_open</i> 
+(as usual, no quotes). 
+</p>
+
+<p>
+Now select the Signals tab, and set the  <i>activate</i> handler to be <i>open_file</i>. This will
+be the name of your Euphoria function which will, surprise, surprise! - open a file!
+</p>
+
+<p>Click the Save the Current Project toolbutton, and run your program again. 
+In your terminal you should see something resembling:
+<div class="scrn"><tt><pre>
+-------------------------------------------------
+-- Undeclared function in test1.glade
+-------------------------------------------------
+
+------------------------------
+global function open_file() 
+------------------------------
+
+return 1
+end function
+</pre></tt></div>
+
+<p>
+Copy the function template from the terminal, paste it into your Eu program, 
+and fill in the blank space with some working code, as shown in the code sample below.
+</p>
+
+<p>Since you will be using EuGTK's handy pre-built <i>fileselector</i>, you'll also have to add <tt><em class="kw">include</em> GtkFileSelector.e</tt> to the top of your program.
+</p>
+
+<div class="quote"></p><tt><pre>
+<em class="kw">include</em> GtkEngine.e
+<em class="kw">include</em> GtkFileSelector.e <em>-- add this</em>
+
+<em class="gtk">add</em>(builder,<em class="str">"~/demos/examples/glade/test1.glade"</em>)
+
+<em class="gtk">main</em>()
+
+<em>---------------------------</em>
+<em class="kw"><b>global</b> function</em> help_me() 
+<em>---------------------------</em>
+<em class="kw">return</em> <em class="gtk">Info</em>(,,<em class="str">"About","My fine program!"</em>)
+<em class="kw">end function</em>
+
+<em>----------------------------</em>
+<em class="kw"><b>global</b> function</em> open_file() 
+<em>----------------------------</em>
+<em class="kw">object</em> fname = fileselector:Open(<em class="str">"*.ex"</em>) <em>-- use the handy pre-build selector</em>
+<em class="kw">if sequence</em>(fname) <em class="kw">then</em>
+	<em class="gtk">Info</em>(,,<em class="str">"You Selected"</em>,fname)
+<em class="kw">end if</em>
+<em class="kw">return</em> 1
+<em class="kw">end function</em>
+</pre></tt>
+</div>
+
+<p>
+Click on a file, and you should see the filename displayed in
+a neat pop-up box.
+</p>
+
+<hr />
+
+<img src="../screenshots/glade_test_1.png" alt="glade test 1" align="right" width="500" />
+<h3>Adding Widgets</h3>
+<h4>Containers</h4>
+
+<p>
+If you recall, the original Box <img class="x" src="../thumbnails/grn_star.png" alt="green star" height="15px;" /> we added as the first item in our window had 
+3 'divisions', oriented vertically. We filled the first (top) with a menu, and the 3rd (bottom) with 
+a button. The middle one was left empty, and so it doesn't show at all.
+</p>
+
+<p>Let's add some things to the middle.
+We can't put more than one item in there; try it, you'll see.
+</p>
+
+<p>
+We'll need a container if we want more than one thing there, so choose another
+Box <img class="x" src="../thumbnails/grn_star.png" alt="green star" height="15px;" />, 
+drop it into the empty middle space, change number of items to 2, and click create.
+The default orientation is vertical, which won't do for this particular demo, so change it 
+to horizontal.
+</p>
+
+<p>
+Into the left-hand panel of the Box we just added, drop an image container. It's the little house with the yellow roof in the Control and Display section of the left-hand toolbar.
+</p>
+
+<p>
+In the right-hand panel, drop a label container. It's also in the Control and Display section. Under Appearance/Label: type in some text. Use markup if you like, and click the Use Markup checkbox.
+Save your work - you should do this frequently.
+</p>
+
+<img src="../screenshots/test5.png" alt="test5" align="right" />
+
+<p>
+What about the image? 
+We'll need to pick one, so click on the little missing image 
+icon on your program's window, and choose one of the following:
+<ul>
+	<li>A stock id from the drop-down combo</li>
+	<li>An icon name<dd>face-cool, for example</dd></li>
+	<li>A file 
+		<dd>Choose one from the file selector on the right.</dd>
+		</li>
+		
+		<ul>
+		<small>
+
+		<li>
+		You could, in the Glade Image..Filename box, type in the full path
+		to the file: e.g. /home/irv/demos/thumbnails/mongoose.png,
+		but that might be incorrect if a different user uses your program. 
+		</li>
+		
+		<li>
+		You could put the image(s) in the same folder as your program,
+		then in your code, do a chdir() to the current program folder: chdir(prog_dir).
+		This way, you can keep your program and related images in their own private
+		space, and they can be moved to another folder without getting lost.
+		</li>
+		
+		<li>
+		You might put the images in the user's home folder, in which case they
+		could be found with no special effort, but it would be
+		impolite to clutter up someone's personal space.
+		</li>
+		
+		</small>
+		</ul>
+</li>
+</ul>
+</p>
+
+<p>
+Run the program again, and note that no changes or additions or adjustments were required to the 12 lines of Euphoria source code.
+</p>
+
+<hr />
+<p>
+Suppose we want an image more pleasing than the one above?
+Just change the open_file function a bit:
+</p>
+
+<p>
+<div class="quote"><pre><code> <em>-----------------------------</em>
+<em class="kw"><b> global</b> function</em> open_file() 
+<em> -----------------------------</em>
+<em class="gtk"> fileselector:filters</em> = {<em class="str">"image"</em>}
+<em class="kw" > object</em> newfile = <em class="gtk">fileselector:Open</em>(<em class="str">"*"</em>)
+<em class="kw"> if sequence</em>(newfile) <em class="kw">then</em>
+  <em class="gtk"> set</em>(<em class="str">"image1","from file"</em>,newfile)
+<em class="kw"> end if</em>
+<em class="kw"> return</em> 1
+<em class="kw"> end function</em>
+</code></pre></div>
+</p>
+
+<p>
+Just click on the image you prefer. I like this one!
+</p>
+
+<img src="../screenshots/test6.png" alt="Calendar" align="right" width="500px" />
+
+<br clear="all" />
+
+<hr />
+<h3>In Conclusion</h3>
+
+<p>
+Building more complex objects such as TreeViews, ListViews, etc. with Glade will involve some experimenting. 
+Explaining these in detail (using words) would require a whole book, which, like most such 
+books, would cost $99.00 plus tax, and would bore you half to death.
+</p>
+
+<p>
+So, if you really feel that you can't handle it on your own from here, start saving your $99.00 (plus tax) for the book. 
+</p>
+
+<p>But frankly, Glade doesn't save any time when creating these objects, since the process is very tedious. You can achieve the same outcome
+much more easily by writing just a few lines of code with an ordinary text editor, cutting and pasting from the demo programs where applicable.
+</p>
+
+<p> 
+Try it - this isn't rocket surgery!
+</p>
+
+<hr />
+
+<footer>
+ <div class="hint boxshadow">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+</html>

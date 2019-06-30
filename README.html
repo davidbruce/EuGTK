@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<div align="center">
+  <a href="https://github.com/colyseus/colyseus">
+    <img src="https://github.com/davidbruce/EuGTK/blob/master/logo.png?raw=true" />
+  </a>
+  <br>
+  <br>
+  <h3>
+    GTK 3 wrapper for <a href="https://openeuphoria.org/">Open Euphoria</a> <br /><a href=": http://htmlpreview.github.io/?https://github.com/davidbruce/EuGTK/blob/master/demos/documentation/README.html">View documentation</a>
+  </h3>
+    <img src="https://github.com/davidbruce/EuGTK/blob/master/hello.png?raw=true" />
+</div>
+
+
+<p>A cross-platform GTK3 library for the <a href="http://openeuphoria.org">Euphoria</a> programming language. EuGTK makes it easy to create modern, professional programs quickly.</p>
+
+<p>Euphoria is a powerful but easy-to-learn programming language. It has a simple syntax and structure with consistent rules, and is also easy to read. You can quickly, and with little effort, develop applications, big and small, for Windows, Unix variants (Linux, FreeBSD, &hellip;) and OS X.</p>
+
+<p>EuGTK wraps the <a href="http://gtk.org">GTK3</a> calls in a sudo object-oriented fashion; you create GTK objects, and then set or get properties of those objects. There&rsquo;s no need to manually lay out &ldquo;widgets&rdquo;, this is handled automatically.
+No tricky sizing or layout code is required, and all that crazy type-casting you have to do with other programming languages doesn&rsquo;t exist! In addition, EuGTK provides &lsquo;wrappers&rsquo; around several of the more difficult-to-use Gtk widgets (e.g. GtkListView) which makes them much easier to use.</p>
+
+<p>Development is fast, since Euphoria is one of the fastest interpreters available, making the development cycle easy (you just test each line of code as you add it) - and Euphoria can optionally convert your code to C and compile it into an executable with a single call.</p>
+
+<p>For more information:
+https://sites.google.com/site/euphoriagtk/Home</p>
+
+<h2>```</h2>
+
+<h2>&ndash;# Example: Yet Another Hello World! program</h2>
+
+<p>include GtkEngine.e</p>
+
+<p>&ndash;[1] create the widgets;</p>
+
+<p>constant <br/>
+    win = create(GtkWindow,&ldquo;border width=10,icon=face-laugh,$destroy=Quit&rdquo;),
+    pan = create(GtkBox,&ldquo;orientation=vertical&rdquo;),
+    box = create(GtkButtonBox),
+    btn = create(GtkButton,&ldquo;gtk-quit&rdquo;, &ldquo;Quit&rdquo;),
+    lbl = create(GtkLabel,&ldquo;color=blue&rdquo;)</p>
+
+<p>&ndash;[2] mark up label using basic html;</p>
+
+<pre><code>set(lbl,"markup", 
+"&lt;b&gt;&lt;u&gt;&lt;span color='red'&gt;&lt;big&gt;Hello World!&lt;/big&gt;&lt;/span&gt;&lt;/u&gt;&lt;/b&gt;\n\n" &amp;
+"This demos a simple window with\na label and a quit button.\n")
+</code></pre>
+
+<p>&ndash;[3] add widgets to containers;</p>
+
+<pre><code>add(win,pan)  
+add(pan,lbl)  
+add(box,btn)  
+pack(pan,-box)
+</code></pre>
+
+<p>show_all(win) &ndash;[4] instantiate widgets;
+main()        &ndash;[5] enter main processing loop;
+```</p>
+
+</body>
+</html>

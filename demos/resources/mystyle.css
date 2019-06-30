@@ -1,0 +1,27 @@
+/* 
+ * mystyle.css
+ * used by test72.ex
+*/
+
+GtkWindow { 
+    background-image: url("./thumbnails/nature.jpg"); 
+    border-radius: 60px;
+    }
+    
+GtkLabel#cowsay {
+    font: Purisa Bold 48; 
+    color: white; 
+    text-shadow: 4px 4px #140B91;
+    }
+
+/*
+ only works if theme allows:
+*/
+
+GtkButton:hover {
+    background-color: #08F320;
+    }
+    
+GtkButton:active {
+    background-color: #F30808;
+    }

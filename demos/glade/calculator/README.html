@@ -1,0 +1,52 @@
+
+
+<!DOCTYPE html>
+<head><title>Glade README</title></head>
+	<style>
+		dd{font-size:small; color: blue;}
+		quote {
+		display: block; 
+		width: 640px;
+		border: 1px solid black; 
+		padding: 5px; 
+		background: #F0F0F0; 
+		margin: 5px;
+	}    
+
+	</style>
+<body>
+
+<h2>Calculator Demo</h2>
+<hr />
+
+<p>
+This implements a nice calculator which operates with Euphoria syntax.
+It utilizes Shian Lee's <i>math_eval.e</i> library:
+</p>
+
+<p><pre><quote>
+-- PROJECT:  MATH_EVAL
+-- VERSION:  1.1.0  3.12.2014   (created on LinuxMint 17, using Geany editor).
+-- AUTHOR:   Shian Lee
+-- LANGUAGE: Euphoria 4.1.0  <http://openeuphoria.org/>
+-- LICENSE:  Free. Use at your own risk.
+-- ---------------------------------------------------------------------------
+-- PURPOSE:  a function which evaluate Euphoria's math expressions,
+--           and returns atom as result, or an error message string.
+--           typically used to calculate math expressions entered by the user.
+--           math_eval supports functions, operators, variables & constants.
+--           read the attached "math_eval.doc" user manual for details.
+-- NOTE:     * the code checks for errors so your program will not crash.
+--           * expressions are evaluated in the same manner as Euphoria 4.1.
+--           * sequences are not supported (it's used mainly in spreadsheets).
+-- ===========================================================================
+</quote></pre></p>
+<a href="calculator.ex">calculator.ex</a>
+<p>
+This demo has limitations, and is not intended to be complete. In particular, it
+cannot do operations on sequences. It does, however, provide some insight on using
+Glade with Euphoria to build complex user interfaces.
+</p>
+</body>
+</html>
+

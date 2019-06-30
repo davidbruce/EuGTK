@@ -1,0 +1,109 @@
+
+body {margin-right: 10px; margin-left: 10px;}
+
+h3 {color: blue;}
+img {margin-right: 10px;}
+p.small {font-size: small; font-style: italic;}
+
+em {color: red;}
+em.kw {color: blue;}
+em.gtk {color: magenta; }
+em.str {color: green;}
+em.black {color: black;}
+em.blue {color: blue;}
+em.green {color: green;}
+em.brown {color: brown; font-style: normal;}
+em.orange {color: orange;}
+em.rb {color: black; background-color: red;}
+em.yb {color: yellow; background-color: blue;}
+
+button {margin-bottom: 5px; background-color: #A6F583;}
+b.x {background-color: #A6F583;}
+
+figure {background-color: #EFEFEB;}
+
+table {margin: 10px;}
+th {background-color: #FCFAC7;}
+tr.note {background-color: yellow;}
+tr.subtitle {font-size: smaller;}
+td {
+	background-color: #F2F9FA; 
+	padding-left: 10px; 
+	padding-right: 10px; 
+	font-size: smaller;
+	}
+
+td.eucode {background-color: #F2F9FA;}
+td.emphasis {background-color: #FBF00A;}
+td.note {background-color: yellow;}
+td.ba {background-color: cyan;}
+td.bb {background-color: skyblue;}
+td.bc {background-color: #A3FCA3;}
+
+ol li {margin-bottom: 10px;}
+ul li {margin-bottom: 5px;}
+ul.small {font-size: small;}
+ol.small {font-size: small;}
+
+dfn {font-size: small; color: blue;}
+dd {font-size: smaller;}
+
+div.hdr {
+	display: block; 
+	padding:3px; 
+	border:none; 
+	background: skyblue; 
+	color:yellow; 
+	font-style: italic;
+	}
+
+div.hint {
+	display: block; 
+	border: thin solid black; 
+	padding: 8px; 
+	font-size: small;
+        border-radius: 20px; 
+	margin-left: 20px; 
+	margin-right: 20px; 
+	background-color: #D9F9E4;
+	}
+
+div.quote {
+	display: block; 
+	border: 1px dashed black; 
+	padding: 5px; 
+	background: #F0F0F0; 
+	margin: 5px;
+	}    
+
+div.scrn {
+	display: block; 
+	border: 2px solid green; 
+	padding: 4px; 
+	font-size: 12pt; 
+        color: #00FF00; 
+	background-color: black; 
+	width: 100%;
+	}
+
+div.urgent {
+	display: block;
+	border: 4px dashed red;
+	padding: 4px;
+	margin: 4px;
+	font-size: 12pt;
+	color: red;
+}
+	
+img {margin-left: 5px; margin-bottom: 5px;}
+img.x {margin:0px;}
+
+figure {margin-left: 2px; margin-bottom: 2px;}
+figcaption {background-color: #F2F2F2;}  
+footer {font-size: smaller;}
+
+
+
+
+
+

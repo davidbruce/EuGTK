@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/euphoria">
+    <comment>Euphoria Source Code File</comment>
+    <glob pattern="*.e;*.ew;*.eu;*.ex;*.exw;*.exu"/>
+    <sub-class-of type="application/text"/>
+  </mime-type>
+</mime-info>

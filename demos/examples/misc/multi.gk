@@ -1,0 +1,28 @@
+
+-- Μετάφραση από την Google
+
+--! MainWindow.title = Δοκιμή αριθμού προγράμματος 3
+--! MainWindow.border = 10
+
++ MainWindow.HelpCaption = Βοήθεια
++ MainWindow.HelpTitle = Σχετικά με αυτό το πρόγραμμα
++ MainWindow.HelpText = Δεν υπάρχει τίποτα να πει κανείς, | είναι απλά ένα πρόγραμμα, ok?
+
+
+--!Image1.icon-name=face-smile
+--!Image1.pixel-size=128
+--! Button1.tooltip text = Κάντε κλικ εδώ για έξοδο
+--! Button1.label = _Εξέλιξη
+--! Button1.image = gtk-quit
+
+--! Button2.tooltip text = Κάντε κλικ εδώ για βοήθεια
+--! Button2.label = _βοήθεια
+--! Button2.image = gtk-about
+
+--! Button3.tooltip text = Κάντε κλικ εδώ για να αλλάξετε το χρώμα
+--! Button3.label = _χρώμα
+--! Button3.image = style
+
++MainWindow.background=#90F196
+MainWindow.size={503,666}
+MainWindow.position={456,0}

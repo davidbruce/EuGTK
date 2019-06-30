@@ -1,0 +1,9 @@
+
+
+/* Used by t2.ex */ 
+
+ GtkWindow {background-image: url("../thumbnails/nature_small.jpg");}
+ GtkButton {transition: 500ms ease-in-out;}
+
+ #label1 {font: 28; text-shadow: 2px 2px black;}
+ #label2 {font: Courier bold 18; color: red; text-shadow: 2px 2px white;}

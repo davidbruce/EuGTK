@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<head>
+	<title>Bear Facts</title>
+		<link rel="stylesheet" href="style.css" type="text/css">
+	<style>
+	    div.hint {
+	    display: block; 
+	    border: thin solid black; 
+	    padding: 8px; 
+        font-size: small; 
+        background-image: linear-gradient(180deg, cornsilk,skyblue); 
+        border-radius: 15px;
+        margin-left: 10px; 
+        margin-right: 10px; 
+        width=80%;}
+        
+        div.hdrb {
+        display: block; 
+        background-image: linear-gradient(180deg, cornsilk, skyblue); 
+        background-repeat: no-repeat;
+        }
+        
+        div.quote {
+        display: block;
+        margin: 5px;
+        padding: 5px;
+        border: thin solid black;
+        background-image: linear-gradient(180deg, ivory,honeydew); 
+        font-size: small;
+        }
+        
+        div.quote dd {font-size: smaller;}
+        
+	</style>
+</head>
+
+<body>
+
+<div class="hdrb">
+<h2><hr />&nbsp;The Bear Facts<hr /></h2>
+</div>
+
+<p>
+The BEAR is a web-browser, html editor, and Euphoria source-code editor with test-run
+capability.
+</p>
+
+<figure style="float:right; border:solid thin black; border:none; width="100%">
+	<a href="images/bear_err.png">
+	<img src="images/bear_err.png" alt="bear" width="100%" style="margin-left:0;" /></a>
+	<figcaption>
+		<small><i>&nbsp;The BEAR now has pop-up Gtk help and ex.err reporting!</i></small>
+	</a>
+	</figcaption>
+</figure>
+	
+<br clear="all" /><hr />
+
+
+<h4>Browser Controls</h4>
+<img src="images/bear1.png" />
+
+
+<p>
+To open a local file (.html or otherwise), click the Local button. In most cases, 
+the file type will be automatically recognized and placed into the appropriate 
+window.  
+</p>
+
+<p>
+To open a page from the web, click the Network button. A dialog box 
+will appear for you to type in a web address: http://OpenEuphoria.org, 
+for example. This button will be disabled if you are not on a network.
+</p>
+
+<p class="star">
+New with EuGTK 4.15.0: Print to PDF button added to
+the webview toolbar.
+</p>
+
+<div class="hint">
+<img class="hint" src="../thumbnails/hint.png" alt="hint" width="100px" align="left" float="right" />
+
+<p>
+The sourcecode editor does <i><b>not</b></i> automatically 'track' the 
+current web page being viewed. If you want to edit the current web page 
+.html, you <b>must</b> click on the Edit button in the  toolbar!</p>
+</div>
+
+<hr />
+
+<h4>Source Controls</h4>
+
+<img src="images/bear2.png" />
+
+<p class="star">
+New with EuGTK 4.15.0: Fonts button added to
+the sourceview toolbar.
+</p>
+
+<p>
+Click New or Open to create or edit a text file (Euphoria source code, for example).
+If the file extension is .ex, then the Execute button in the Source toolbar
+will be enabled; clicking on it will run <i>a temporary copy</i> of the program in the Source pane.
+If you are satisfied with the way the temporary copy ran, just click on the Save or SaveAs buttons
+to write the updated code to disk.
+</p>
+
+
+<p>
+Don't forget - any editing you do to Euphoria source code will only change
+the <i>temporary test copy</i>, not the original, in case your change didn't work. To save your updated code, click on the save button!
+</p>
+
+<p>
+The Execute button will be disabled if the code being edited is not
+a Euphoria program, but the Save and SaveAs buttons will function to save 
+text, including .html, .css, or any other text that you may have modified. If the file is .html, then
+the WebView will be reloaded to show the updated web page.
+</p>
+
+<div class="quote">
+<h4>Preferences</h4>
+<p>
+Options for the source code editor are:
+<ul>
+	<li>Set Editor Font<dd> Only monospace fonts are shown in the
+font dialog,</dd><dd>since the BEAR is primarily for editing source  and html
+code</dd></li>
+	<li>Use Line Numbers<dd> Toggle on/off</dd></li>
+	<li>Spaces + Tabs<dd>Make whitespace characters visible</dd></li>
+	<li>Confirm on Save<dd>Pop up File Save dialog or save without prompting</dd></li>
+	<li>Styles<dd> Select various syntax colors and styles for the editor.</dd>
+		<dd>See ~/demos/resources/gedit_syntax folder to install these.</dd></li> 
+</ul>
+</p>
+</div>
+
+
+<br />
+
+<b>Help</b>
+
+<p>
+<img src="images/help.png" width="90%" />
+Highlight a Euphoria keyword or GTK widget name, and click on the Docs button.
+The appropriate html help page, if found, will be displayed in the left-hand
+viewer.
+</p>
+
+<b>Searching</b>
+<p>
+In order to more easily edit web pages, you can highlight 
+words or a phrase in the web view, and select 'copy' from the right-click pop-up menu.
+Then click on the Find button in the Web Page control panel. 
+This will try to scroll the editor 
+pane to find the matching word(s). 
+</p>
+
+<p>Avoid clicking on text that 
+includes markup, such as <i>italics</i> or <b>bold</b>, as those contain invisible markup
+which won't match when doing a text search. 
+Neither will escaped characters such as &amp; &lt; &gt;, etc.,
+or items containing hidden text such as links.
+</p>
+
+<p>This scheme doesn't always work perfectly, 
+(sometimes not at all; try clicking on the find button again), 
+but it's certainly better than nothing! If you know of a better way, please let me know!
+</p>
+
+<b>Bugs</b>
+
+<p>
+Sometimes, when test-running a program from within the BEAR editor, you'll get
+an error about not finding GtkEngine.e or other includes. If so, just
+click the Save button and try the Execute button again. 
+</p>
+
+<footer>
+ <div class="hint">
+ <img class="hint" src="../thumbnails/mongoose.png" alt="hint" align="left" float="right" />
+	<p>
+	This page edited by The <a href="../documentation/README.html#bear">Bear</a>, 
+	a web-page and programming editor 
+	written in <a href="OpenEuphoria.org">Euphoria</a>.
+	</p>
+	<p>
+	Updated for EuGTK version 4.15 Apr 2019<br />
+	All code &copy; 2005-2019 by Irv Mullins
+	</p>
+ </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+--initest2.ini
+
+-- In this demo, we use the ini to control some of the appearance.
+-- This could perhaps be used to translate button captions and labels into different
+-- languages without having to touch the program's source code or re-compile!
+
+-- translation via google translate
+
+--! MainWindow.title=Test program number 1
+--! MainWindow.border=10
+--!+ MainWindow.HelpTitle=About this program
+--!+ MainWindow.HelpText=There is not much to tell
+
+--! Button1.tooltip text=Click here to exit
+--! Button1.label=Exit
+--! Button1.image=gtk-quit
+
+--! Button2.tooltip text=Click here for help
+--! Button2.label=About
+--! Button2.image=gtk-about
+
+--! Button3.tooltip text=Click here to change the color
+--! Button3.label=Background
+--! Button3.image=style
+
++ Main Window.background=#15CBBD
+  Main Window.size={534,634}
+  Main Window.position={592,38}
+
